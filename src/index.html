@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app="ngDevstack" ng-controller="AppCtrl">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title ng-bind="pageTitle"> | ng-devstack</title>
+
+    <!-- build:css --><!-- inject:css -->
+    <!-- endinject --><!-- endbuild -->
+    <!-- build:js --><!-- inject:js -->
+    <!-- endinject --><!-- endbuild -->
+
+</head>
+<body ng-cloak>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <nav class="navbar navbar-inverse" role="navigation">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav">
+                            <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
+                            <li ui-sref-active="active"><a ui-sref="about">About</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div ui-view="main"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
