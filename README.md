@@ -1,9 +1,13 @@
-Why ng-devstack?
-================
-This project has been inspired by another great concept <a href="http://joshdmiller.github.io/ng-boilerplate/">ngBoilerplate</a>, allowing to create modern web applications in AngularJS. It follows all the best practices introduced in ngBoilerplate such as component/feature-oriented directory structure, intelligent build system, etc. However, I decided to improve it a little bit and create my own boilerplate since I missed some basic features like applying changes in real-time on adding new files to project, images optimization, remove redundant code on compiling output HTML, plus ngBoilerplate hasn't been updated for months. Now this all has been made possible. Please welcome ng-devstack!
+# ng-devstack v0.1.0
 
-Features
-========
+#### Everything a front-end developer needs to simplify building AngularJS applications.
+
+## Why ng-devstack?
+
+This project has been inspired by another great concept [ngBoilerplate](http://joshdmiller.github.io/ng-boilerplate/), allowing to create modern web applications in AngularJS. It follows all the best practices introduced in ngBoilerplate such as component/feature-oriented directory structure, intelligent build system, etc. However, I decided to improve it a little bit and create my own boilerplate since I missed some basic features like applying changes in real-time on adding new files to project, images optimization, remove redundant code on compiling output HTML, plus ngBoilerplate hasn't been updated for months. Now this all has been made possible. Please welcome ng-devstack!
+
+## Features
+
 * integration with gulp
 * dependency management with Bower
 * feature-oriented directory structure
@@ -19,45 +23,60 @@ Features
 * html5Mode support (see Additional Info for details)
 * integration with AngularUI Router & AngularUI Bootstrap
 
-Requirements
-============
+## Requirements
+
 * Ruby
 * NodeJS
+* Bower
 
-Installation
-============
-1. Install SASS:
+## Installation
 
-    gem install sass
+**1.** Install SASS:
 
-2. Install gulp globally, which is giving access to gulp's CLI:
+```sh
+$ gem install sass
+```
 
-    npm install gulp -g
+**2.** Install gulp globally, which is giving access to gulp's CLI:
 
-3. Install gulp locally to the project with other required plugins:
+```sh
+$ npm install gulp -g
+```
 
-    npm install
+**3.** Install gulp locally to the project with other required plugins:
 
-4. Install dependencies:
+```sh
+$ npm install
+```
 
-    bower install
+**4.** Install dependencies:
 
-Usage
-=====
+```sh
+$ bower install
+```
+
+## Usage
+
 To build the application simply type:
 
-    gulp build
+```sh
+$ gulp build
+```
 
-For development purposes, run watch task to build and start localhost with liverload:
+For development purposes, run watch task to build and start localhost with livereload:
 
-    gulp watch
+```sh
+$ gulp watch
+```
 
-Deploy the production version by running 'gulp compile', or more simple:
+Deploy the production version by running `gulp compile`, or more simple:
 
-    gulp
+```sh
+$ gulp
+```
 
-TODO
-=====
+## TODO
+
 - add authorization service
 - add E2E testing (Karma/Protractor)
 - add source maps support for SASS & JS
