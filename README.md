@@ -56,7 +56,7 @@ $ npm install gulp -g
 $ npm install
 ```
 
-**4.** Install dependencies:
+**4.** Install required libraries:
 
 ```sh
 $ bower install
@@ -76,7 +76,7 @@ For development purposes, run watch task to build and start local web server wit
 $ gulp watch
 ```
 
-Deploy the production version by running `gulp compile`, or more simple:
+Deploy the production version by running `gulp compile`, or simpler:
 
 ```sh
 $ gulp
