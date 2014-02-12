@@ -15,11 +15,11 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 
 ## Features
 
-* integration with gulp,
-* dependency management with Bower,
+* integration with gulp.js,
+* package management with Bower,
 * feature-oriented directory structure,
 * Livereload fully handled server-side with NodeJS/Express (without installing additional extensions for browsers),
-* real-time applying changes to website on adding new files (forget about manual rebuilding the app),
+* real-time applying changes to website on adding new files (forget about manual rebuild the app),
 * caching AngularJS templates to avoid additional server requests,
 * pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,
 * support for SASS (including Twitter Bootstrap official port to SASS),
