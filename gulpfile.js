@@ -11,11 +11,11 @@ var config = {
 };
 
 var paths = {
-    scripts   : [config.app + 'app/**/!(!(*.js))', config.app + 'common/**/!(!(*.js))'],
-    templates : [config.app + 'app/**/!(!(*.tpl.html))', config.app + 'common/**/!(!(*.tpl.html))'],
-    sass      : [config.app + 'app/**/!(!(*.scss))', config.app + 'common/**/!(!(*.scss))', config.app + 'sass/**/!(!(*.scss))'],
-    assets    : config.app + 'assets/**',
-    html      : config.app + 'index.html'
+    scripts   : [config.app + '/app/**/!(!(*.js))', config.app + '/common/**/!(!(*.js))'],
+    templates : [config.app + '/app/**/!(!(*.tpl.html))', config.app + '/common/**/!(!(*.tpl.html))'],
+    sass      : [config.app + '/app/**/!(!(*.scss))', config.app + '/common/**/!(!(*.scss))', config.app + '/sass/**/!(!(*.scss))'],
+    assets    : config.app + '/assets/**',
+    html      : config.app + '/index.html'
 };
 
 var vendor_files = {
