@@ -11,11 +11,11 @@ var config = {
 };
 
 var paths = {
-    scripts   : ['src/app/**', 'src/common/**', '!src/app/**/*.html', '!src/common/**/*.html', '!src/app/**/*.scss', '!src/common/**/*.scss'],
-    templates : ['src/app/**', 'src/common/**', '!src/app/**/*.js', '!src/common/**/*.js', '!src/app/**/*.scss', '!src/common/**/*.scss'],
-    sass      : ['src/app/**', 'src/common/**', 'src/sass/**', '!src/app/**/*.js', '!src/common/**/*.js', '!src/app/**/*.html', '!src/common/**/*.html'],
-    assets    : 'src/assets/**',
-    html      : 'src/index.html'
+    scripts   : [config.app + 'app/**/!(!(*.js))', config.app + 'common/**/!(!(*.js))'],
+    templates : [config.app + 'app/**/!(!(*.tpl.html))', config.app + 'common/**/!(!(*.tpl.html))'],
+    sass      : [config.app + 'app/**/!(!(*.scss))', config.app + 'common/**/!(!(*.scss))', config.app + 'sass/**/!(!(*.scss))'],
+    assets    : config.app + 'assets/**',
+    html      : config.app + 'index.html'
 };
 
 var vendor_files = {
@@ -179,8 +179,8 @@ gulp.task('vendor_assets', function () {
  Subtasks: Compress Images & copy assets
  */
 var fnImg = function (path) {
-    return gulp.src(path)
-        .pipe(gulp.dest(config.build + '/assets'));
+    return gulp.src(path, { base: 'src' })
+        .pipe(gulp.dest(config.build));
 };
 gulp.task('img', function () {
     return fnImg(paths.assets);
