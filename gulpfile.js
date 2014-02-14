@@ -2,81 +2,15 @@
 
 var gulp    = require('gulp'),
     plugins = require('gulp-load-plugins')(),
-    server  = require('tiny-lr')();
-
-var config = {
-    app   : 'src',
-    build : 'build',
-    dist  : 'dist'
-};
-
-var paths = {
-    scripts   : [config.app + '/app/**/!(!(*.js))', config.app + '/common/**/!(!(*.js))'],
-    templates : [config.app + '/app/**/!(!(*.tpl.html))', config.app + '/common/**/!(!(*.tpl.html))'],
-    sass      : [config.app + '/app/**/!(!(*.scss))', config.app + '/common/**/!(!(*.scss))', config.app + '/sass/**/!(!(*.scss))'],
-    assets    : config.app + '/assets/**',
-    html      : config.app + '/index.html'
-};
-
-var vendor_files = {
-    js: [
-        'vendor/angular/angular.js',
-        'vendor/angular-ui-router/release/angular-ui-router.js',
-        'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
-    ],
-    css: [],
-    assets: [
-        'vendor/bootstrap-sass-official/vendor/assets/fonts/**/*'
-    ]
-};
-
-var inject = {
-    css : (vendor_files.css).concat(config.build + '/assets/*.css'),
-    js  : (vendor_files.js).concat([config.build + '/app/**/*.js', config.build + '/common/**/*.js'])
-};
+    server  = require('tiny-lr')(),
+    config  = require('./config.json');
 
 
-/*
- Subtasks: Watch
- */
-gulp.task('watch', ['sass', 'lint', 'html2js', 'vendor_js', 'img', 'vendor_assets', 'inject'], function () {
-    require('./server.js')(server);
 
-    gulp.watch(paths.sass, function (event) {
-        var files = [config.app + '/sass/main.scss', config.app + '/common/**/*.scss', config.app + '/app/**/*.scss'];
-        return fnSass(files).pipe(plugins.livereload(server));
-    });
+// Prepare CSS
+// ===========
 
-    gulp.watch(paths.templates, function (event) {
-        return fnHtml2Js(paths.templates).pipe(plugins.livereload(server));
-    });
-
-    gulp.watch(paths.scripts, function (event) {
-        return fnLint(event.path).pipe(plugins.livereload(server));
-    });
-
-    gulp.watch(paths.assets, function (event) {
-        return fnImg(event.path).pipe(plugins.livereload(server));
-    });
-
-    gulp.watch(paths.html, function (event) {
-        return fnInject(event.path).pipe(plugins.livereload(server));
-    });
-});
-
-
-/*
- Subtasks: Clean up
- */
-gulp.task('clean', function () {
-    return gulp.src([config.build, config.dist], { read: false })
-        .pipe(plugins.rimraf());
-});
-
-
-/*
- Subtasks: Compile SASS, Autoprefix and minify
- */
+// Compile SASS and add prefixes
 var fnSass = function (path) {
     return gulp.src(path)
         .pipe(plugins.plumber())
@@ -87,12 +21,13 @@ var fnSass = function (path) {
         .pipe(plugins.filesize())    // .pipe(plugins.size({ showFiles: true }))
         .pipe(gulp.dest(config.build + '/assets'));
 };
-gulp.task('sass', function () {
+gulp.task('styles:sass', function () {
     var files = [config.app + '/sass/main.scss', config.app + '/common/**/*.scss', config.app + '/app/**/*.scss'];
     return fnSass(files);
 });
 
-gulp.task('styles', ['sass'], function () {
+// Minify CSS
+gulp.task('styles', ['styles:sass'], function () {
     return gulp.src(config.build + '/assets/*.css')
         .pipe(plugins.bytediff.start())
         .pipe(plugins.minifyCss({ keepSpecialComments: 0 }))
@@ -102,24 +37,34 @@ gulp.task('styles', ['sass'], function () {
 });
 
 
-/*
- Subtasks: JSHint, concat, and minify JavaScript
- */
-var fnLint = function (path) {
-    return gulp.src(path, { base: 'src' })
-        .pipe(plugins.plumber())
-        .pipe(plugins.jshint('.jshintrc'))
-        .pipe(plugins.jshint.reporter('default'))
+
+// Prepare vendor files
+// ====================
+
+// Copy vendor JS files to /build/
+gulp.task('vendor:js', function () {
+    if (!config.vendor_files.js.length) {
+        return;
+    }
+    return gulp.src(config.vendor_files.js, { base: '.' })
         .pipe(gulp.dest(config.build));
-};
-gulp.task('lint', function () {
-    return fnLint(paths.scripts);
+});
+
+// Copy vendor assets to /build/
+gulp.task('vendor:assets', function () {
+    if (!config.vendor_files.assets.length) {
+        return;
+    }
+    return gulp.src(config.vendor_files.assets)
+        .pipe(gulp.dest(config.build + '/assets'));
 });
 
 
-/*
- Subtask Cache AngularJS templates
-*/
+
+// Prepare JavaScript
+// ==================
+
+// Cache AngularJS templates
 var fnHtml2Js = function (path) {
     return gulp.src(path)
         .pipe(plugins.minifyHtml({
@@ -133,24 +78,25 @@ var fnHtml2Js = function (path) {
         .pipe(plugins.concat('app-templates.js'))
         .pipe(gulp.dest(config.build + '/app'));
 };
-gulp.task('html2js', function () {
-    return fnHtml2Js(paths.templates);
+gulp.task('scripts:html2js', function () {
+    return fnHtml2Js(config.paths.templates);
 });
 
-
-/*
- Subtask: Copy vendor JS files to /build/
-*/
-gulp.task('vendor_js', function () {
-    if (!vendor_files.js.length) {
-        return;
-    }
-    return gulp.src(vendor_files.js, { base: '.' })
+// Check JavaScript code quality with JSHint
+var fnLint = function (path) {
+    return gulp.src(path, { base: config.app })
+        .pipe(plugins.plumber())
+        .pipe(plugins.jshint('.jshintrc'))
+        .pipe(plugins.jshint.reporter('default'))
         .pipe(gulp.dest(config.build));
+};
+gulp.task('scripts:lint', function () {
+    return fnLint(config.paths.scripts);
 });
 
-gulp.task('scripts', ['lint', 'html2js', 'vendor_js'], function () {
-    var arr = vendor_files.js.concat(paths.scripts);
+// Concat and minify JavaScript
+gulp.task('scripts', ['scripts:lint', 'scripts:html2js', 'vendor:js'], function () {
+    var arr = (config.vendor_files.js).concat(config.paths.scripts);
     return gulp.src(arr)
         .pipe(plugins.concat('main.js'))
         .pipe(plugins.bytediff.start())
@@ -163,31 +109,23 @@ gulp.task('scripts', ['lint', 'html2js', 'vendor_js'], function () {
 });
 
 
-/*
- Subtask: Copy vendor assets to /build/
-*/
-gulp.task('vendor_assets', function () {
-    if (!vendor_files.assets.length) {
-        return;
-    }
-    return gulp.src(vendor_files.assets)
-        .pipe(gulp.dest(config.build + '/assets'));
-});
 
+// Prepare assets
+// ==============
 
-/*
- Subtasks: Compress Images & copy assets
- */
+// Copy assets
 var fnImg = function (path) {
-    return gulp.src(path, { base: 'src' })
+    return gulp.src(path, { base: config.app })
         .pipe(gulp.dest(config.build));
 };
-gulp.task('img', function () {
-    return fnImg(paths.assets);
+gulp.task('assets:img', function () {
+    return fnImg(config.paths.assets);
 });
 
-gulp.task('assets', ['img', 'vendor_assets'], function () {
-    return gulp.src(paths.assets)
+// Compress images
+gulp.task('assets', ['assets:img', 'vendor:assets'], function () {
+    var arr = (config.vendor_files.assets).concat(config.paths.assets);
+    return gulp.src(arr)
         .pipe(plugins.plumber())
         // .pipe(plugins.bytediff.start())
         .pipe(plugins.newer(config.dist + '/assets'))
@@ -197,10 +135,17 @@ gulp.task('assets', ['img', 'vendor_assets'], function () {
 });
 
 
-/*
- Subtask: Inject CSS & JS to index.html source
- */
+
+// Prepare HTML
+// ============
+
+// Inject CSS & JS to index.html source
 var fnInject = function (path) {
+    var inject = {
+        css : (config.vendor_files.css).concat(config.build + '/assets/*.css'),
+        js  : (config.vendor_files.js).concat(config.build + '/+(app|common)/**/*.js')
+    };
+
     return gulp.src(inject.css.concat(inject.js), { read: false })
         .pipe(plugins.inject(path, {
             addRootSlash: false,
@@ -208,15 +153,12 @@ var fnInject = function (path) {
         }))
         .pipe(gulp.dest(config.build));
 };
-gulp.task('inject', ['sass', 'lint', 'html2js'], function () {
-    return fnInject(config.app + '/index.html');
+gulp.task('html:inject', ['styles:sass', 'scripts:lint', 'scripts:html2js'], function () {
+    return fnInject(config.paths.html);
 });
 
-
-/*
- Subtask: Replace non-optimized HTML blocks
- */
-gulp.task('html-replace', ['inject'], function () {
+// Replace non-optimized HTML blocks
+gulp.task('html:replace', ['html:inject'], function () {
     return gulp.src(config.build + '/index.html')
         .pipe(plugins.htmlReplace({
             css: 'assets/main.min.css',
@@ -225,10 +167,8 @@ gulp.task('html-replace', ['inject'], function () {
         .pipe(gulp.dest(config.dist));
 });
 
-/*
- Subtasks: Compile and minify HTML
- */
-gulp.task('html', ['html-replace'], function () {
+// Compile and minify HTML
+gulp.task('html', ['html:replace'], function () {
     return gulp.src(config.dist + '/index.html')
         .pipe(plugins.plumber())
         .pipe(plugins.minifyHtml({ quotes: true }))
@@ -237,16 +177,82 @@ gulp.task('html', ['html-replace'], function () {
 
 
 
+// Set up Watch
+// ============
 
-/*
- The default task
- */
+// Add files to Watch
+gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:html2js', 'assets:img', 'vendor:js', 'vendor:assets', 'html:inject'], function () {
+    require('./server.js')(server);
+
+    gulp.watch(config.paths.scripts, function (event) {
+        if (event.path.lastIndexOf('.js') === event.path.length - 3) {
+            if (event.type === 'deleted') {
+                var buildPath = event.path.replace(config.app, config.build);
+                return gulp.src(buildPath, { read: false })
+                    .pipe(plugins.rimraf());
+            } else {
+                return fnLint(event.path).pipe(plugins.livereload(server));
+            }
+        }
+    });
+
+    // remove deleted JS files from index.html
+    gulp.watch('build/+(app|common)/**/*.js', function (event) {
+        if (event.type !== 'changed') {
+            return fnInject(config.paths.html).pipe(plugins.livereload(server));
+        }
+    });
+
+    gulp.watch(config.paths.templates, function (event) {
+        return fnHtml2Js(config.paths.templates).pipe(plugins.livereload(server));
+    });
+
+    gulp.watch(config.paths.sass, function (event) {
+        if (event.path.lastIndexOf('.scss') === event.path.length - 5) {
+            var files = [
+                config.app + '/sass/main.scss',
+                config.app + '/+(app|common)/**/*.scss'
+            ];
+            return fnSass(files).pipe(plugins.livereload(server));
+        }
+    });
+
+    gulp.watch(config.paths.assets, function (event) {
+        if (event.type === 'deleted') {
+            var buildPath = event.path.replace(config.app, config.build);
+            return gulp.src(buildPath, { read: false })
+                .pipe(plugins.rimraf());
+        } else {
+            return fnImg(event.path).pipe(plugins.livereload(server));
+        }
+    });
+
+    gulp.watch(config.paths.html, function (event) {
+        return fnInject(event.path).pipe(plugins.livereload(server));
+    });
+});
+
+
+
+// Clean up development & production directories
+// =============================================
+
+gulp.task('clean', function () {
+    return gulp.src([config.build, config.dist], { read: false })
+        .pipe(plugins.rimraf());
+});
+
+
+
+// Main gulp tasks
+// ===============
+
 gulp.task('build', ['clean'], function () {
-    gulp.start('sass', 'lint', 'html2js', 'vendor_js', 'img', 'vendor_assets', 'inject');
+    gulp.start('styles:sass', 'scripts:lint', 'scripts:html2js', 'vendor:js', 'vendor:assets', 'assets:img', 'html:inject');
 });
 
 gulp.task('compile', ['build'], function () {
-    gulp.start('styles', 'scripts', 'assets', 'html-replace', 'html');
+    gulp.start('styles', 'scripts', 'assets', 'html');
 });
 
 gulp.task('default', function () {

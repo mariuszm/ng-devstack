@@ -1,0 +1,29 @@
+{
+    "app"   : "src",
+    "build" : "build",
+    "dist"  : "dist",
+
+    "paths" : {
+        "scripts"   : "src/+(app|common)/**/*.js",
+        "templates" : [
+            "src/app/**/*.tpl.html",
+            "src/common/**/*.tpl.html"
+        ],
+        "sass"   : "src/+(sass|app|common)/**/*",
+        "assets" : "src/assets/**",
+        "html"   : "src/index.html"
+    },
+
+    "vendor_files" : {
+        "js": [
+            "vendor/angular/angular.js",
+            "vendor/angular-ui-router/release/angular-ui-router.js",
+            "vendor/angular-bootstrap/ui-bootstrap-tpls.js"
+        ],
+        "css": [
+        ],
+        "assets": [
+            "vendor/bootstrap-sass-official/vendor/assets/fonts/**/*"
+        ]
+    }
+}

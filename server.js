@@ -1,3 +1,4 @@
+/* jshint strict: false */
 /*
  More on LiveReload: http://rhumaric.com/2014/01/livereload-magic-gulp-style/
  */

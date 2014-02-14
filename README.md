@@ -1,4 +1,4 @@
-# ng-devstack v0.1.0
+# ng-devstack v0.2.0
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -6,35 +6,35 @@
 
 This project has been inspired by another great concept [ngBoilerplate](http://joshdmiller.github.io/ng-boilerplate/), allowing to create modern web applications in AngularJS. It follows all the best practices introduced in ngBoilerplate such as component/feature-oriented directory structure, intelligent build system, etc. However, I decided to improve it a little bit and create my own boilerplate from scratch since I missed some basic features like:
 
-* applying changes in real-time on adding new files to project,
-* image optimization,
-* remove redundant code on compiling output HTML,
-* plus ngBoilerplate hasn't been updated for months.
+- applying changes in real-time on adding new files to project,
+- image optimization,
+- remove redundant code on compiling output HTML,
+- plus ngBoilerplate hasn't been updated for months.
 
 Now this all has been made possible. Please welcome **ng-devstack**!
 
 ## Features
 
-* integration with gulp,
-* package management with Bower,
-* feature-oriented directory structure,
-* Livereload fully handled server-side with NodeJS/Express (without installing additional extensions for browsers),
-* real-time applying changes to website on adding new files (forget about manual rebuild the app),
-* caching AngularJS templates to avoid additional server requests,
-* pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,
-* support for SASS (including Twitter Bootstrap official port to SASS),
-* support for JSHint,
-* minify JS/CSS/HTML,
-* remove logging (`console.log()`, etc.) from compiled JS code,
-* image optimization on build (see *Additional Info* for details),
-* `html5Mode` support (see *Additional Info* for details),
-* integration with AngularUI Router & AngularUI Bootstrap.
+- integration with gulp,
+- package management with Bower,
+- feature-oriented directory structure,
+- Livereload fully handled server-side with NodeJS/Express (without installing additional extensions for browsers),
+- real-time applying changes to website on adding/deleting files (forget about manual rebuild the app),
+- caching AngularJS templates to avoid additional server requests,
+- pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,
+- support for SASS (including Twitter Bootstrap official port to SASS),
+- support for JSHint,
+- JS/CSS/HTML minification,
+- remove logging (`console.log()`, etc.) from compiled JS code,
+- image optimization (see *Additional Info* for details),
+- `html5Mode` support (see *Additional Info* for details),
+- integration with AngularUI Router & AngularUI Bootstrap.
 
 ## Requirements
 
-* Ruby
-* NodeJS
-* Bower
+- Ruby
+- NodeJS
+- Bower
 
 ## Installation
 
@@ -83,15 +83,19 @@ $ gulp
 ```
 
 ## Additional info
+
+Vendor files downloaded with Bower can be added manually by editing `'vendor_files'` section in `config.json` file.
+
 If you would like to enable AngularJS HTML5 mode, you have to uncomment 2 lines in `src/app/app.js` and `server.js`:
-* `src/app/app.js`:
+
+- `src/app/app.js`:
 
 >
 ```
 // $locationProvider.html5Mode(true);
 ```
 
-* `server.js`:
+- `server.js`:
 
 >
 ```
@@ -105,12 +109,14 @@ In addition, image optimization is turned off by default but in case you need it
 // .pipe(plugins.imagemin({ optimizationLevel: 5, progressive: true }))
 ```
 
+## Known issues
+
+- Outdated libsass in node-sass. This is a main cause of a bug with compiling Twitter Bootstrap SASS to CSS (see [this](https://github.com/andrew/node-sass/issues/233) thread and [this](https://github.com/dlmanning/gulp-sass/issues/1) for details). Not a gulp-sass issue! Temporarily using Ruby version (slower but stable).
+
 ## TODO
 
+- replace Ruby SASS compiler with NodeJS equivalent
+- add source maps support for SASS & JS
 - add authorization service
 - add E2E testing (Karma/Protractor)
-- add source maps support for SASS & JS
 - improve images/SVG optimization
-- update gulp configuration
-- add more comments to gulpfile
-- improve README.md
