@@ -26,8 +26,8 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 - support for JSHint,
 - JS/CSS/HTML minification,
 - remove logging (`console.log()`, etc.) from compiled JS code,
-- image optimization (see *Additional Info* for details),
-- `html5Mode` support (see *Additional Info* for details),
+- image optimization (see [Additional Info](#additional-info) for details),
+- `html5Mode` support (see [Additional Info](#additional-info) for details),
 - integration with AngularUI Router & AngularUI Bootstrap.
 
 ## Requirements
@@ -84,7 +84,7 @@ $ gulp
 
 ## Additional info
 
-Vendor files downloaded with Bower can be added manually by editing `'vendor_files'` section in `config.json` file.
+Vendor files downloaded with Bower can be added to project by editing `'vendor_files'` section in `config.json` file.
 
 If you would like to enable AngularJS HTML5 mode, you have to uncomment 2 lines in `src/app/app.js` and `server.js`:
 
