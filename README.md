@@ -90,19 +90,22 @@ If you would like to enable AngularJS HTML5 mode, you have to uncomment 2 lines 
 
 - `src/app/app.js`:
 
-```
+>
+```sh
 // $locationProvider.html5Mode(true);
 ```
 
 - `server.js`:
 
-```
+>
+```sh
 // app.use(require('connect-modrewrite')(['!\\.\\w+$ /index.html']));
 ```
 
 In addition, image optimization is turned off by default but in case you need it, don't hesitate to remove comment from the following line in `gulpfile.js`:
 
-```
+>
+```sh
 // .pipe(plugins.imagemin({ optimizationLevel: 5, progressive: true }))
 ```
 
