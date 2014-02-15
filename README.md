@@ -90,28 +90,25 @@ If you would like to enable AngularJS HTML5 mode, you have to uncomment 2 lines 
 
 - `src/app/app.js`:
 
->
 ```
 // $locationProvider.html5Mode(true);
 ```
 
 - `server.js`:
 
->
 ```
 // app.use(require('connect-modrewrite')(['!\\.\\w+$ /index.html']));
 ```
 
 In addition, image optimization is turned off by default but in case you need it, don't hesitate to remove comment from the following line in `gulpfile.js`:
 
->
 ```
 // .pipe(plugins.imagemin({ optimizationLevel: 5, progressive: true }))
 ```
 
 ## Known issues
 
-- Outdated libsass in node-sass. This is a main cause of a bug with compiling Twitter Bootstrap SASS to CSS (see [this](https://github.com/andrew/node-sass/issues/233) thread and [this](https://github.com/dlmanning/gulp-sass/issues/1) for details). Not a gulp-sass issue! Temporarily using Ruby version (slower but stable).
+- Outdated libsass in node-sass. This is a main cause of a bug with compiling Twitter Bootstrap SASS to CSS (see [this](https://github.com/andrew/node-sass/issues/233) thread and [this](https://github.com/dlmanning/gulp-sass/issues/1) for details). **Not a gulp-sass issue**! Temporarily using Ruby version (slower but stable).
 
 ## TODO
 
