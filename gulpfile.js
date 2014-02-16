@@ -149,7 +149,7 @@ var fnInject = function (path) {
     return gulp.src(inject.css.concat(inject.js), { read: false })
         .pipe(plugins.inject(path, {
             addRootSlash: false,
-            ignorePath: ['/', 'build/']
+            ignorePath: ['/', config.build + '/']
         }))
         .pipe(gulp.dest(config.build));
 };
@@ -184,6 +184,7 @@ gulp.task('html', ['html:replace'], function () {
 gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:html2js', 'assets:img', 'vendor:js', 'vendor:assets', 'html:inject'], function () {
     require('./server.js')(server);
 
+    // watch for JS changes
     gulp.watch(config.paths.scripts, function (event) {
         if (event.path.lastIndexOf('.js') === event.path.length - 3) {
             if (event.type === 'deleted') {
@@ -197,16 +198,20 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:html2js', 'assets:im
     });
 
     // remove deleted JS files from index.html
-    gulp.watch('build/+(app|common)/**/*.js', function (event) {
+    gulp.watch(config.build + '/+(app|common)/**/*.js', function (event) {
         if (event.type !== 'changed') {
             return fnInject(config.paths.html).pipe(plugins.livereload(server));
         }
     });
 
-    gulp.watch(config.paths.templates, function (event) {
-        return fnHtml2Js(config.paths.templates).pipe(plugins.livereload(server));
+    // watch AngularJS templates to cache
+    gulp.watch(config.app + '/+(app|common)/**', function (event) {
+        if (event.path.lastIndexOf('.tpl.html') === event.path.length - 9) {
+            return fnHtml2Js(config.paths.templates).pipe(plugins.livereload(server));
+        }
     });
 
+    // watch for SASS changes
     gulp.watch(config.paths.sass, function (event) {
         if (event.path.lastIndexOf('.scss') === event.path.length - 5) {
             var files = [

@@ -1,3 +1,10 @@
+# 0.2.1 (2014-02-16)
+
+## Bug Fixes
+
+- **watch:**
+  - fixed caching AngularJS templates
+
 # 0.2.0 (2014-02-15)
 
 ## Features
