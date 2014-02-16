@@ -3,7 +3,7 @@
 ## Bug Fixes
 
 - **watch:**
-  - fixed caching AngularJS templates
+  - fixed caching AngularJS templates ([1e4c989](https://github.com/mariuszm/ng-devstack/commit/1e4c989))
 
 # 0.2.0 (2014-02-15)
 
