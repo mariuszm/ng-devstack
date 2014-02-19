@@ -16,7 +16,7 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 ## Features
 
 - integration with gulp,
-- package management with Bower,l
+- package management with Bower,
 - feature-oriented directory structure,
 - LiveReload fully handled server-side with NodeJS/Express (without installing additional extensions for browsers),
 - watch for file changes (scripts, styles, templates, assets) and apply them to the project on the fly,
