@@ -177,11 +177,39 @@ gulp.task('html', ['html:replace'], function () {
 
 
 
+// Karma
+// ============
+var testFiles = [
+    config.build + '/vendor/**/*.js',
+    config.build + '/+(app|common)/**/*.js',
+    config.mocks,
+    config.paths.tests
+];
+
+gulp.task('test:run', ['vendor:assets'] , function() {
+  // Be sure to return the stream
+  return gulp.src(testFiles)
+    .pipe(plugins.karma({
+      configFile: 'karma.conf.js',
+      action: 'run'
+    }));
+});
+
+gulp.task('test:watch', ['vendor:assets'], function() {
+  gulp.src(testFiles)
+    .pipe(plugins.karma({
+      configFile: 'karma.conf.js',
+      action: 'watch'
+    }));
+});
+
+
+
 // Set up Watch
 // ============
 
 // Add files to Watch
-gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:html2js', 'assets:img', 'vendor:js', 'vendor:assets', 'html:inject'], function () {
+gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:html2js', 'assets:img', 'vendor:js', 'vendor:assets', 'test:watch', 'html:inject'], function () {
     require('./server.js')(server);
 
     // watch for JS changes
@@ -253,7 +281,7 @@ gulp.task('clean', function () {
 // ===============
 
 gulp.task('build', ['clean'], function () {
-    gulp.start('styles:sass', 'scripts:lint', 'scripts:html2js', 'vendor:js', 'vendor:assets', 'assets:img', 'html:inject');
+    gulp.start('styles:sass', 'scripts:lint', 'scripts:html2js', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
 });
 
 gulp.task('compile', ['build'], function () {
