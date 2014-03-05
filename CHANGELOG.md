@@ -1,3 +1,18 @@
+# 0.2.2 (2014-03-05)
+
+## Features
+
+- added Karma ([58edb91](https://github.com/mariuszm/ng-devstack/commit/58edb91))
+
+## Bug Fixes
+
+- **templates:**
+  - fixed compiling cached AngularJS templates ([717575b](https://github.com/mariuszm/ng-devstack/commit/717575b))
+- **misc:**
+  - removed base tag since AngularJS HTML5 mode is disabled by default ([0758344](https://github.com/mariuszm/ng-devstack/commit/0758344))
+  - added UI Bootstrap's Collapse plugin into example app's navbar ([717575b](https://github.com/mariuszm/ng-devstack/commit/717575b))
+  - updated packages as well as gulp plugins ([717575b](https://github.com/mariuszm/ng-devstack/commit/717575b))
+
 # 0.2.1 (2014-02-16)
 
 ## Bug Fixes
