@@ -1,17 +1,19 @@
 'use strict';
 
 angular.module('ngDevstack', [
-    'templates',
+    'ngDevstack.templates',
     'ngDevstack.conf',
     'ngDevstack.home',
     'ngDevstack.about',
+    'ui.bootstrap',
     'ui.router'
 ])
 
-.config(function ($urlRouterProvider, $locationProvider, $stateProvider) {
+.config(function ($urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');
     // Please enable mod rewrite in server.js when html5Mode is enabled.
+    // Don't forget to inject $locationProvider.
     // $locationProvider.html5Mode(true);
 
 
@@ -41,6 +43,9 @@ angular.module('ngDevstack', [
 })
 
 .controller('AppCtrl', function ($rootScope, $scope) {
+
+    // handling UI Bootstrap Collapse plugin
+    $scope.isCollapsed = true;
 
     $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         if (angular.isDefined(toState.data.pageTitle)) {

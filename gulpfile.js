@@ -65,28 +65,29 @@ gulp.task('vendor:assets', function () {
 // ==================
 
 // Cache AngularJS templates
-var fnHtml2Js = function (path) {
+var fnCacheTpls = function (path) {
     return gulp.src(path)
         .pipe(plugins.minifyHtml({
             empty: true,
             spare: true,
             quotes: true
         }))
-        .pipe(plugins.ngHtml2js({
-            moduleName: 'templates'
+        .pipe(plugins.angularTemplatecache({
+            module: 'ngDevstack.templates',
+            standalone: true
         }))
-        .pipe(plugins.concat('app-templates.js'))
+        .pipe(plugins.concat('templates.js'))
         .pipe(gulp.dest(config.build + '/app'));
 };
-gulp.task('scripts:html2js', function () {
-    return fnHtml2Js(config.paths.templates);
+gulp.task('scripts:cacheTpls', function () {
+    return fnCacheTpls(config.paths.templates);
 });
 
 // Check JavaScript code quality with JSHint
 var fnLint = function (path) {
     return gulp.src(path, { base: config.app })
         .pipe(plugins.plumber())
-        .pipe(plugins.jshint('.jshintrc'))
+        .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter('default'))
         .pipe(gulp.dest(config.build));
 };
@@ -95,14 +96,14 @@ gulp.task('scripts:lint', function () {
 });
 
 // Concat and minify JavaScript
-gulp.task('scripts', ['scripts:lint', 'scripts:html2js', 'vendor:js'], function () {
-    var arr = (config.vendor_files.js).concat(config.paths.scripts);
+gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], function () {
+    var arr = (config.vendor_files.js).concat(config.paths.scripts, config.build + '/app/templates.js');
     return gulp.src(arr)
         .pipe(plugins.concat('main.js'))
         .pipe(plugins.bytediff.start())
         .pipe(plugins.ngmin())
-        .pipe(plugins.uglify())
         .pipe(plugins.removelogs())
+        .pipe(plugins.uglify())
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.bytediff.stop())
         .pipe(gulp.dest(config.dist + '/assets'));
@@ -153,7 +154,7 @@ var fnInject = function (path) {
         }))
         .pipe(gulp.dest(config.build));
 };
-gulp.task('html:inject', ['styles:sass', 'scripts:lint', 'scripts:html2js'], function () {
+gulp.task('html:inject', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls'], function () {
     return fnInject(config.paths.html);
 });
 
@@ -209,7 +210,7 @@ gulp.task('test:watch', ['vendor:assets'], function() {
 // ============
 
 // Add files to Watch
-gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:html2js', 'assets:img', 'vendor:js', 'vendor:assets', 'test:watch', 'html:inject'], function () {
+gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'vendor:js', 'vendor:assets', 'test:watch', 'html:inject'], function () {
     require('./server.js')(server);
 
     // watch for JS changes
@@ -235,7 +236,7 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:html2js', 'assets:im
     // watch AngularJS templates to cache
     gulp.watch(config.app + '/+(app|common)/**', function (event) {
         if (event.path.lastIndexOf('.tpl.html') === event.path.length - 9) {
-            return fnHtml2Js(config.paths.templates).pipe(plugins.livereload(server));
+            return fnCacheTpls(config.paths.templates).pipe(plugins.livereload(server));
         }
     });
 
@@ -281,7 +282,7 @@ gulp.task('clean', function () {
 // ===============
 
 gulp.task('build', ['clean'], function () {
-    gulp.start('styles:sass', 'scripts:lint', 'scripts:html2js', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
+    gulp.start('styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
 });
 
 gulp.task('compile', ['build'], function () {
