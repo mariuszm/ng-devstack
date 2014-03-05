@@ -4,17 +4,21 @@
     "dist"  : "dist",
 
     "paths" : {
-        "scripts"   : "src/+(app|common)/**/*.js",
-        "templates" : [
+        "scripts": [
+          "src/+(app|common)/**/*.js",
+          "!src/+(app|common)/**/*.spec.js"
+        ],
+        "templates": [
             "src/app/**/*.tpl.html",
             "src/common/**/*.tpl.html"
         ],
         "sass"   : "src/+(sass|app|common)/**/*",
         "assets" : "src/assets/**",
-        "html"   : "src/index.html"
+        "html"   : "src/index.html",
+        "tests"  : "src/+(app|common)/**/*.spec.js"
     },
 
-    "vendor_files" : {
+    "vendor_files": {
         "js": [
             "vendor/angular/angular.js",
             "vendor/angular-ui-router/release/angular-ui-router.js",
@@ -25,5 +29,7 @@
         "assets": [
             "vendor/bootstrap-sass-official/vendor/assets/fonts/**/*"
         ]
-    }
+    },
+
+    "mocks": "vendor/angular-mocks/angular-mocks.js"
 }
