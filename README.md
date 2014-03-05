@@ -1,4 +1,4 @@
-# ng-devstack v0.2.1
+# ng-devstack v0.2.2
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -90,7 +90,7 @@ Vendor files downloaded with Bower can be added to project by editing `'vendor_f
 
 If you would like to enable AngularJS HTML5 mode, you have to uncomment 2 lines in `src/app/app.js` and `server.js`:
 
-- `src/app/app.js`:
+- `src/app/app.js` (don't forget to inject `$locationProvider`):
 
 >
 ```sh
@@ -121,5 +121,4 @@ In addition, image optimization is turned off by default but in case you need it
 - add support for external sources in vendor files (http://*)
 - add source maps support for SASS & JS
 - add authorization service
-- add E2E testing (Karma/Protractor)
 - improve images/SVG optimization
