@@ -1,6 +1,7 @@
 /* jshint strict: false */
 
 var gulp    = require('gulp'),
+    map     = require('map-stream'),
     plugins = require('gulp-load-plugins')(),
     server  = require('tiny-lr')(),
     config  = require('./config.json');
@@ -88,7 +89,13 @@ var fnLint = function (path) {
     return gulp.src(path, { base: config.app })
         .pipe(plugins.plumber())
         .pipe(plugins.jshint())
-        .pipe(plugins.jshint.reporter('default'))
+        .pipe(plugins.jshint.reporter('jshint-stylish'))
+        .pipe(map(function (file, cb) {
+            if (!file.jshint.success) {
+                process.exit(1);
+            }
+            cb(null, file);
+        }))
         .pipe(gulp.dest(config.build));
 };
 gulp.task('scripts:lint', function () {
