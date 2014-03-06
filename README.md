@@ -4,7 +4,7 @@
 
 ## Why ng-devstack?
 
-This project has been inspired by another great concept [ngBoilerplate](http://joshdmiller.github.io/ng-boilerplate/), allowing to create modern web applications in AngularJS. It follows all the best practices introduced in ngBoilerplate such as component/feature-oriented directory structure, intelligent build system, etc. However, I decided to improve it a little bit and create my own boilerplate from scratch since I missed some basic features like:
+This project has been inspired by another great concept [ngBoilerplate](http://joshdmiller.github.io/ng-boilerplate/), allowing to create modern web applications in [AngularJS](http://angularjs.org/). It follows all the best practices introduced in ngBoilerplate such as component/feature-oriented directory structure, intelligent build system, etc. However, I decided to improve it a little bit and create my own boilerplate from scratch since I missed some basic features like:
 
 - watch for any file changes and apply them to the project in real-time,
 - image optimization,
@@ -15,20 +15,21 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 
 ## Features
 
-- integration with gulp,
-- package management with Bower,
+- integration with [gulp](http://gulpjs.com/),
+- package management with [Bower](http://bower.io/),
 - feature-oriented directory structure,
+- unit testing with Karma,
 - LiveReload fully handled server-side with NodeJS/Express (without installing additional extensions for browsers),
 - watch for file changes (scripts, styles, templates, assets) and apply them to the project on the fly,
 - caching AngularJS templates to avoid additional server requests,
 - pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,
-- support for SASS (including Twitter Bootstrap official port to SASS),
+- support for SASS (including Twitter Bootstrap [official SASS port](http://getbootstrap.com/css/#sass)),
 - support for JSHint,
 - JS/CSS/HTML minification,
 - remove logging (`console.log()`, etc.) from compiled JS code,
 - image optimization (see [Additional Info](#additional-info) for details),
 - `html5Mode` support (see [Additional Info](#additional-info) for details),
-- integration with AngularUI Router & AngularUI Bootstrap.
+- integration with [UI Router](http://angular-ui.github.io/ui-router/) & [UI Bootstrap](http://angular-ui.github.io/bootstrap/).
 
 ## Requirements
 
