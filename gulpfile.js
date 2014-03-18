@@ -85,13 +85,13 @@ gulp.task('scripts:cacheTpls', function () {
 });
 
 // Check JavaScript code quality with JSHint
-var fnLint = function (path) {
+var fnLint = function (path, exitOnError) {
     return gulp.src(path, { base: config.app })
         .pipe(plugins.plumber())
         .pipe(plugins.jshint())
         .pipe(plugins.jshint.reporter('jshint-stylish'))
         .pipe(map(function (file, cb) {
-            if (!file.jshint.success) {
+            if (!file.jshint.success && exitOnError) {
                 process.exit(1);
             }
             cb(null, file);
@@ -99,7 +99,7 @@ var fnLint = function (path) {
         .pipe(gulp.dest(config.build));
 };
 gulp.task('scripts:lint', function () {
-    return fnLint(config.paths.scripts);
+    return fnLint(config.paths.scripts, true);
 });
 
 // Concat and minify JavaScript
@@ -200,7 +200,10 @@ gulp.task('test:run', ['vendor:assets'] , function() {
     .pipe(plugins.karma({
       configFile: 'karma.conf.js',
       action: 'run'
-    }));
+    }))
+    .on('error', function(err) {
+      process.exit(1);
+    });
 });
 
 gulp.task('test:watch', ['vendor:assets'], function() {
