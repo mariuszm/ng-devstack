@@ -29,7 +29,6 @@
     "gulp-newer": "^0.3.0",
     "gulp-ngmin": "^0.2.0",
     "gulp-plumber": "^0.5.6",
-    "gulp-removelogs": "0.0.2",
     "gulp-rename": "^1.2.0",
     "gulp-rimraf": "0.0.9",
     "gulp-sass": "^0.7.1",

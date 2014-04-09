@@ -109,8 +109,11 @@ gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], functio
         .pipe(plugins.concat('main.js'))
         .pipe(plugins.bytediff.start())
         .pipe(plugins.ngmin())
-        .pipe(plugins.removelogs())
-        .pipe(plugins.uglify())
+        .pipe(plugins.uglify({
+            compress: {
+                drop_console: true
+            }
+        }))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.bytediff.stop())
         .pipe(gulp.dest(config.dist + '/assets'));
