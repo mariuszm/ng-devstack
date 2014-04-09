@@ -194,24 +194,24 @@ var testFiles = [
     config.paths.tests
 ];
 
-gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets'] , function() {
-  // Be sure to return the stream
-  return gulp.src(testFiles)
-    .pipe(plugins.karma({
-      configFile: 'karma.conf.js',
-      action: 'run'
-    }))
-    .on('error', function(err) {
-      process.exit(1);
-    });
+gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets'] , function () {
+    // Be sure to return the stream
+    return gulp.src(testFiles)
+        .pipe(plugins.karma({
+            configFile: 'karma.conf.js',
+            action: 'run'
+        }))
+        .on('error', function (err) {
+            process.exit(1);
+        });
 });
 
-gulp.task('test:watch', ['vendor:assets'], function() {
-  gulp.src(testFiles)
-    .pipe(plugins.karma({
-      configFile: 'karma.conf.js',
-      action: 'watch'
-    }));
+gulp.task('test:watch', ['vendor:assets'], function () {
+    gulp.src(testFiles)
+        .pipe(plugins.karma({
+            configFile: 'karma.conf.js',
+            action: 'watch'
+        }));
 });
 
 
