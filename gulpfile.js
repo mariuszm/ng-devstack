@@ -194,7 +194,7 @@ var testFiles = [
     config.paths.tests
 ];
 
-gulp.task('test:run', ['vendor:assets'] , function() {
+gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets'] , function() {
   // Be sure to return the stream
   return gulp.src(testFiles)
     .pipe(plugins.karma({
