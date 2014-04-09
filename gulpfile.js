@@ -17,7 +17,7 @@ var fnSass = function (path) {
         .pipe(plugins.plumber())
         .pipe(plugins.filesize())    // .pipe(plugins.size({ showFiles: true }))
         .pipe(plugins.concat('main.scss'))
-        .pipe(plugins.rubySass({ style: 'expanded' }))
+        .pipe(plugins.sass())
         .pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
         .pipe(plugins.filesize())    // .pipe(plugins.size({ showFiles: true }))
         .pipe(gulp.dest(config.build + '/assets'));

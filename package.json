@@ -32,7 +32,7 @@
     "gulp-removelogs": "0.0.2",
     "gulp-rename": "^1.2.0",
     "gulp-rimraf": "0.0.9",
-    "gulp-ruby-sass": "^0.4.1",
+    "gulp-sass": "^0.7.1",
     "gulp-size": "^0.3.0",
     "gulp-uglify": "^0.2.1",
     "gulp-util": "^2.2.14",
@@ -47,6 +47,7 @@
     "karma-requirejs": "^0.2.1",
     "karma-script-launcher": "^0.1.0",
     "map-stream": "^0.1.0",
+    "node-sass": "^0.8.4",
     "open": "0.0.4",
     "requirejs": "^2.1.11",
     "tiny-lr": "0.0.5"
