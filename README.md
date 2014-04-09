@@ -1,4 +1,4 @@
-# ng-devstack v0.2.2
+# ng-devstack v0.2.3
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -33,31 +33,24 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 
 ## Requirements
 
-- Ruby
 - NodeJS
 - Bower
 
 ## Installation
 
-**1.** Install SASS:
-
-```sh
-$ gem install sass
-```
-
-**2.** Install gulp globally, which is giving access to gulp's CLI:
+**1.** Install gulp globally, which is giving access to gulp's CLI:
 
 ```sh
 $ npm install gulp -g
 ```
 
-**3.** Install gulp locally to the project with other required plugins:
+**2.** Install gulp locally to the project with other required plugins:
 
 ```sh
 $ npm install
 ```
 
-**4.** Install required libraries:
+**3.** Install required libraries:
 
 ```sh
 $ bower install
@@ -112,13 +105,8 @@ In addition, image optimization is turned off by default but in case you need it
 // .pipe(plugins.imagemin({ optimizationLevel: 5, progressive: true }))
 ```
 
-## Known issues
-
-- Outdated libsass in node-sass. This is a main cause of a bug with compiling Twitter Bootstrap SASS to CSS (see [this](https://github.com/andrew/node-sass/issues/233) thread and [this](https://github.com/dlmanning/gulp-sass/issues/1) for details). **Not a gulp-sass issue**! Temporarily using Ruby version (slower but stable).
-
 ## TODO
 
-- replace Ruby SASS compiler with NodeJS equivalent
 - add support for external sources in vendor files (http://*)
 - add source maps support for SASS & JS
 - add authorization service
