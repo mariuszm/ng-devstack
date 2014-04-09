@@ -1,6 +1,6 @@
 {
   "name": "ng-devstack",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "devDependencies": {
     "angular": "~1.2.16",
     "angular-bootstrap": "~0.10.0",

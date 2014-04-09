@@ -1,7 +1,7 @@
 {
   "author": "Mariusz Michalski",
   "name": "ng-devstack",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "licenses": {
     "type": "MIT",
     "url": "https://raw2.github.com/mariuszm/ng-devstack/master/LICENSE.md"

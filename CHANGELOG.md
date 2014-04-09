@@ -1,3 +1,23 @@
+# 0.2.3 (2014-04-09)
+
+## Features
+
+- **jshint:**
+  - updated stylish plugin to customize colors ([30e7abd](https://github.com/mariuszm/ng-devstack/commit/30e7abd))
+- **sass:**
+  - replaced Ruby compiler with faster node-sass ([03a6f48](https://github.com/mariuszm/ng-devstack/commit/03a6f48))
+- **build:**
+  - removing logs is done by UglifyJS without external plugins ([1708b09](https://github.com/mariuszm/ng-devstack/commit/1708b09))
+  - fixed formatting ([a838821](https://github.com/mariuszm/ng-devstack/commit/a838821))
+- **misc:**
+  - updated libraries ([c0f56ca](https://github.com/mariuszm/ng-devstack/commit/c0f56ca))
+  - updated docs to v0.2.3 ([f09ef36](https://github.com/mariuszm/ng-devstack/commit/f09ef36))
+
+## Bug Fixes
+
+- **build:**
+  - fixed running Karma after updating to latest version ([3ca9c55](https://github.com/mariuszm/ng-devstack/commit/3ca9c55))
+
 # 0.2.2 (2014-03-05)
 
 ## Features
