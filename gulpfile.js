@@ -151,7 +151,7 @@ gulp.task('assets', ['assets:img', 'vendor:assets'], function () {
 var fnInject = function (path) {
     var inject = {
         css : (config.vendor_files.css).concat(config.build + '/assets/*.css'),
-        js  : (config.vendor_files.js).concat(config.build + '/+(app|common)/**/*.js')
+        js  : (config.vendor_files.js).concat(config.build + '/+(app|common)/**/*.module.js').concat(config.build + '/+(app|common)/**/*.js')
     };
 
     return gulp.src(inject.css.concat(inject.js), { read: false })
@@ -189,6 +189,7 @@ gulp.task('html', ['html:replace'], function () {
 // ============
 var testFiles = [
     config.build + '/vendor/**/*.js',
+    config.build + '/+(app|common)/**/*.module.js',
     config.build + '/+(app|common)/**/*.js',
     config.mocks,
     config.paths.tests

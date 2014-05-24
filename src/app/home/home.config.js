@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('ngDevstack.home', [
-    'ui.router'
-])
+angular.module('ngDevstack.home')
 
 .config(function ($stateProvider) {
     $stateProvider.state('home', {
@@ -19,5 +17,4 @@ angular.module('ngDevstack.home', [
     });
 })
 
-.controller('HomeCtrl', function ($scope) {
-});
+;
