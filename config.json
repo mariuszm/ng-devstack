@@ -5,6 +5,7 @@
 
     "paths" : {
         "scripts": [
+          "src/+(app|common)/**/*.module.js",
           "src/+(app|common)/**/*.js",
           "!src/+(app|common)/**/*.spec.js"
         ],

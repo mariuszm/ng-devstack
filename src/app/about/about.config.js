@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('ngDevstack.about', [
-    'ui.router'
-])
+angular.module('ngDevstack.about')
 
 .config(function ($stateProvider) {
     $stateProvider.state('about', {
@@ -19,5 +17,4 @@ angular.module('ngDevstack.about', [
     });
 })
 
-.controller('AboutCtrl', function ($scope) {
-});
+;
