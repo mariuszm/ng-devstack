@@ -1,4 +1,4 @@
-# ng-devstack v0.2.3
+# ng-devstack v0.2.4
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -21,9 +21,11 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 - unit testing with Karma,
 - LiveReload fully handled server-side with NodeJS/Express (without installing additional extensions for browsers),
 - watch for file changes (scripts, styles, templates, assets) and apply them to the project on the fly,
+- each AngularJS module separated into separate file (much more suited for bigger applications),
 - caching AngularJS templates to avoid additional server requests,
 - pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,
 - support for SASS (including Twitter Bootstrap [official SASS port](http://getbootstrap.com/css/#sass)),
+- support for SASS source maps,
 - support for JSHint,
 - JS/CSS/HTML minification,
 - remove logging (`console.log()`, etc.) from compiled JS code,
@@ -108,6 +110,5 @@ In addition, image optimization is turned off by default but in case you need it
 ## TODO
 
 - add support for external sources in vendor files (http://*)
-- add source maps support for SASS & JS
 - add authorization service
 - improve images/SVG optimization
