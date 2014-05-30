@@ -1,3 +1,22 @@
+# 0.2.4 (2014-05-30)
+
+## Features
+
+- **modules:**
+  - create modularized structure of ng-devstack ([607e713](https://github.com/mariuszm/ng-devstack/commit/607e713))
+- **sass:**
+  - added source maps support ([460fb99](https://github.com/mariuszm/ng-devstack/commit/460fb99))
+- **build:**
+  - updated build process log messages ([965f4ca](https://github.com/mariuszm/ng-devstack/commit/965f4ca))
+- **misc:**
+  - updated libraries ([c900208](https://github.com/mariuszm/ng-devstack/commit/c900208))
+  - updated docs to v0.2.4 ([53fdd40](https://github.com/mariuszm/ng-devstack/commit/53fdd40))
+
+## Bug Fixes
+
+- **build:**
+  - fixed running Autoprefixer on CSS file with source maps ([d4299b4](https://github.com/mariuszm/ng-devstack/commit/d4299b4))
+
 # 0.2.3 (2014-04-09)
 
 ## Features
