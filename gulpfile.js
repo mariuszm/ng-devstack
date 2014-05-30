@@ -16,11 +16,15 @@ var fnSass = function (path) {
     return gulp.src(path)
         .pipe(plugins.plumber())
         .pipe(plugins.filesize())    // .pipe(plugins.size({ showFiles: true }))
-        .pipe(plugins.concat('main.scss'))
         .pipe(plugins.sass({
             sourceComments: 'map'
         }))
-        .pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+        .pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4', {
+            map: true,
+            from: 'main.css',
+            to: 'main.css'
+        }))
+        .pipe(plugins.concat('main.css'))
         .pipe(plugins.filesize())    // .pipe(plugins.size({ showFiles: true }))
         .pipe(gulp.dest(config.build + '/assets'));
 };
