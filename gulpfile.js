@@ -15,7 +15,7 @@ var gulp    = require('gulp'),
 var fnSass = function (path) {
     return gulp.src(path)
         .pipe(plugins.plumber())
-        .pipe(plugins.filesize())    // .pipe(plugins.size({ showFiles: true }))
+        .pipe(plugins.size({ showFiles: true, title: '[SASS]' }))
         .pipe(plugins.sass({
             sourceComments: 'map'
         }))
@@ -25,7 +25,6 @@ var fnSass = function (path) {
             to: 'main.css'
         }))
         .pipe(plugins.concat('main.css'))
-        .pipe(plugins.filesize())    // .pipe(plugins.size({ showFiles: true }))
         .pipe(gulp.dest(config.build + '/assets'));
 };
 gulp.task('styles:sass', function () {
@@ -36,10 +35,10 @@ gulp.task('styles:sass', function () {
 // Minify CSS
 gulp.task('styles', ['styles:sass'], function () {
     return gulp.src(config.build + '/assets/*.css')
-        .pipe(plugins.bytediff.start())
+        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
         .pipe(plugins.minifyCss({ keepSpecialComments: 0 }))
         .pipe(plugins.rename({ suffix: '.min' }))
-        .pipe(plugins.bytediff.stop())
+        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
         .pipe(gulp.dest(config.dist + '/assets'));
 });
 
@@ -113,7 +112,7 @@ gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], functio
     var arr = (config.vendor_files.js).concat(config.paths.scripts, config.build + '/app/templates.js');
     return gulp.src(arr)
         .pipe(plugins.concat('main.js'))
-        .pipe(plugins.bytediff.start())
+        .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
         .pipe(plugins.ngmin())
         .pipe(plugins.uglify({
             compress: {
@@ -121,7 +120,7 @@ gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], functio
             }
         }))
         .pipe(plugins.rename({ suffix: '.min' }))
-        .pipe(plugins.bytediff.stop())
+        .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
         .pipe(gulp.dest(config.dist + '/assets'));
 });
 
