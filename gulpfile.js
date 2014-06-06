@@ -4,7 +4,8 @@ var gulp    = require('gulp'),
     map     = require('map-stream'),
     plugins = require('gulp-load-plugins')(),
     server  = require('tiny-lr')(),
-    config  = require('./config.json');
+    config  = require('./config.json'),
+    pkg     = require('./package.json');
 
 
 
@@ -21,10 +22,10 @@ var fnSass = function (path) {
         }))
         .pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4', {
             map: true,
-            from: 'main.css',
-            to: 'main.css'
+            from: pkg.name + '-' + pkg.version + '.css',
+            to: pkg.name + '-' + pkg.version + '.css'
         }))
-        .pipe(plugins.concat('main.css'))
+        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.css'))
         .pipe(gulp.dest(config.build + '/assets'));
 };
 gulp.task('styles:sass', function () {
@@ -79,7 +80,7 @@ var fnCacheTpls = function (path) {
             quotes: true
         }))
         .pipe(plugins.angularTemplatecache({
-            module: 'ngDevstack.templates',
+            module: pkg.name + '.templates',
             standalone: true
         }))
         .pipe(plugins.concat('templates.js'))
@@ -111,7 +112,7 @@ gulp.task('scripts:lint', function () {
 gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], function () {
     var arr = (config.vendor_files.js).concat(config.paths.scripts, config.build + '/app/templates.js');
     return gulp.src(arr)
-        .pipe(plugins.concat('main.js'))
+        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.js'))
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
         .pipe(plugins.ngmin())
         .pipe(plugins.uglify({
@@ -177,8 +178,8 @@ gulp.task('html:inject', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls'], f
 gulp.task('html:replace', ['html:inject'], function () {
     return gulp.src(config.build + '/index.html')
         .pipe(plugins.htmlReplace({
-            css: 'assets/main.min.css',
-            js: 'assets/main.min.js'
+            css: 'assets/' + pkg.name + '-' + pkg.version + '.min.css',
+            js: 'assets/' + pkg.name + '-' + pkg.version + '.min.js'
         }))
         .pipe(gulp.dest(config.dist));
 });
