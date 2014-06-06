@@ -20,6 +20,10 @@ var fnSass = function (path) {
         .pipe(plugins.sass({
             sourceComments: 'map'
         }))
+        .on('error', function (err) {
+            console.log(err.message);
+            process.exit(1);
+        })
         .pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4', {
             map: true,
             from: pkg.name + '-' + pkg.version + '.css',
@@ -28,8 +32,18 @@ var fnSass = function (path) {
         .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.css'))
         .pipe(gulp.dest(config.build + '/assets'));
 };
-gulp.task('styles:sass', function () {
-    var files = [config.app + '/sass/main.scss', config.app + '/common/**/*.scss', config.app + '/app/**/*.scss'];
+gulp.task('styles:sass:imports', function () {
+    var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss'];
+    return gulp.src(files, { read: false })
+        .pipe(plugins.intercept(function (file) {
+            file.contents = new Buffer('@import \'' + file.path + '\';');
+            return file;
+        }))
+        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.scss'))
+        .pipe(gulp.dest(config.build + '/assets'));
+});
+gulp.task('styles:sass', ['styles:sass:imports'], function () {
+    var files = config.build + '/assets/' + pkg.name + '-' + pkg.version + '.scss';
     return fnSass(files);
 });
 
