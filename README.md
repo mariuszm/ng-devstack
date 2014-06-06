@@ -1,4 +1,4 @@
-# ng-devstack v0.2.4
+# ng-devstack v0.2.5
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -80,7 +80,7 @@ $ gulp
 
 ## Additional info
 
-All styles (as well as scripts and templates) added to `src/app/` and `src/common/` should be included to the project automatically - except to `src/sass/` folder. Files put into `src/sass/` must be manually imported in `src/sass/main.scss` file (you may want to set custom order for loading your styles). If files located in `src/sass/` are not imported in `src/sass/main.scss`, they will not work!
+All styles (as well as scripts and templates) added to `src/app/` and `src/common/` should be included to the project automatically - with a small difference to `src/sass/` folder. Partials SASS files (such as variables, mixins, etc.) put into `src/sass/includes/` must be manually imported in `src/sass/_includes.scss` file (you may want to set custom order for loading your styles). Partials located in `src/sass/_includes/` should be named with a leading underscore `_`, so the compiler knows not to generate them into a CSS file (see [SASS official site](http://sass-lang.com/guide#topic-4) for details).
 
 Vendor files downloaded with Bower can be added to project by editing `'vendor_files'` section in `config.json` file. The rest of this file should remain unchanged.
 
@@ -104,11 +104,12 @@ In addition, image optimization is turned off by default but in case you need it
 
 >
 ```sh
-// .pipe(plugins.imagemin({ optimizationLevel: 5, progressive: true }))
+// .pipe(plugins.imagemin({ optimizationLevel: 7, progressive: true, interlaced: true }))
 ```
 
 ## TODO
 
 - add support for external sources in vendor files (http://*)
+- substitute local vendor files with CDN resources
 - add authorization service
 - improve images/SVG optimization

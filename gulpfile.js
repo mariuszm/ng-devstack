@@ -169,7 +169,7 @@ gulp.task('assets', ['assets:img', 'vendor:assets'], function () {
         .pipe(plugins.plumber())
         // .pipe(plugins.bytediff.start())
         .pipe(plugins.newer(config.dist + '/assets'))
-        // .pipe(plugins.imagemin({ optimizationLevel: 5, progressive: true }))
+        // .pipe(plugins.imagemin({ optimizationLevel: 7, progressive: true, interlaced: true }))
         // .pipe(plugins.bytediff.stop())
         .pipe(gulp.dest(config.dist + '/assets'));
 });
