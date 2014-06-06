@@ -16,7 +16,6 @@ var gulp    = require('gulp'),
 var fnSass = function (path) {
     return gulp.src(path)
         .pipe(plugins.plumber())
-        .pipe(plugins.size({ showFiles: true, title: '[SASS]' }))
         .pipe(plugins.sass({
             sourceComments: 'map'
         }))
@@ -29,6 +28,7 @@ var fnSass = function (path) {
             from: pkg.name + '-' + pkg.version + '.css',
             to: pkg.name + '-' + pkg.version + '.css'
         }))
+        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
         .pipe(gulp.dest(config.build + '/assets'));
 };
 gulp.task('styles:sass:imports', function () {
