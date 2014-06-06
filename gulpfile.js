@@ -29,7 +29,6 @@ var fnSass = function (path) {
             from: pkg.name + '-' + pkg.version + '.css',
             to: pkg.name + '-' + pkg.version + '.css'
         }))
-        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.css'))
         .pipe(gulp.dest(config.build + '/assets'));
 };
 gulp.task('styles:sass:imports', function () {
@@ -48,9 +47,10 @@ gulp.task('styles:sass', ['styles:sass:imports'], function () {
 });
 
 // Minify CSS
-gulp.task('styles', ['styles:sass'], function () {
-    return gulp.src(config.build + '/assets/*.css')
-        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
+gulp.task('styles', ['styles:sass', 'vendor:css'], function () {
+    var arr = (config.vendor_files.css).concat(config.build + '/assets/' + pkg.name + '-' + pkg.version + '.css');
+    return gulp.src(arr)
+        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.css'))
         .pipe(plugins.minifyCss({ keepSpecialComments: 0 }))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
@@ -68,6 +68,15 @@ gulp.task('vendor:js', function () {
         return;
     }
     return gulp.src(config.vendor_files.js, { base: '.' })
+        .pipe(gulp.dest(config.build));
+});
+
+// Copy vendor css to /build/
+gulp.task('vendor:css', function () {
+    if (!config.vendor_files.css.length) {
+        return;
+    }
+    return gulp.src(config.vendor_files.css, { base: '.' })
         .pipe(gulp.dest(config.build));
 });
 
@@ -244,7 +253,7 @@ gulp.task('test:watch', ['vendor:assets'], function () {
 // ============
 
 // Add files to Watch
-gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'vendor:js', 'vendor:assets', 'test:watch', 'html:inject'], function () {
+gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:watch', 'html:inject'], function () {
     require('./server.js')(server);
 
     // watch for JS changes
@@ -313,7 +322,7 @@ gulp.task('clean', function () {
 // ===============
 
 gulp.task('build', ['clean'], function () {
-    gulp.start('styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
+    gulp.start('styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
 });
 
 gulp.task('compile', ['build'], function () {
