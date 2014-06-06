@@ -1,3 +1,27 @@
+# 0.2.5 (2014-06-06)
+
+## Features
+
+- **tests:**
+  - running tests after build process has ended ([c7ed424](https://github.com/mariuszm/ng-devstack/commit/c7ed424))
+- **build:**
+  - separate tasks for cleaning build & dist versions ([3e188fb](https://github.com/mariuszm/ng-devstack/commit/3e188fb))
+  - improved messaging for SASS compilation task ([7b9ab85](https://github.com/mariuszm/ng-devstack/commit/7b9ab85))
+- **misc:**
+  - updated file structure ([b0eb32b](https://github.com/mariuszm/ng-devstack/commit/b0eb32b))
+  - file naming based on `package.json` ([f568bd0](https://github.com/mariuszm/ng-devstack/commit/f568bd0))
+  - update dependencies in NPM (`package.json`) ([dfa11d5](https://github.com/mariuszm/ng-devstack/commit/dfa11d5))
+  - updated docs to v0.2.5 ([ff65504](https://github.com/mariuszm/ng-devstack/commit/ff65504))
+
+## Bug Fixes
+
+- **build:**
+  - fixed adding vendor CSS files to project ([882c685](https://github.com/mariuszm/ng-devstack/commit/882c685))
+- **sass:**
+  - fixed compiling SASS to CSS with source maps ([f57221f](https://github.com/mariuszm/ng-devstack/commit/f57221f))
+- **watch:**
+  - fixed watching for SASS changes ([9ee7b82](https://github.com/mariuszm/ng-devstack/commit/9ee7b82))
+
 # 0.2.4 (2014-05-30)
 
 ## Features
