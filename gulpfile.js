@@ -275,12 +275,9 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
     });
 
     // watch for SASS changes
-    gulp.watch(config.paths.sass, function (event) {
+    gulp.watch(config.paths.sass, ['styles:sass:imports'], function (event) {
         if (event.path.lastIndexOf('.scss') === event.path.length - 5) {
-            var files = [
-                config.app + '/sass/main.scss',
-                config.app + '/+(app|common)/**/*.scss'
-            ];
+            var files = config.build + '/assets/' + pkg.name + '-' + pkg.version + '.scss';
             return fnSass(files).pipe(plugins.livereload(server));
         }
     });
