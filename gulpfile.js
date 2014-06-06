@@ -311,8 +311,12 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
 // Clean up development & production directories
 // =============================================
 
-gulp.task('clean', function () {
-    return gulp.src([config.build, config.dist], { read: false })
+gulp.task('clean:build', function () {
+    return gulp.src(config.build, { read: false })
+        .pipe(plugins.rimraf());
+});
+gulp.task('clean:compile', function () {
+    return gulp.src(config.dist, { read: false })
         .pipe(plugins.rimraf());
 });
 
@@ -321,11 +325,11 @@ gulp.task('clean', function () {
 // Main gulp tasks
 // ===============
 
-gulp.task('build', ['clean'], function () {
+gulp.task('build', ['clean:build'], function () {
     gulp.start('styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
 });
 
-gulp.task('compile', ['build'], function () {
+gulp.task('compile', ['clean:compile', 'build'], function () {
     gulp.start('styles', 'scripts', 'assets', 'html');
 });
 
