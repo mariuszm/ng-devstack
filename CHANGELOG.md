@@ -1,3 +1,13 @@
+# 0.2.6 (2014-06-08)
+
+## Features
+
+- **tests:**
+  - replaced Chrome with faster PhantomJS ([5edf044](https://github.com/mariuszm/ng-devstack/commit/5edf044))
+- **misc:**
+  - update dependencies in NPM (`package.json`) ([c5de3b1](https://github.com/mariuszm/ng-devstack/commit/c5de3b1))
+  - updated docs to v0.2.6 ([363bd9d](https://github.com/mariuszm/ng-devstack/commit/363bd9d))
+
 # 0.2.5 (2014-06-06)
 
 ## Features
