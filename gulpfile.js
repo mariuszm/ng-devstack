@@ -85,7 +85,7 @@ gulp.task('vendor:assets', function () {
     if (!config.vendor_files.assets.length) {
         return;
     }
-    return gulp.src(config.vendor_files.assets)
+    return gulp.src(config.vendor_files.assets, { base: '.' })
         .pipe(gulp.dest(config.build + '/assets'));
 });
 
@@ -170,8 +170,7 @@ gulp.task('assets:img', function () {
 
 // Compress images
 gulp.task('assets', ['assets:img', 'vendor:assets'], function () {
-    var arr = (config.vendor_files.assets).concat(config.paths.assets);
-    return gulp.src(arr)
+    return gulp.src(config.build + '/assets/**')
         .pipe(plugins.plumber())
         // .pipe(plugins.bytediff.start())
         .pipe(plugins.newer(config.dist + '/assets'))
