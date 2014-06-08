@@ -1,3 +1,18 @@
+# 0.2.7 (2014-06-09)
+
+## Features
+- **build:**
+  - added example SASS file for variables ([9f9dc49](https://github.com/mariuszm/ng-devstack/commit/9f9dc49))
+- **misc:**
+  - updated dependencies in Bower ([331f3c7](https://github.com/mariuszm/ng-devstack/commit/331f3c7))
+
+## Bug Fixes
+
+- **build:**
+  - fixed HTML minification ([dbeafef](https://github.com/mariuszm/ng-devstack/commit/dbeafef))
+  - fixed compiling JavaScript files ([41811df](https://github.com/mariuszm/ng-devstack/commit/41811df))
+  - fixed including vendor files in application ([f618f5b](https://github.com/mariuszm/ng-devstack/commit/f618f5b))
+
 # 0.2.6 (2014-06-08)
 
 ## Features
