@@ -1,4 +1,4 @@
-# ng-devstack v0.2.5
+# ng-devstack v0.2.6
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -80,7 +80,7 @@ $ gulp
 
 ## Additional info
 
-All styles (as well as scripts and templates) added to `src/app/` and `src/common/` should be included to the project automatically - with a small difference to `src/sass/` folder. Partials SASS files (such as variables, mixins, etc.) put into `src/sass/includes/` must be manually imported in `src/sass/_includes.scss` file (you may want to set custom order for loading your styles). Partials located in `src/sass/_includes/` should be named with a leading underscore `_`, so the compiler knows not to generate them into a CSS file (see [SASS official site](http://sass-lang.com/guide#topic-4) for details).
+All styles (as well as scripts and templates) added to `src/app/` and `src/common/` should be included to the project automatically - with a small difference to `src/sass/` folder. Partials SASS files (such as variables, mixins, etc.) put into `src/sass/includes/` must be manually imported in `src/sass/_includes.scss` file (you may want to set custom order for loading your styles). Partials located in `src/sass/includes/` should be named with a leading underscore `_`, so the compiler knows not to generate them into a CSS file (see [SASS official site](http://sass-lang.com/guide#topic-4) for details).
 
 Vendor files downloaded with Bower can be added to project by editing `'vendor_files'` section in `config.json` file. The rest of this file should remain unchanged.
 
@@ -106,6 +106,10 @@ In addition, image optimization is turned off by default but in case you need it
 ```sh
 // .pipe(plugins.imagemin({ optimizationLevel: 7, progressive: true, interlaced: true }))
 ```
+
+## Known issues
+
+Support for source maps in the latest version of node-sass (v0.9.1) is broken, so older version of gulp-sass (depending on older node-sass) will be used as a temporary solution (see the discussions at [gulp-sass](https://github.com/dlmanning/gulp-sass/issues/57) and [node-sass](https://github.com/sass/node-sass/issues/337)).
 
 ## TODO
 
