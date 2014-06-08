@@ -211,7 +211,11 @@ gulp.task('html:replace', ['html:inject'], function () {
 gulp.task('html', ['html:replace'], function () {
     return gulp.src(config.dist + '/index.html')
         .pipe(plugins.plumber())
-        .pipe(plugins.minifyHtml({ quotes: true }))
+        .pipe(plugins.minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
         .pipe(gulp.dest(config.dist));
 });
 
