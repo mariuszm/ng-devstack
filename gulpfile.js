@@ -112,6 +112,12 @@ var fnCacheTpls = function (path) {
 gulp.task('scripts:cacheTpls', function () {
     return fnCacheTpls(config.paths.templates);
 });
+gulp.task('scripts:ngmin', ['scripts:cacheTpls'], function () {
+    return gulp.src(config.paths.scripts)
+        .pipe(plugins.ngmin())
+        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.js'))
+        .pipe(gulp.dest(config.build + '/assets'));
+});
 
 // Check JavaScript code quality with JSHint
 var fnLint = function (path, exitOnError) {
@@ -132,13 +138,13 @@ gulp.task('scripts:lint', function () {
 });
 
 // Concat and minify JavaScript
-gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], function () {
-    var arr = (config.vendor_files.js).concat(config.paths.scripts, config.build + '/app/templates.js');
+gulp.task('scripts', ['scripts:lint', 'scripts:ngmin', 'vendor:js'], function () {
+    var arr = (config.vendor_files.js).concat([config.build + '/assets/' + pkg.name + '-' + pkg.version + '.js', config.build + '/app/templates.js']);
     return gulp.src(arr)
         .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.js'))
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
-        .pipe(plugins.ngmin())
         .pipe(plugins.uglify({
+            mangle: false,
             compress: {
                 drop_console: true
             }
