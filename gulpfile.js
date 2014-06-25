@@ -21,7 +21,7 @@ var fnSass = function (path) {
         }))
         .on('error', function (err) {
             console.log(err.message);
-            process.exit(1);
+            // process.exit(1);
         })
         .pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4', {
             map: true,
@@ -32,7 +32,7 @@ var fnSass = function (path) {
         .pipe(gulp.dest(config.build + '/assets'));
 };
 gulp.task('styles:sass:imports', function () {
-    var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss'];
+    var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss', '!' + config.app + '/+(app|common)/**/_*.scss'];
     return gulp.src(files, { read: false })
         .pipe(plugins.intercept(function (file) {
             file.contents = new Buffer('@import \'' + file.path + '\';');
