@@ -15,6 +15,4 @@ angular.module('ngDevstack.home')
             pageTitle: 'Home'
         }
     });
-})
-
-;
+});

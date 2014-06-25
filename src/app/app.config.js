@@ -33,6 +33,4 @@ angular.module('ngDevstack')
 
         return path + '/?' + params.join('&');
     });
-})
-
-;
+});

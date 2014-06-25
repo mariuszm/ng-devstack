@@ -15,6 +15,4 @@ angular.module('ngDevstack.about')
             pageTitle: 'About'
         }
     });
-})
-
-;
+});

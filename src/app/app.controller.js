@@ -12,6 +12,4 @@ angular.module('ngDevstack')
             $scope.pageTitle = toState.data.pageTitle + ' | ng-devstack';
         }
     });
-})
-
-;
+});
