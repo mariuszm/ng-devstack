@@ -1,3 +1,21 @@
+# 0.2.8 (2014-06-25)
+
+## Features
+- **build:**
+  - running tests after the build process is finished ([3ddcbc7](https://github.com/mariuszm/ng-devstack/commit/3ddcbc7))
+- **misc:**
+  - fixed formatting ([0f505e6](https://github.com/mariuszm/ng-devstack/commit/0f505e6))
+  - update dependencies in NPM and Bower ([8b6c087](https://github.com/mariuszm/ng-devstack/commit/8b6c087))
+
+## Bug Fixes
+
+- **build:**
+  - fixed injecting templates module (module name not related to project's name defined in package.json anymore) ([877338d](https://github.com/mariuszm/ng-devstack/commit/877338d))
+- **sass:**
+  - fixed importing partial SASS files ([aa9728c](https://github.com/mariuszm/ng-devstack/commit/aa9728c))
+- **watch:**
+  - fixed rebuilding CSS on SASS change ([0ede1af](https://github.com/mariuszm/ng-devstack/commit/0ede1af))
+
 # 0.2.7 (2014-06-09)
 
 ## Features
