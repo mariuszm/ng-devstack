@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngDevstack', [
-    'ngDevstack.templates',
+    'templates.app',
     'ngDevstack.conf',
     'ngDevstack.home',
     'ngDevstack.about',

@@ -103,7 +103,7 @@ var fnCacheTpls = function (path) {
             quotes: true
         }))
         .pipe(plugins.angularTemplatecache({
-            module: pkg.name + '.templates',
+            module: 'templates.app',
             standalone: true
         }))
         .pipe(plugins.concat('templates.js'))
