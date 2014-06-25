@@ -248,7 +248,7 @@ gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets', 'st
         });
 });
 
-gulp.task('test:watch', ['vendor:assets'], function () {
+gulp.task('test:watch', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets', 'styles:sass', 'html:inject'], function () {
     gulp.src(testFiles)
         .pipe(plugins.karma({
             configFile: 'karma.conf.js',
