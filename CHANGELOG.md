@@ -1,6 +1,21 @@
+# 0.3.0 (2014-07-01)
+
+## Features
+
+- **misc:**
+  - updated dependencies in NPM and Bower ([757e018](https://github.com/mariuszm/ng-devstack/commit/757e018))
+
+## Bug Fixes
+
+- **compile:**
+  - fixed removing temporary SASS file ([368cb47](https://github.com/mariuszm/ng-devstack/commit/368cb47))
+- **watch:**
+  - fixed rebuilding CSS on SASS change ([c094769](https://github.com/mariuszm/ng-devstack/commit/c094769))
+
 # 0.2.9 (2014-07-01)
 
 ## Features
+
 - **build:**
   - added forced clean of compiled version ([ba3382e](https://github.com/mariuszm/ng-devstack/commit/ba3382e))
 
@@ -14,11 +29,12 @@
 # 0.2.8 (2014-06-25)
 
 ## Features
+
 - **build:**
   - running tests after the build process is finished ([3ddcbc7](https://github.com/mariuszm/ng-devstack/commit/3ddcbc7))
 - **misc:**
   - fixed formatting ([0f505e6](https://github.com/mariuszm/ng-devstack/commit/0f505e6))
-  - update dependencies in NPM and Bower ([8b6c087](https://github.com/mariuszm/ng-devstack/commit/8b6c087))
+  - updated dependencies in NPM and Bower ([8b6c087](https://github.com/mariuszm/ng-devstack/commit/8b6c087))
 
 ## Bug Fixes
 
@@ -32,6 +48,7 @@
 # 0.2.7 (2014-06-09)
 
 ## Features
+
 - **build:**
   - added example SASS file for variables ([9f9dc49](https://github.com/mariuszm/ng-devstack/commit/9f9dc49))
 - **misc:**
@@ -51,7 +68,7 @@
 - **tests:**
   - replaced Chrome with faster PhantomJS ([5edf044](https://github.com/mariuszm/ng-devstack/commit/5edf044))
 - **misc:**
-  - update dependencies in NPM (`package.json`) ([c5de3b1](https://github.com/mariuszm/ng-devstack/commit/c5de3b1))
+  - updated dependencies in NPM (`package.json`) ([c5de3b1](https://github.com/mariuszm/ng-devstack/commit/c5de3b1))
   - updated docs to v0.2.6 ([363bd9d](https://github.com/mariuszm/ng-devstack/commit/363bd9d))
 
 # 0.2.5 (2014-06-06)
@@ -66,7 +83,7 @@
 - **misc:**
   - updated file structure ([b0eb32b](https://github.com/mariuszm/ng-devstack/commit/b0eb32b))
   - file naming based on `package.json` ([f568bd0](https://github.com/mariuszm/ng-devstack/commit/f568bd0))
-  - update dependencies in NPM (`package.json`) ([dfa11d5](https://github.com/mariuszm/ng-devstack/commit/dfa11d5))
+  - updated dependencies in NPM (`package.json`) ([dfa11d5](https://github.com/mariuszm/ng-devstack/commit/dfa11d5))
   - updated docs to v0.2.5 ([ff65504](https://github.com/mariuszm/ng-devstack/commit/ff65504))
 
 ## Bug Fixes

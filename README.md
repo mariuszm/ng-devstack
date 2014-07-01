@@ -1,4 +1,4 @@
-# ng-devstack v0.2.9
+# ng-devstack v0.3.0
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
