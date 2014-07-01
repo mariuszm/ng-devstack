@@ -29,7 +29,10 @@ var fnSass = function (path) {
             to: pkg.name + '-' + pkg.version + '.css'
         }))
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
-        .pipe(gulp.dest(config.build + '/assets'));
+        .pipe(gulp.dest(config.build + '/assets'))
+        .on('end', function () {
+            require('fs').unlink(path);
+        });
 };
 gulp.task('styles:sass:imports', function () {
     var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss', '!' + config.app + '/+(app|common)/**/_*.scss'];
