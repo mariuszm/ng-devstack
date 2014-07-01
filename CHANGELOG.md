@@ -1,3 +1,16 @@
+# 0.2.9 (2014-07-01)
+
+## Features
+- **build:**
+  - added forced clean of compiled version ([ba3382e](https://github.com/mariuszm/ng-devstack/commit/ba3382e))
+
+## Bug Fixes
+
+- **build:**
+  - fixed paths for the latest version of Twitter Bootstrap ([bc21e44](https://github.com/mariuszm/ng-devstack/commit/bc21e44))
+  - fixed removing temporary SASS file ([6d4ed45](https://github.com/mariuszm/ng-devstack/commit/6d4ed45))
+  - fixed AngularJS modules minification (removed saving temporary file to disk) ([0ab24d3](https://github.com/mariuszm/ng-devstack/commit/0ab24d3))
+
 # 0.2.8 (2014-06-25)
 
 ## Features
