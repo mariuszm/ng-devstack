@@ -28,7 +28,7 @@
         "css": [
         ],
         "assets": [
-            "vendor/bootstrap-sass-official/vendor/assets/fonts/**/*"
+            "vendor/bootstrap-sass-official/assets/fonts/**/*"
         ]
     },
 
