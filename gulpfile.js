@@ -291,12 +291,12 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
     });
 
     // watch for SASS changes
-    var sassWatcher = gulp.watch(config.paths.sass, ['styles:sass:imports']);
-    sassWatcher.on('change', function (event) {
-        if (event.path.lastIndexOf('.scss') === event.path.length - 5) {
+    var runSequence = require('run-sequence');
+    gulp.watch(config.paths.sass, function (event) {
+        runSequence('styles:sass:imports', function () {
             var files = config.build + '/assets/' + pkg.name + '-' + pkg.version + '.scss';
             return fnSass(files).pipe(plugins.livereload(server));
-        }
+        });
     });
 
     gulp.watch(config.paths.assets, function (event) {

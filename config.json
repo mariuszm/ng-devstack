@@ -13,7 +13,7 @@
             "src/app/**/*.tpl.html",
             "src/common/**/*.tpl.html"
         ],
-        "sass"   : "src/+(sass|app|common)/**/*",
+        "sass"   : "src/+(sass|app|common)/**/*.scss",
         "assets" : "src/assets/**",
         "html"   : "src/index.html",
         "tests"  : "src/+(app|common)/**/*.spec.js"
