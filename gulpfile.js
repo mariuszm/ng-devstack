@@ -168,7 +168,7 @@ gulp.task('assets:img', function () {
 
 // Compress images
 gulp.task('assets', ['assets:img', 'vendor:assets'], function () {
-    return gulp.src(config.build + '/assets/**')
+    return gulp.src([config.build + '/assets/**', '!' + config.build + '/assets/*.scss'])
         .pipe(plugins.plumber())
         // .pipe(plugins.bytediff.start())
         .pipe(plugins.newer(config.dist + '/assets'))
