@@ -327,7 +327,7 @@ gulp.task('clean:build', function () {
 });
 gulp.task('clean:compile', function () {
     return gulp.src(config.dist, { read: false })
-        .pipe(plugins.rimraf());
+        .pipe(plugins.rimraf({ force: true }));
 });
 
 
