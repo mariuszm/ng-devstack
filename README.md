@@ -1,4 +1,4 @@
-# ng-devstack v0.3.0
+# ng-devstack v0.3.1
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -27,8 +27,9 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 - support for SASS (including Twitter Bootstrap [official SASS port](http://getbootstrap.com/css/#sass)),
 - support for SASS source maps,
 - support for JSHint,
+- support for CSS Autoprefixer,
 - JS/CSS/HTML minification,
-- remove logging (`console.log()`, etc.) from compiled JS code,
+- remove redundancies (`console.log()`, multiple occurrences of `'use strict'` statement, etc.) from compiled JS code,
 - image optimization (see [Additional Info](#additional-info) for details),
 - `html5Mode` support (see [Additional Info](#additional-info) for details),
 - integration with [UI Router](http://angular-ui.github.io/ui-router/) & [UI Bootstrap](http://angular-ui.github.io/bootstrap/).
@@ -106,10 +107,6 @@ In addition, image optimization is turned off by default but in case you need it
 ```sh
 // .pipe(plugins.imagemin({ optimizationLevel: 7, progressive: true, interlaced: true }))
 ```
-
-## Known issues
-
-Support for source maps in the latest version of node-sass (v0.9.1) is broken, so older version of gulp-sass (depending on older node-sass) will be used as a temporary solution (see the discussions at [gulp-sass](https://github.com/dlmanning/gulp-sass/issues/57) and [node-sass](https://github.com/sass/node-sass/issues/337)).
 
 ## TODO
 

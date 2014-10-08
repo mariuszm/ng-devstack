@@ -1,3 +1,26 @@
+# 0.3.1 (2014-10-09)
+
+## Features
+
+- **build:**
+  - replaced deprecated plugins ([37cff86](https://github.com/mariuszm/ng-devstack/commit/37cff86), [49048f8](https://github.com/mariuszm/ng-devstack/commit/49048f8))
+  - renamed task `clean:compile` to `clean:dist` for convenience ([a78d21c](https://github.com/mariuszm/ng-devstack/commit/a78d21c))
+  - fixed multiple occurrences of `'use strict'` statement ([c16a692](https://github.com/mariuszm/ng-devstack/commit/c16a692))
+  - application files separated from vendor files for final maintenance ([a45951d](https://github.com/mariuszm/ng-devstack/commit/a45951d))
+- **misc:**
+  - JavaScript files moved to the bottom of the page ([cde391b](https://github.com/mariuszm/ng-devstack/commit/cde391b))
+  - updated dependencies in NPM and Bower ([8eff9ff](https://github.com/mariuszm/ng-devstack/commit/8eff9ff))
+
+## Bug Fixes
+
+- **build:**
+  - fixed copying unnecessary CSS files to `dist/` ([0bd8f4a](https://github.com/mariuszm/ng-devstack/commit/0bd8f4a))
+  - added helper function to fix problem with Windows paths in SASS task ([e42bbed](https://github.com/mariuszm/ng-devstack/commit/e42bbed))
+- **update:**
+  - updated server config after migrating to Express 4 ([616f046](https://github.com/mariuszm/ng-devstack/commit/616f046))
+  - fixed compiling SASS with source maps after updating node-sass and Autoprefixer to latest version ([31a299b](https://github.com/mariuszm/ng-devstack/commit/31a299b))
+  - fixed CSS & JS injection to HTML according to latest API changes ([6aab772](https://github.com/mariuszm/ng-devstack/commit/6aab772))
+
 # 0.3.0 (2014-07-01)
 
 ## Features
