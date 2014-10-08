@@ -215,8 +215,10 @@ var fnInject = function (path) {
         js  : (config.vendor_files.js).concat(config.build + '/+(app|common)/**/*.module.js').concat(config.build + '/+(app|common)/**/*.js')
     };
 
-    return gulp.src(inject.css.concat(inject.js), { read: false })
-        .pipe(plugins.inject(path, {
+    var sources = gulp.src(inject.css.concat(inject.js), { read: false });
+
+    return gulp.src(path)
+        .pipe(plugins.inject(sources, {
             addRootSlash: false,
             ignorePath: ['/', config.build + '/']
         }))
