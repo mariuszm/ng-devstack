@@ -13,7 +13,7 @@ var gulp    = require('gulp'),
 // Prepare CSS
 // ===========
 
-var processWinPath = function(file) {
+var processWinPath = function (file) {
     // Fix for bug with paths on Windows
     var path = require('path');
     if (process.platform === 'win32') {
@@ -330,7 +330,7 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
 gulp.task('clean:build', function (cb) {
     del(config.build, cb);
 });
-gulp.task('clean:compile', function (cb) {
+gulp.task('clean:dist', function (cb) {
     del(config.dist, { force: true }, cb);
 });
 
@@ -343,7 +343,7 @@ gulp.task('build', ['clean:build'], function () {
     gulp.start('styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
 });
 
-gulp.task('compile', ['clean:compile', 'build'], function () {
+gulp.task('compile', ['clean:dist', 'build'], function () {
     gulp.start('styles', 'scripts', 'assets', 'html');
 });
 
