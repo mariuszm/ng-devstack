@@ -146,10 +146,10 @@ gulp.task('scripts:lint', function () {
     return fnLint(config.paths.scripts, true);
 });
 
-// Concat and minify JavaScript
-gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], function () {
-    var arr = (config.vendor_files.js).concat(config.paths.scripts.concat(config.build + '/app/templates.js'));
-    return gulp.src(arr)
+// Perform final maintenance
+gulp.task('scripts:tidy', ['scripts:lint', 'scripts:cacheTpls'], function () {
+    var files = config.paths.scripts.concat(config.build + '/app/templates.js');
+    return gulp.src(files)
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.concatUtil(pkg.name + '-' + pkg.version + '.js', {
             process: function (src) {
@@ -157,6 +157,14 @@ gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], functio
             }
         }))
         .pipe(plugins.concatUtil.header('\'use strict\';\n'))
+        .pipe(gulp.dest(config.dist + '/assets'));
+});
+
+// Concat and minify JavaScript
+gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], function () {
+    var arr = (config.vendor_files.js).concat(config.dist + '/assets/' + pkg.name + '-' + pkg.version + '.js');
+    return gulp.src(arr)
+        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.js'))
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
         .pipe(plugins.uglify({
             mangle: false,
@@ -166,7 +174,10 @@ gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], functio
         }))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
-        .pipe(gulp.dest(config.dist + '/assets'));
+        .pipe(gulp.dest(config.dist + '/assets'))
+        .on('end', function () {
+            del(config.dist + '/assets/' + pkg.name + '-' + pkg.version + '.js');
+        });
 });
 
 
