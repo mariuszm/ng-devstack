@@ -2,6 +2,7 @@
 
 var gulp    = require('gulp'),
     map     = require('map-stream'),
+    del     = require('del'),
     plugins = require('gulp-load-plugins')(),
     server  = require('tiny-lr')(),
     config  = require('./config.json'),
@@ -278,9 +279,7 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
     gulp.watch(config.paths.scripts, function (event) {
         if (event.path.lastIndexOf('.js') === event.path.length - 3) {
             if (event.type === 'deleted') {
-                var buildPath = event.path.replace(config.app, config.build);
-                return gulp.src(buildPath, { read: false })
-                    .pipe(plugins.rimraf());
+                del(event.path.replace(config.app, config.build));
             } else {
                 return fnLint(event.path).pipe(plugins.livereload(server));
             }
@@ -312,9 +311,7 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
 
     gulp.watch(config.paths.assets, function (event) {
         if (event.type === 'deleted') {
-            var buildPath = event.path.replace(config.app, config.build);
-            return gulp.src(buildPath, { read: false })
-                .pipe(plugins.rimraf());
+            del(event.path.replace(config.app, config.build));
         } else {
             return fnImg(event.path).pipe(plugins.livereload(server));
         }
@@ -330,13 +327,11 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
 // Clean up development & production directories
 // =============================================
 
-gulp.task('clean:build', function () {
-    return gulp.src(config.build, { read: false })
-        .pipe(plugins.rimraf());
+gulp.task('clean:build', function (cb) {
+    del(config.build, cb);
 });
-gulp.task('clean:compile', function () {
-    return gulp.src(config.dist, { read: false })
-        .pipe(plugins.rimraf({ force: true }));
+gulp.task('clean:compile', function (cb) {
+    del(config.dist, { force: true }, cb);
 });
 
 
