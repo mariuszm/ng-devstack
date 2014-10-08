@@ -151,7 +151,12 @@ gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], functio
     var arr = (config.vendor_files.js).concat(config.paths.scripts.concat(config.build + '/app/templates.js'));
     return gulp.src(arr)
         .pipe(plugins.ngAnnotate())
-        .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.js'))
+        .pipe(plugins.concatUtil(pkg.name + '-' + pkg.version + '.js', {
+            process: function (src) {
+                return (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+            }
+        }))
+        .pipe(plugins.concatUtil.header('\'use strict\';\n'))
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
         .pipe(plugins.uglify({
             mangle: false,
