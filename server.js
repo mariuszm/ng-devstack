@@ -5,9 +5,11 @@
 
 module.exports = function (lr) {
 
-    var express = require('express'),
-        app     = express(),
-        http    = require('http'),
+    var express         = require('express'),
+        app             = express(),
+        http            = require('http'),
+        serveIndex      = require('serve-index'),
+        serveStatic     = require('serve-static'),
         EXPRESS_ROOT    = 'build',
         EXPRESS_PORT    = 4000,
         LIVERELOAD_PORT = 35729;
@@ -15,8 +17,8 @@ module.exports = function (lr) {
     // Uncomment following line if html5Mode is enabled.
     // app.use(require('connect-modrewrite')(['!\\.\\w+$ /index.html']));
     app.use(require('connect-livereload')({ port: LIVERELOAD_PORT }));
-    app.use(express.static(EXPRESS_ROOT));
-    app.use(express.directory(EXPRESS_ROOT));
+    app.use(serveStatic(EXPRESS_ROOT));
+    app.use('/', serveIndex(EXPRESS_ROOT));
 
     var server = http.createServer(app);
 
