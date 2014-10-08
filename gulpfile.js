@@ -12,9 +12,19 @@ var gulp    = require('gulp'),
 // Prepare CSS
 // ===========
 
+var processWinPath = function(file) {
+    // Fix for bug with paths on Windows
+    var path = require('path');
+    if (process.platform === 'win32') {
+        file.path = path.relative('.', file.path);
+        file.path = file.path.replace(/\\/g, '/');
+    }
+};
+
 // Compile SASS and add prefixes
 var fnSass = function (path) {
     return gulp.src(path)
+        .on('data', processWinPath)
         .pipe(plugins.plumber())
         .pipe(plugins.sass({
             sourceComments: 'map'
@@ -37,6 +47,7 @@ var fnSass = function (path) {
 gulp.task('styles:sass:imports', function () {
     var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss', '!' + config.app + '/+(app|common)/**/_*.scss'];
     return gulp.src(files, { read: false })
+        .on('data', processWinPath)
         .pipe(plugins.intercept(function (file) {
             file.contents = new Buffer('@import \'' + file.path + '\';');
             return file;
