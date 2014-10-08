@@ -149,7 +149,7 @@ gulp.task('scripts:lint', function () {
 gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], function () {
     var arr = (config.vendor_files.js).concat(config.paths.scripts.concat(config.build + '/app/templates.js'));
     return gulp.src(arr)
-        .pipe(plugins.ngmin())
+        .pipe(plugins.ngAnnotate())
         .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.js'))
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
         .pipe(plugins.uglify({
