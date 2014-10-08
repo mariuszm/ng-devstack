@@ -2,11 +2,11 @@
   "name": "ngDevstack",
   "version": "0.3.0",
   "devDependencies": {
-    "angular": "~1.2.19",
-    "angular-bootstrap": "~0.11.0",
-    "angular-mocks": "~1.2.19",
-    "angular-ui-router": "0.2.10",
-    "bootstrap-sass-official": "latest"
+    "angular": "~1.2.26",
+    "angular-bootstrap": "~0.11.2",
+    "angular-mocks": "~1.2.26",
+    "angular-ui-router": "0.2.11",
+    "bootstrap-sass-official": "3.2.0"
   },
   "dependencies": {}
 }
