@@ -27,18 +27,13 @@ var fnSass = function (path) {
     return gulp.src(path)
         .on('data', processWinPath)
         .pipe(plugins.plumber())
-        .pipe(plugins.sass({
-            sourceComments: 'map'
-        }))
+        .pipe(plugins.sourcemaps.init())
+        .pipe(plugins.sass())
+        .pipe(plugins.sourcemaps.write())
         .on('error', function (err) {
             console.log(err.message);
             // process.exit(1);
         })
-        .pipe(plugins.autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4', {
-            map: true,
-            from: pkg.name + '-' + pkg.version + '.css',
-            to: pkg.name + '-' + pkg.version + '.css'
-        }))
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
         .pipe(gulp.dest(config.build + '/assets'))
         .on('end', function () {
@@ -66,6 +61,9 @@ gulp.task('styles', ['styles:sass', 'vendor:css'], function () {
     var arr = (config.vendor_files.css).concat(config.build + '/assets/' + pkg.name + '-' + pkg.version + '.css');
     return gulp.src(arr)
         .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.css'))
+        .pipe(plugins.autoprefixer({
+            browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
+        }))
         .pipe(plugins.minifyCss({ keepSpecialComments: 0 }))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
