@@ -175,7 +175,7 @@ gulp.task('scripts', ['scripts:tidy', 'vendor:js'], function () {
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
         .pipe(gulp.dest(config.dist + '/assets'))
         .on('end', function () {
-            del(config.dist + '/assets/' + pkg.name + '-' + pkg.version + '.js');
+            del(config.dist + '/assets/' + pkg.name + '-' + pkg.version + '.js', { force: true });
         });
 });
 
