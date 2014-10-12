@@ -160,7 +160,7 @@ gulp.task('scripts:tidy', ['scripts:lint', 'scripts:cacheTpls'], function () {
 });
 
 // Concat and minify JavaScript
-gulp.task('scripts', ['scripts:lint', 'scripts:cacheTpls', 'vendor:js'], function () {
+gulp.task('scripts', ['scripts:tidy', 'vendor:js'], function () {
     var arr = (config.vendor_files.js).concat(config.dist + '/assets/' + pkg.name + '-' + pkg.version + '.js');
     return gulp.src(arr)
         .pipe(plugins.concat(pkg.name + '-' + pkg.version + '.js'))
