@@ -154,7 +154,8 @@ gulp.task('scripts:tidy', ['scripts:lint', 'scripts:cacheTpls'], function () {
                 return (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
             }
         }))
-        .pipe(plugins.concatUtil.header('\'use strict\';\n'))
+        .pipe(plugins.concatUtil.header('(function(window, document, undefined) {\n\'use strict\';\n'))
+        .pipe(plugins.concatUtil.footer('\n})(window, document);\n'))
         .pipe(gulp.dest(config.dist + '/assets'));
 });
 
