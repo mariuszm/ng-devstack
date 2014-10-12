@@ -1,3 +1,12 @@
+# 0.3.2 (2014-10-12)
+
+## Bug Fixes
+
+- **build:**
+  - `'use script'` statement wrapped with a function to affect only this function and prevent problems with concatenating scripts that aren't strict ([1d9ca9b](https://github.com/mariuszm/ng-devstack/commit/1d9ca9b))
+  - fixed running JS maintenance task ([684d125](https://github.com/mariuszm/ng-devstack/commit/684d125))
+  - forced deleting redundant JS files ([fd4dc66](https://github.com/mariuszm/ng-devstack/commit/fd4dc66))
+
 # 0.3.1 (2014-10-09)
 
 ## Features
