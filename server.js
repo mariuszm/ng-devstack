@@ -3,7 +3,7 @@
  More on LiveReload: http://rhumaric.com/2014/01/livereload-magic-gulp-style/
  */
 
-module.exports = function (lr) {
+module.exports = function (lr, options) {
 
     var express         = require('express'),
         app             = express(),
@@ -25,7 +25,10 @@ module.exports = function (lr) {
     server.listen(EXPRESS_PORT);
     server.on('listening', function () {
         console.log('Running at\n  => http://localhost:' + EXPRESS_PORT + '/');
-        require('open')('http://localhost:' + EXPRESS_PORT);
+
+        if (!options.nobrowser) {
+            require('open')('http://localhost:' + EXPRESS_PORT);
+        }
     });
 
     lr.listen(LIVERELOAD_PORT);

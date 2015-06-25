@@ -1,14 +1,23 @@
 /* jshint strict: false */
 
-var gulp    = require('gulp'),
-    map     = require('map-stream'),
-    del     = require('del'),
-    plugins = require('gulp-load-plugins')(),
-    server  = require('tiny-lr')(),
-    config  = require('./config.json'),
-    pkg     = require('./package.json');
+var gulp     = require('gulp'),
+    map      = require('map-stream'),
+    del      = require('del'),
+    minimist = require('minimist'),
+    plugins  = require('gulp-load-plugins')(),
+    server   = require('tiny-lr')(),
+    config   = require('./config.json'),
+    pkg      = require('./package.json');
 
 
+// Known options
+// =============
+
+var knownOptions = {
+    boolean: ['nobrowser', 'notest']
+};
+
+var options = minimist(process.argv.slice(2), knownOptions);
 
 // Prepare CSS
 // ===========
@@ -289,8 +298,13 @@ gulp.task('test:watch', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets', '
 // ============
 
 // Add files to Watch
-gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:watch', 'html:inject'], function () {
-    require('./server.js')(server);
+var watchTasks = ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:watch', 'html:inject'];
+if (options.notest) {
+    watchTasks.splice(watchTasks.indexOf('test:watch'), 1);
+}
+
+gulp.task('watch', watchTasks, function () {
+    require('./server.js')(server, options);
 
     // watch for JS changes
     gulp.watch(config.paths.scripts, function (event) {
@@ -357,7 +371,11 @@ gulp.task('clean:dist', function (cb) {
 // ===============
 
 gulp.task('build', ['clean:build'], function () {
-    gulp.start('styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject');
+    var buildTasks = ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'vendor:css', 'vendor:js', 'vendor:assets', 'test:run', 'assets:img', 'html:inject'];
+    if (options.notest) {
+        buildTasks.splice(buildTasks.indexOf('test:run'), 1);
+    }
+    gulp.start(buildTasks);
 });
 
 gulp.task('compile', ['clean:dist', 'build'], function () {
