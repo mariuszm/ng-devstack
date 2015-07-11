@@ -231,14 +231,15 @@ gulp.task('optimize', ['html:inject'], function () {
 // =====
 
 var testFiles = [
-    config.build + '/vendor/**/*.js',
+    'vendor/**/*.js',
+    '!vendor/*jquery*/src/**/*.js',
     config.build + '/+(app|common)/**/*.module.js',
     config.build + '/+(app|common)/**/*.js',
     config.mocks,
     config.paths.tests
 ];
 
-gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets', 'styles:sass', 'html:inject'] , function () {
+gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'] , function () {
     // Be sure to return the stream
     return gulp.src(testFiles)
         .pipe(plugins.karma({
@@ -250,7 +251,7 @@ gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets', 'st
         });
 });
 
-gulp.task('test:watch', ['scripts:lint', 'scripts:cacheTpls', 'vendor:assets', 'styles:sass', 'html:inject'], function () {
+gulp.task('test:watch', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'], function () {
     gulp.src(testFiles)
         .pipe(plugins.karma({
             configFile: 'karma.conf.js',
