@@ -1,4 +1,6 @@
 {
   "directory": "vendor",
-  "json": "bower.json"
+  "scripts": {
+    "postinstall": "gulp wiredep"
+  }
 }

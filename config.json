@@ -19,16 +19,12 @@
         "tests"  : "src/+(app|common)/**/*.spec.js"
     },
 
-    "vendor_files": {
-        "js": [
-            "vendor/angular/angular.js",
-            "vendor/angular-ui-router/release/angular-ui-router.js",
-            "vendor/angular-bootstrap/ui-bootstrap-tpls.js"
-        ],
-        "css": [
-        ],
-        "assets": [
-            "vendor/bootstrap-sass-official/assets/fonts/**/*"
+    "bower": {
+        "json": "./bower.json",
+        "directory": "./vendor/",
+        "exclude": [
+            "jquery",
+            "vendor/bootstrap-sass-official/assets/javascripts"
         ]
     },
 

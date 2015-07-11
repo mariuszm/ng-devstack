@@ -4,6 +4,7 @@ var gulp     = require('gulp'),
     map      = require('map-stream'),
     del      = require('del'),
     minimist = require('minimist'),
+    wiredep  = require('wiredep').stream,
     plugins  = require('gulp-load-plugins')(),
     server   = require('tiny-lr')(),
     config   = require('./config.json'),
@@ -110,7 +111,20 @@ gulp.task('vendor:assets', function () {
     return gulp.src(config.vendor_files.assets, { base: '.' })
         .pipe(gulp.dest(config.build + '/assets'));
 });
+// Wire Bower dependencies to source code
+// ======================================
 
+gulp.task('wiredep', function () {
+    var options = {
+        bowerJson: require(config.bower.json),
+        directory: config.bower.directory,
+        exclude: config.bower.exclude
+    };
+
+    return gulp.src(config.paths.html)
+        .pipe(wiredep(options))
+        .pipe(gulp.dest(config.build));
+});
 
 
 // Prepare JavaScript
@@ -221,8 +235,8 @@ gulp.task('assets', ['assets:img', 'vendor:assets'], function () {
 // Inject CSS & JS to index.html source
 var fnInject = function (path) {
     var inject = {
-        css : (config.vendor_files.css).concat(config.build + '/assets/*.css'),
-        js  : (config.vendor_files.js).concat(config.build + '/+(app|common)/**/*.module.js').concat(config.build + '/+(app|common)/**/*.js')
+        css : [config.build + '/assets/*.css'],
+        js  : [config.build + '/+(app|common)/**/*.module.js', config.build + '/+(app|common)/**/*.js']
     };
 
     var sources = gulp.src(inject.css.concat(inject.js), { read: false });

@@ -18,6 +18,7 @@ module.exports = function (lr, options) {
     // app.use(require('connect-modrewrite')(['!\\.\\w+$ /index.html']));
     app.use(require('connect-livereload')({ port: LIVERELOAD_PORT }));
     app.use(serveStatic(EXPRESS_ROOT));
+    app.use('/vendor', serveStatic('vendor'));
     app.use('/', serveIndex(EXPRESS_ROOT));
 
     var server = http.createServer(app);
