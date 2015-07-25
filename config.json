@@ -24,7 +24,7 @@
         "directory": "./vendor/",
         "exclude": [
             "jquery",
-            "vendor/bootstrap-sass-official/assets/javascripts"
+            "vendor/bootstrap-sass/assets/javascripts"
         ]
     }
 }
