@@ -286,67 +286,69 @@ gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html
 // Set up Watch
 // ============
 
-gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'html:inject'], function () {
+gulp.task('watch', function () {
     var runSequence = require('run-sequence');
 
-    bs.init({
-        logPrefix: 'Browsersync',
-        open: !args.nobrowser,
-        reloadOnRestart: true,
-        server: {
-            baseDir: './build',
-            routes: {
-                '/vendor': './vendor'
-            },
-        }
-    }, function (done) {
-        if (args.notest) {
-            return;
-        }
+    runSequence('clean:build', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'html:inject'], function () {
+        bs.init({
+            logPrefix: 'Browsersync',
+            open: !args.nobrowser,
+            reloadOnRestart: true,
+            server: {
+                baseDir: './build',
+                routes: {
+                    '/vendor': './vendor'
+                },
+            }
+        }, function (done) {
+            if (args.notest) {
+                return;
+            }
 
-        var cfg = {
-            configFile: __dirname + '/karma.conf.js'
-        };
+            var cfg = {
+                configFile: __dirname + '/karma.conf.js'
+            };
 
-        var server = new Server(cfg, done);
-        server.start();
-    });
+            var server = new Server(cfg, done);
+            server.start();
+        });
 
-    // watch for JS changes
-    gulp.watch(config.paths.scripts, function (event) {
-        switch (event.type) {
-            case 'deleted':
-                del(event.path.replace(config.app, config.build));
-                return fnInject(config.build + '/index.html');
-            case 'added':
-                runSequence('scripts:lint', function () {
+        // watch for JS changes
+        gulp.watch(config.paths.scripts, function (event) {
+            switch (event.type) {
+                case 'deleted':
+                    del(event.path.replace(config.app, config.build));
                     return fnInject(config.build + '/index.html');
-                });
-                break;
-            default:
-                return fnLint(event.path);
-        }
-    });
+                case 'added':
+                    runSequence('scripts:lint', function () {
+                        return fnInject(config.build + '/index.html');
+                    });
+                    break;
+                default:
+                    return fnLint(event.path);
+            }
+        });
 
-    // watch AngularJS templates to cache
-    gulp.watch(config.app + '/+(app|common)/**/*.tpl.html', ['scripts:cacheTpls']);
+        // watch AngularJS templates to cache
+        gulp.watch(config.app + '/+(app|common)/**/*.tpl.html', ['scripts:cacheTpls']);
 
-    // watch for SASS changes
-    gulp.watch(config.paths.sass, ['styles:sass']);
+        // watch for SASS changes
+        gulp.watch(config.paths.sass, ['styles:sass']);
 
-    // watch for assets changes
-    gulp.watch(config.paths.assets, function (event) {
-        if (event.type === 'deleted') {
-            del(event.path.replace(config.app, config.build));
-        } else {
-            return fnImg(event.path);
-        }
-    });
+        // watch for assets changes
+        gulp.watch(config.paths.assets, function (event) {
+            if (event.type === 'deleted') {
+                del(event.path.replace(config.app, config.build));
+            } else {
+                return fnImg(event.path);
+            }
+        });
 
-    // watch for index.html changes
-    gulp.watch(config.paths.html, function () {
-        runSequence('wiredep', function () {
-            return fnInject(config.build + '/index.html');
+        // watch for index.html changes
+        gulp.watch(config.paths.html, function () {
+            runSequence('wiredep', function () {
+                return fnInject(config.build + '/index.html');
+            });
         });
     });
 });
