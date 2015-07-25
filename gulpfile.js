@@ -12,6 +12,7 @@ var gulp     = require('gulp'),
 
 
 
+
 // Handle gulp parameters
 // ======================
 
@@ -72,6 +73,7 @@ gulp.task('styles:sass', ['styles:sass:imports'], function () {
 
 
 
+
 // Wire Bower dependencies to source code
 // ======================================
 
@@ -86,6 +88,7 @@ gulp.task('wiredep', function () {
         .pipe(wiredep(options))
         .pipe(gulp.dest(config.build));
 });
+
 
 
 
@@ -133,6 +136,7 @@ gulp.task('scripts:lint', function () {
 
 
 
+
 // Prepare assets
 // ==============
 
@@ -156,6 +160,7 @@ gulp.task('assets', ['assets:img'], function () {
         // .pipe(plugins.bytediff.stop())
         .pipe(gulp.dest(config.dist + '/assets'));
 });
+
 
 
 
@@ -197,6 +202,7 @@ gulp.task('html', ['optimize'], function () {
 
 
 
+
 // Perform final optimization
 // ==========================
 
@@ -230,37 +236,22 @@ gulp.task('optimize', ['html:inject'], function () {
 
 
 
+
 // Karma
 // =====
 
-var testFiles = [
-    'vendor/**/*.js',
-    '!vendor/*jquery*/src/**/*.js',
-    config.build + '/+(app|common)/**/*.module.js',
-    config.build + '/+(app|common)/**/*.js',
-    config.mocks,
-    config.paths.tests
-];
+var Server = require('karma').Server;
 
-gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'] , function () {
-    // Be sure to return the stream
-    return gulp.src(testFiles)
-        .pipe(plugins.karma({
-            configFile: 'karma.conf.js',
-            action: 'run'
-        }))
-        .on('error', function (err) {
-            process.exit(1);
-        });
+gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'] , function (done) {
+    var cfg = {
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    };
+
+    var server = new Server(cfg, done);
+    server.start();
 });
 
-gulp.task('test:watch', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'], function () {
-    gulp.src(testFiles)
-        .pipe(plugins.karma({
-            configFile: 'karma.conf.js',
-            action: 'watch'
-        }));
-});
 
 
 
@@ -280,7 +271,17 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
                 '/vendor': './vendor'
             },
         }
+    }, function (done) {
+        if (args.notest) {
+            return;
+        }
 
+        var cfg = {
+            configFile: __dirname + '/karma.conf.js'
+        };
+
+        var server = new Server(cfg, done);
+        server.start();
     });
 
     // watch for JS changes
@@ -324,6 +325,7 @@ gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:
 
 
 
+
 // Clean up development & production directories
 // =============================================
 
@@ -333,6 +335,7 @@ gulp.task('clean:build', function (cb) {
 gulp.task('clean:dist', function (cb) {
     del(config.dist, { force: true }, cb);
 });
+
 
 
 
