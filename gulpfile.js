@@ -4,7 +4,7 @@ var gulp     = require('gulp'),
     map      = require('map-stream'),
     del      = require('del'),
     minimist = require('minimist'),
-    wiredep  = require('wiredep').stream,
+    wiredep  = require('wiredep'),
     plugins  = require('gulp-load-plugins')(),
     bs       = require('browser-sync').create(),
     config   = require('./config.json'),
@@ -84,8 +84,36 @@ gulp.task('wiredep', function () {
         exclude: config.bower.exclude
     };
 
+    // inject Bower dependencies to Karma config
+
+    var extend = require('util')._extend;
+    var testOptions = extend(options, {
+        src: './karma.conf.js',
+        fileTypes: {
+            js: {
+                block: /(([ \t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+                detect: {
+                    js: /['\']([^'\']+\.js)['\'],?/gi,
+                    css: /['\']([^'\']+\.js)['\'],?/gi
+                },
+                replace: {
+                    js: '{ pattern: "{{filePath}}", watched: false },',
+                    css: '"{{filePath}}",'
+                }
+            }
+        },
+    });
+
+    var fs = require('fs');
+    fs.stat('karma.conf.js', function (err, stat) {
+        if (err && err.code === 'ENOENT') {
+            fs.writeFileSync('karma.conf.js', fs.readFileSync('karma.conf.default.js'));
+        }
+        wiredep(testOptions);
+    });
+
     return gulp.src(config.paths.html)
-        .pipe(wiredep(options))
+        .pipe(wiredep.stream(options))
         .pipe(gulp.dest(config.build));
 });
 

@@ -26,7 +26,5 @@
             "jquery",
             "vendor/bootstrap-sass-official/assets/javascripts"
         ]
-    },
-
-    "mocks": "vendor/angular-mocks/angular-mocks.js"
+    }
 }

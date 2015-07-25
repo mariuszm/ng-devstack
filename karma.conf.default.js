@@ -4,21 +4,13 @@ var cfg = require('./config.json');
 
 module.exports = function (config) {
     config.set({
-        exclude: [
-            'vendor/*jquery*/src/**/*.js'
-        ],
         files: [
-            { pattern: 'vendor/jquery/dist/jquery.js', watched: false },
-            { pattern: 'vendor/angular/angular.js', watched: false },
-            { pattern: 'vendor/**/*.js', watched: false },
+            // bower:js
+            // endbower
             cfg.build + '/+(app|common)/**/*.module.js',
-            cfg.build + '/+(app|common)/**/*.config.js',
-            cfg.build + '/+(app|common)/**/*.controller.js',
-            cfg.build + '/app/templates.js',
-            cfg.build + '/app/conf.js',
+            cfg.build + '/+(app|common)/**/*.js',
             cfg.paths.tests
         ],
-
         frameworks: ['jasmine'],
         plugins: ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-coverage'],
 

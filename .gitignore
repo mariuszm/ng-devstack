@@ -1,6 +1,7 @@
 *.DS_Store
 .sass-cache/
 npm-debug.log
+karma.conf.js
 build/
 dist/
 node_modules/
