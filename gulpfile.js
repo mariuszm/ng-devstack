@@ -6,7 +6,7 @@ var gulp     = require('gulp'),
     minimist = require('minimist'),
     wiredep  = require('wiredep').stream,
     plugins  = require('gulp-load-plugins')(),
-    server   = require('tiny-lr')(),
+    bs       = require('browser-sync').create(),
     config   = require('./config.json'),
     pkg      = require('./package.json');
 
@@ -18,7 +18,8 @@ var gulp     = require('gulp'),
 var knownOptions = {
     boolean: ['nobrowser', 'notest']
 };
-var options = minimist(process.argv.slice(2), knownOptions);
+var args = minimist(process.argv.slice(2), knownOptions);
+
 
 
 
@@ -35,23 +36,6 @@ var processWinPath = function (file) {
 };
 
 // Compile SASS and add prefixes
-var fnSass = function (path) {
-    return gulp.src(path)
-        .on('data', processWinPath)
-        .pipe(plugins.plumber())
-        .pipe(plugins.sourcemaps.init())
-        .pipe(plugins.sass())
-        .pipe(plugins.sourcemaps.write())
-        .on('error', function (err) {
-            console.log(err.message);
-            // process.exit(1);
-        })
-        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
-        .pipe(gulp.dest(config.build + '/assets'))
-        .on('end', function () {
-            require('fs').unlink(path);
-        });
-};
 gulp.task('styles:sass:imports', function () {
     var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss', '!' + config.app + '/+(app|common)/**/_*.scss'];
     return gulp.src(files, { read: false })
@@ -68,7 +52,22 @@ gulp.task('styles:sass:imports', function () {
 });
 gulp.task('styles:sass', ['styles:sass:imports'], function () {
     var files = config.build + '/assets/app.scss';
-    return fnSass(files);
+    return gulp.src(files)
+        .on('data', processWinPath)
+        .pipe(plugins.plumber())
+        .pipe(plugins.sourcemaps.init())
+        .pipe(plugins.sass())
+        .pipe(plugins.sourcemaps.write())
+        .on('error', function (err) {
+            console.log(err.message);
+            // process.exit(1);
+        })
+        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
+        .pipe(gulp.dest(config.build + '/assets'))
+        .on('end', function () {
+            require('fs').unlink(files);
+        })
+        .pipe(bs.stream());
 });
 
 
@@ -106,7 +105,8 @@ var fnCacheTpls = function (path) {
             standalone: true
         }))
         .pipe(plugins.concat('templates.js'))
-        .pipe(gulp.dest(config.build + '/app'));
+        .pipe(gulp.dest(config.build + '/app'))
+        .pipe(bs.stream());
 };
 gulp.task('scripts:cacheTpls', function () {
     return fnCacheTpls(config.paths.templates);
@@ -124,7 +124,8 @@ var fnLint = function (path, exitOnError) {
             }
             cb(null, file);
         }))
-        .pipe(gulp.dest(config.build));
+        .pipe(gulp.dest(config.build))
+        .pipe(bs.stream());
 };
 gulp.task('scripts:lint', function () {
     return fnLint(config.paths.scripts, true);
@@ -138,7 +139,8 @@ gulp.task('scripts:lint', function () {
 // Copy assets
 var fnImg = function (path) {
     return gulp.src(path, { base: config.app })
-        .pipe(gulp.dest(config.build));
+        .pipe(gulp.dest(config.build))
+        .pipe(bs.stream());
 };
 gulp.task('assets:img', function () {
     return fnImg(config.paths.assets);
@@ -174,7 +176,8 @@ var fnInject = function (path) {
             addRootSlash: false,
             ignorePath: ['/', config.build + '/']
         }))
-        .pipe(gulp.dest(config.build));
+        .pipe(gulp.dest(config.build))
+        .pipe(bs.stream());
 };
 gulp.task('html:inject', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'wiredep'], function () {
     return fnInject(config.build + '/index.html');
@@ -264,59 +267,58 @@ gulp.task('test:watch', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'ht
 // Set up Watch
 // ============
 
-// Add files to Watch
-var watchTasks = ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'test:watch', 'html:inject'];
-if (options.notest) {
-    watchTasks.splice(watchTasks.indexOf('test:watch'), 1);
-}
+gulp.task('watch', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'html:inject'], function () {
+    var runSequence = require('run-sequence');
 
-gulp.task('watch', watchTasks, function () {
-    require('./server.js')(server, options);
+    bs.init({
+        logPrefix: 'Browsersync',
+        open: !args.nobrowser,
+        reloadOnRestart: true,
+        server: {
+            baseDir: './build',
+            routes: {
+                '/vendor': './vendor'
+            },
+        }
+
+    });
 
     // watch for JS changes
     gulp.watch(config.paths.scripts, function (event) {
-        if (event.path.lastIndexOf('.js') === event.path.length - 3) {
-            if (event.type === 'deleted') {
+        switch (event.type) {
+            case 'deleted':
                 del(event.path.replace(config.app, config.build));
-            } else {
-                return fnLint(event.path).pipe(plugins.livereload(server));
-            }
-        }
-    });
-
-    // remove deleted JS files from index.html
-    gulp.watch(config.build + '/+(app|common)/**/*.js', function (event) {
-        if (event.type !== 'changed') {
-            return fnInject(config.paths.html).pipe(plugins.livereload(server));
+                return fnInject(config.build + '/index.html');
+            case 'added':
+                runSequence('scripts:lint', function () {
+                    return fnInject(config.build + '/index.html');
+                });
+                break;
+            default:
+                return fnLint(event.path);
         }
     });
 
     // watch AngularJS templates to cache
-    gulp.watch(config.app + '/+(app|common)/**', function (event) {
-        if (event.path.lastIndexOf('.tpl.html') === event.path.length - 9) {
-            return fnCacheTpls(config.paths.templates).pipe(plugins.livereload(server));
-        }
-    });
+    gulp.watch(config.app + '/+(app|common)/**/*.tpl.html', ['scripts:cacheTpls']);
 
     // watch for SASS changes
-    var runSequence = require('run-sequence');
-    gulp.watch(config.paths.sass, function (event) {
-        runSequence('styles:sass:imports', function () {
-            var files = config.build + '/assets/app.scss';
-            return fnSass(files).pipe(plugins.livereload(server));
-        });
-    });
+    gulp.watch(config.paths.sass, ['styles:sass']);
 
+    // watch for assets changes
     gulp.watch(config.paths.assets, function (event) {
         if (event.type === 'deleted') {
             del(event.path.replace(config.app, config.build));
         } else {
-            return fnImg(event.path).pipe(plugins.livereload(server));
+            return fnImg(event.path);
         }
     });
 
-    gulp.watch(config.paths.html, function (event) {
-        return fnInject(event.path).pipe(plugins.livereload(server));
+    // watch for index.html changes
+    gulp.watch(config.paths.html, function () {
+        runSequence('wiredep', function () {
+            return fnInject(config.build + '/index.html');
+        });
     });
 });
 
@@ -339,7 +341,7 @@ gulp.task('clean:dist', function (cb) {
 
 gulp.task('build', ['clean:build'], function () {
     var buildTasks = ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'test:run', 'assets:img', 'html:inject'];
-    if (options.notest) {
+    if (args.notest) {
         buildTasks.splice(buildTasks.indexOf('test:run'), 1);
     }
     gulp.start(buildTasks);
