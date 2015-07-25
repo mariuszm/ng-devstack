@@ -7,7 +7,12 @@ angular.module('ngDevstack')
     $urlRouterProvider.otherwise('/');
     // Please enable mod rewrite in server.js when html5Mode is enabled.
     // Don't forget to inject $locationProvider.
-    // $locationProvider.html5Mode(true);
+    // Depending on your project requirements, you may further want to
+    // include <base> tag in your index.html
+    // $locationProvider.html5Mode({
+    //     enabled: true,
+    //     requireBase: false
+    // });
 
 
     /*

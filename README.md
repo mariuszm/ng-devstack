@@ -1,4 +1,4 @@
-# ng-devstack v0.3.2
+# ng-devstack v0.3.3
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -7,20 +7,22 @@
 This project has been inspired by another great concept [ngBoilerplate](http://joshdmiller.github.io/ng-boilerplate/), allowing to create modern web applications in [AngularJS](http://angularjs.org/). It follows all the best practices introduced in ngBoilerplate such as component/feature-oriented directory structure, intelligent build system, etc. However, I decided to improve it a little bit and create my own boilerplate from scratch since I missed some basic features like:
 
 - watch for any file changes and apply them to the project in real-time,
+- automatically add dependencies to your application without user interaction,
 - image optimization,
-- remove redundant code on compiling output HTML,
-- plus ngBoilerplate hasn't been updated for months.
+- remove redundant code on compiling output HTML.
 
-Now this all has been made possible. Please welcome **ng-devstack**!
+Please welcome **ng-devstack**!
 
 ## Features
 
 - integration with [gulp](http://gulpjs.com/),
 - package management with [Bower](http://bower.io/),
 - feature-oriented directory structure,
-- unit testing with Karma,
-- LiveReload fully handled server-side with NodeJS/Express (without installing additional extensions for browsers),
+- unit testing with [Karma](http://karma-runner.github.io/),
+- synchronised browser testing with [Browsersync](http://www.browsersync.io/),
+- auto inject Bower dependencies to application/Karma configuration without user interaction,
 - watch for file changes (scripts, styles, templates, assets) and apply them to the project on the fly,
+- customize development process with build parameters,
 - each AngularJS module separated into separate file (much more suited for bigger applications),
 - caching AngularJS templates to avoid additional server requests,
 - pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,
@@ -36,7 +38,7 @@ Now this all has been made possible. Please welcome **ng-devstack**!
 
 ## Requirements
 
-- NodeJS
+- NodeJS (v0.12.0 or later)
 - Bower
 
 ## Installation
@@ -67,38 +69,40 @@ To build the application simply type:
 $ gulp build
 ```
 
-For development purposes, run watch task to build and start local web server with LiveReload:
-
-```sh
-$ gulp watch
-```
-
 Deploy the production version by running `gulp compile`, or simpler:
 
 ```sh
 $ gulp
 ```
 
+For development purposes, run `watch` task to build and start local web server with Browsersync:
+
+```sh
+$ gulp watch
+```
+
+Please note that by default `watch` process incorporates Karma unit testing along with opening new browser window for local web server. You can disable these features by running `watch` task with additional parameters put in command line. Use `--notest` to disable Karma, or `--nobrowser` to disable opening new browser window. Both can be combined in following way:
+
+```sh
+$ gulp watch --notest --nobrowser
+```
+
 ## Additional info
 
 All styles (as well as scripts and templates) added to `src/app/` and `src/common/` should be included to the project automatically - with a small difference to `src/sass/` folder. Partials SASS files (such as variables, mixins, etc.) put into `src/sass/includes/` must be manually imported in `src/sass/_includes.scss` file (you may want to set custom order for loading your styles). Partials located in `src/sass/includes/` should be named with a leading underscore `_`, so the compiler knows not to generate them into a CSS file (see [SASS official site](http://sass-lang.com/guide#topic-4) for details).
 
-Vendor files downloaded with Bower can be added to project by editing `'vendor_files'` section in `config.json` file. The rest of this file should remain unchanged.
+Vendor files downloaded with Bower are automatically included into application code and Karma configuration. No longer needed to put them manually!
 
-If you would like to enable AngularJS HTML5 mode, you have to uncomment 2 lines in `src/app/app.js` and `server.js`:
+Unit testing configuration is stored in `karma.conf.default.js`. You don't have to rename it in order to make it working, ng-devstack is generating a valid configuration file for you during development process. Any changes to Karma config should be added to `karma.conf.default.js` default file.
 
-- `src/app/app.js` (don't forget to inject `$locationProvider`):
-
->
-```sh
-// $locationProvider.html5Mode(true);
-```
-
-- `server.js`:
+If you would like to enable AngularJS HTML5 mode, you have to uncomment following lines in `src/app/app.js` (don't forget to inject `$locationProvider`):
 
 >
 ```sh
-// app.use(require('connect-modrewrite')(['!\\.\\w+$ /index.html']));
+// $locationProvider.html5Mode({
+//     enabled: true,
+//     requireBase: false
+// });
 ```
 
 In addition, image optimization is turned off by default but in case you need it, don't hesitate to remove comment from the following line in `gulpfile.js`:
@@ -110,7 +114,6 @@ In addition, image optimization is turned off by default but in case you need it
 
 ## TODO
 
-- add support for external sources in vendor files (http://*)
-- substitute local vendor files with CDN resources
 - add authorization service
+- add support for i18n internationalization
 - improve images/SVG optimization

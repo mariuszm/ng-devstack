@@ -1,7 +1,7 @@
 {
   "author": "Mariusz Michalski",
-  "name": "ngDevstack",
-  "version": "0.3.2",
+  "name": "ng-devstack",
+  "version": "0.3.3",
   "license": "MIT",
   "repository": {
     "type": "git",

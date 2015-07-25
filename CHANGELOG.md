@@ -1,3 +1,27 @@
+# 0.3.3 (2015-07-25)
+
+## Features
+
+- **breaking changes:**
+  - added wiredep to wire Bower dependencies to source code ([518dde5](https://github.com/mariuszm/ng-devstack/commit/518dde5))
+  - fixed auto injecting Bower dependencies to Karma config ([f206ea3](https://github.com/mariuszm/ng-devstack/commit/f206ea3))
+- **build:**
+  - added parameters to customise build/watch process ([23fe2c4](https://github.com/mariuszm/ng-devstack/commit/23fe2c4))
+- **server:**
+  - replaced LiveReload with Browsersync ([588ebc1](https://github.com/mariuszm/ng-devstack/commit/588ebc1))
+- **misc:**
+  - updated dependencies in NPM and Bower ([1b6827f](https://github.com/mariuszm/ng-devstack/commit/1b6827f))
+
+## Bug Fixes
+
+- **tests:**
+  - fixed Karma configuration after latest API changes (v0.13.0) ([2219f56](https://github.com/mariuszm/ng-devstack/commit/2219f56))
+  - removed redundant tasks & updated input files ([fcd881c](https://github.com/mariuszm/ng-devstack/commit/fcd881c))
+- **build:**
+  - updated optimization process ([20e5dbe](https://github.com/mariuszm/ng-devstack/commit/20e5dbe))
+- **watch:**
+  - clean `build/` folder before running `watch` task ([0445918](https://github.com/mariuszm/ng-devstack/commit/0445918))
+
 # 0.3.2 (2014-10-12)
 
 ## Bug Fixes
