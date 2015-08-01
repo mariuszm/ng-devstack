@@ -226,7 +226,13 @@ gulp.task('html', ['optimize'], function () {
 // Perform final optimization
 // ==========================
 
-gulp.task('optimize', ['html:inject'], function () {
+var optimizeTasks = ['html:inject', 'test:run'];
+
+if (args.notest) {
+    optimizeTasks.splice(optimizeTasks.indexOf('test:run'), 1);
+}
+
+gulp.task('optimize', optimizeTasks, function () {
     var assets = plugins.useref.assets();
     var cssFilter = plugins.filter('**/*.css', { restore: true });
     var jsFilter = plugins.filter('**/*.js', { restore: true });
