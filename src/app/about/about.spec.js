@@ -6,18 +6,16 @@
  * build process will exclude all `.spec.js` files from the build
  * automatically.
  */
-describe('home module', function () {
-    beforeEach(module('ngDevstack'));
-    beforeEach(module('ngDevstack.about'));
-    beforeEach(inject(function ($rootScope, $controller) {
-        $controller('AboutCtrl', {
-            $scope: $rootScope.$new()
-        });
-    }));
 
-    it('should load', inject(function () {
-        expect(true).toBeTruthy();
-    }));
+ngDescribe({
+    name: 'about module',
+    modules: ['ngDevstack', 'ngDevstack.about'],
+    controllers: 'AboutCtrl',
+    tests: function (deps) {
+        it('should load', function () {
+            expect(deps.AboutCtrl).toBeTruthy();
+        });
+    }
 });
 
 /* jshint ignore: end */

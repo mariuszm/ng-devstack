@@ -7,6 +7,7 @@ module.exports = function (config) {
         files: [
             // bower:js
             // endbower
+            'node_modules/ng-describe/dist/ng-describe.js',
             cfg.build + '/+(app|common)/**/*.module.js',
             cfg.build + '/+(app|common)/**/*.js',
             cfg.paths.tests

@@ -1,24 +1,22 @@
 /* jshint ignore: start */
 
-describe('AppCtrl', function () {
-    describe('isCurrentUrl', function () {
-        var AppCtrl, $location, $scope;
+ngDescribe({
+    name: 'is current url',
+    modules: 'ngDevstack',
+    controllers: 'AppCtrl',
+    inject: ['$location'],
+    tests: function (deps) {
+        // should pass a dummy test
+        it('has location service', function () {
+            expect(typeof deps.$location).toEqual('object');
+        });
 
-        beforeEach(module('ngDevstack'));
-
-        beforeEach(inject(function ($controller, _$location_, $rootScope) {
-            $location = _$location_;
-            $scope = $rootScope.$new();
-            AppCtrl = $controller('AppCtrl', {
-                $location: $location,
-                $scope: $scope
-            });
-        }));
-
-        it('should pass a dummy test', inject(function () {
-            expect(AppCtrl).toBeTruthy();
-        }));
-    });
+        // deps.AppCtrl is the $scope object injected into AppCtrl
+        it('is a scope for controller', function () {
+            expect(deps.AppCtrl).toBeTruthy();
+            expect(typeof deps.AppCtrl).toEqual('object');
+        });
+    }
 });
 
 /* jshint ignore: end */
