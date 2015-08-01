@@ -17,7 +17,7 @@ var gulp     = require('gulp'),
 // ======================
 
 var knownOptions = {
-    boolean: ['nobrowser', 'notest']
+    boolean: ['nobrowser', 'notest', 'nocoverage']
 };
 var args = minimist(process.argv.slice(2), knownOptions);
 
@@ -271,12 +271,17 @@ gulp.task('optimize', optimizeTasks, function () {
 
 var Server = require('karma').Server;
 
-gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'] , function (done) {
-    var cfg = {
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    };
+var cfg = {
+    configFile: __dirname + '/karma.conf.js',
+    reporters: ['progress', 'coverage']
+};
 
+if (args.nocoverage) {
+    cfg.reporters.splice(cfg.reporters.indexOf('coverage'), 1);
+}
+
+gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'] , function (done) {
+    cfg.singleRun = true;
     var server = new Server(cfg, done);
     server.start();
 });
@@ -305,10 +310,6 @@ gulp.task('watch', function () {
             if (args.notest) {
                 return;
             }
-
-            var cfg = {
-                configFile: __dirname + '/karma.conf.js'
-            };
 
             var server = new Server(cfg, done);
             server.start();

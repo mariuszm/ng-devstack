@@ -15,8 +15,6 @@ module.exports = function (config) {
         frameworks: ['jasmine'],
         plugins: ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-coverage'],
 
-        reporters: ['progress', 'coverage'],
-
         preprocessors: {
             'src/**/*.js': 'coverage'
         },
