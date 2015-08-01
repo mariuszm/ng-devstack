@@ -37,10 +37,16 @@ var processWinPath = function (file) {
 };
 
 // Compile SASS and add prefixes
-gulp.task('styles:sass:imports', function () {
+// Compile SASS
+gulp.task('styles:sass', function () {
     var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss', '!' + config.app + '/+(app|common)/**/_*.scss'];
     return gulp.src(files, { read: false })
         .on('data', processWinPath)
+        .pipe(plugins.plumber())
+        .pipe(plugins.order([
+            config.app + '/sass/*.scss',
+            config.app + '/+(app|common)/*/*.scss'
+        ], { base: '.' }))
         .pipe(plugins.intercept(function (file) {
             file.contents = new Buffer('@import \'' + file.path + '\';');
             return file;
@@ -49,13 +55,6 @@ gulp.task('styles:sass:imports', function () {
         .pipe(plugins.autoprefixer({
             browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
         }))
-        .pipe(gulp.dest(config.build + '/assets'));
-});
-gulp.task('styles:sass', ['styles:sass:imports'], function () {
-    var files = config.build + '/assets/app.scss';
-    return gulp.src(files)
-        .on('data', processWinPath)
-        .pipe(plugins.plumber())
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.sass())
         .pipe(plugins.sourcemaps.write())
@@ -65,9 +64,6 @@ gulp.task('styles:sass', ['styles:sass:imports'], function () {
         })
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
         .pipe(gulp.dest(config.build + '/assets'))
-        .on('end', function () {
-            require('fs').unlink(files);
-        })
         .pipe(bs.stream());
 });
 
