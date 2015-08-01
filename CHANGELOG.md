@@ -1,3 +1,22 @@
+# 0.3.4 (2015-08-01)
+
+## Features
+
+- **tests:**
+  - added ng-describe to simplify unit testing and mocking AngularJS ([892603d](https://github.com/mariuszm/ng-devstack/commit/892603d))
+- **build:**
+  - added new parameter to disable generating code coverage by Karma ([6468af7](https://github.com/mariuszm/ng-devstack/commit/6468af7))
+  - fixed running Karma unit testing before final optimization ([7064c59](https://github.com/mariuszm/ng-devstack/commit/7064c59))
+- **misc:**
+  - updated dependencies in NPM (package.json) ([2f40fed](https://github.com/mariuszm/ng-devstack/commit/2f40fed))
+
+## Bug Fixes
+
+- **build:**
+  - fixed order of imported SASS files ([4f3f92a](https://github.com/mariuszm/ng-devstack/commit/4f3f92a))
+  - fixed parsing CSS with Autoprefixer ([9b95f00](https://github.com/mariuszm/ng-devstack/commit/9b95f00))
+  - fixed filtering files during optimization process ([31f868d](https://github.com/mariuszm/ng-devstack/commit/31f868d))
+
 # 0.3.3 (2015-07-25)
 
 ## Features

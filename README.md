@@ -1,4 +1,4 @@
-# ng-devstack v0.3.3
+# ng-devstack v0.3.4
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -18,7 +18,7 @@ Please welcome **ng-devstack**!
 - integration with [gulp](http://gulpjs.com/),
 - package management with [Bower](http://bower.io/),
 - feature-oriented directory structure,
-- unit testing with [Karma](http://karma-runner.github.io/),
+- unit testing with [Karma](http://karma-runner.github.io/) and [ng-describe](http://github.com/kensho/ng-describe/),
 - synchronised browser testing with [Browsersync](http://www.browsersync.io/),
 - auto inject Bower dependencies to application/Karma configuration without user interaction,
 - watch for file changes (scripts, styles, templates, assets) and apply them to the project on the fly,
@@ -29,7 +29,7 @@ Please welcome **ng-devstack**!
 - support for SASS (including Twitter Bootstrap [official SASS port](http://getbootstrap.com/css/#sass)),
 - support for SASS source maps,
 - support for JSHint,
-- support for CSS Autoprefixer,
+- support for CSS [Autoprefixer](http://github.com/postcss/autoprefixer-core),
 - JS/CSS/HTML minification,
 - remove redundancies (`console.log()`, multiple occurrences of `'use strict'` statement, etc.) from compiled JS code,
 - image optimization (see [Additional Info](#additional-info) for details),
@@ -87,13 +87,15 @@ Please note that by default `watch` process incorporates Karma unit testing alon
 $ gulp watch --notest --nobrowser
 ```
 
+Also, for unit testing purposes your can disable generating code coverage by Karma by adding `--nocoverage` parameter.
+
 ## Additional info
 
 All styles (as well as scripts and templates) added to `src/app/` and `src/common/` should be included to the project automatically - with a small difference to `src/sass/` folder. Partials SASS files (such as variables, mixins, etc.) put into `src/sass/includes/` must be manually imported in `src/sass/_includes.scss` file (you may want to set custom order for loading your styles). Partials located in `src/sass/includes/` should be named with a leading underscore `_`, so the compiler knows not to generate them into a CSS file (see [SASS official site](http://sass-lang.com/guide#topic-4) for details).
 
 Vendor files downloaded with Bower are automatically included into application code and Karma configuration. No longer needed to put them manually!
 
-Unit testing configuration is stored in `karma.conf.default.js`. You don't have to rename it in order to make it working, ng-devstack is generating a valid configuration file for you during development process. Any changes to Karma config should be added to `karma.conf.default.js` default file.
+Unit testing configuration is stored in `karma.conf.default.js`. You don't have to rename it in order to make it working, ng-devstack is generating a valid configuration file for you during development process. Any changes to Karma config should be added to `karma.conf.default.js` default file. Please note that ng-devstack now supports [ng-describe](http://github.com/kensho/ng-describe/) to make unit testing and mocking AngularJS simpler.
 
 If you would like to enable AngularJS HTML5 mode, you have to uncomment following lines in `src/app/app.js` (don't forget to inject `$locationProvider`):
 
