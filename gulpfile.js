@@ -228,8 +228,8 @@ gulp.task('html', ['optimize'], function () {
 
 gulp.task('optimize', ['html:inject'], function () {
     var assets = plugins.useref.assets();
-    var cssFilter = plugins.filter('**/*.css');
-    var jsFilter = plugins.filter('**/*.js');
+    var cssFilter = plugins.filter('**/*.css', { restore: true });
+    var jsFilter = plugins.filter('**/*.js', { restore: true });
 
     return gulp.src(config.build + '/index.html')
         .pipe(plugins.plumber())
@@ -240,7 +240,7 @@ gulp.task('optimize', ['html:inject'], function () {
         }))
         .pipe(plugins.csso())
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
-        .pipe(cssFilter.restore())
+        .pipe(cssFilter.restore)
         .pipe(jsFilter)
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.uglify({
@@ -250,7 +250,7 @@ gulp.task('optimize', ['html:inject'], function () {
             }
         }))
         .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
-        .pipe(jsFilter.restore())
+        .pipe(jsFilter.restore)
         .pipe(assets.restore())
         .pipe(plugins.useref())
         .pipe(plugins.size())
