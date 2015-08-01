@@ -36,7 +36,6 @@ var processWinPath = function (file) {
     }
 };
 
-// Compile SASS and add prefixes
 // Compile SASS
 gulp.task('styles:sass', function () {
     var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss', '!' + config.app + '/+(app|common)/**/_*.scss'];
@@ -52,9 +51,6 @@ gulp.task('styles:sass', function () {
             return file;
         }))
         .pipe(plugins.concat('app.scss'))
-        .pipe(plugins.autoprefixer({
-            browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
-        }))
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.sass())
         .pipe(plugins.sourcemaps.write())
@@ -239,6 +235,9 @@ gulp.task('optimize', ['html:inject'], function () {
         .pipe(plugins.plumber())
         .pipe(assets)
         .pipe(cssFilter)
+        .pipe(plugins.autoprefixer({
+            browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
+        }))
         .pipe(plugins.csso())
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
         .pipe(cssFilter.restore())
