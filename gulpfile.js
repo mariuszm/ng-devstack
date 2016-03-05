@@ -94,9 +94,7 @@ gulp.task('wiredep', function () {
 
     var fs = require('fs');
     fs.stat('karma.conf.js', function (err, stat) {
-        if (err && err.code === 'ENOENT') {
-            fs.writeFileSync('karma.conf.js', fs.readFileSync('karma.conf.default.js'));
-        }
+        fs.writeFileSync('karma.conf.js', fs.readFileSync('karma.conf.default.js'));
         wiredep(testOptions);
     });
 
