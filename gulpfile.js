@@ -52,12 +52,8 @@ gulp.task('styles:sass', function () {
         }))
         .pipe(plugins.concat('app.scss'))
         .pipe(plugins.sourcemaps.init())
-        .pipe(plugins.sass())
+        .pipe(plugins.sass().on('error', plugins.sass.logError))
         .pipe(plugins.sourcemaps.write())
-        .on('error', function (err) {
-            console.log(err.message);
-            // process.exit(1);
-        })
         .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
         .pipe(gulp.dest(config.build + '/assets'))
         .pipe(bs.stream());
