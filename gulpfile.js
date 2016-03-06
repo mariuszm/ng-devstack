@@ -250,21 +250,20 @@ if (args.notest) {
 }
 
 gulp.task('optimize', optimizeTasks, function () {
-    var assets = plugins.useref.assets();
-    var cssFilter = plugins.filter('**/*.css', { restore: true });
-    var jsFilter = plugins.filter('**/*.js', { restore: true });
+    var __filterCSS = plugins.filter('**/*.css', { restore: true });
+    var __filterJS  = plugins.filter('**/*.js', { restore: true });
 
     return gulp.src(config.build + '/index.html')
         .pipe(plugins.plumber())
-        .pipe(assets)
-        .pipe(cssFilter)
+        .pipe(plugins.useref())
+        .pipe(__filterCSS)
         .pipe(plugins.autoprefixer({
             browsers: ['last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4']
         }))
         .pipe(plugins.csso())
-        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
-        .pipe(cssFilter.restore)
-        .pipe(jsFilter)
+        .pipe(plugins.size({ showFiles: true, title: '»»»' }))
+        .pipe(__filterCSS.restore)
+        .pipe(__filterJS)
         .pipe(plugins.ngAnnotate())
         .pipe(plugins.uglify({
             mangle: false,
@@ -272,10 +271,8 @@ gulp.task('optimize', optimizeTasks, function () {
                 drop_console: true
             }
         }))
-        .pipe(plugins.size({ showFiles: true, title: '[JS]' }))
-        .pipe(jsFilter.restore)
-        .pipe(assets.restore())
-        .pipe(plugins.useref())
+        .pipe(plugins.size({ showFiles: true, title: '»»»' }))
+        .pipe(__filterJS.restore)
         .pipe(plugins.size())
         .pipe(gulp.dest(config.dist));
 });
@@ -299,7 +296,17 @@ if (args.nocoverage) {
 
 gulp.task('test:run', ['scripts', 'styles:sass', 'html:inject'] , function (done) {
     cfg.singleRun = true;
-    var server = new Server(cfg, done);
+
+    function karmaCompleted (karmaResult) {
+        if (karmaResult === 1) {
+            done();
+            process.exit(1);
+        } else {
+            done();
+        }
+    }
+
+    var server = new Server(cfg, karmaCompleted);
     server.start();
 });
 
@@ -384,10 +391,14 @@ gulp.task('watch', function () {
 // =============================================
 
 gulp.task('clean:build', function (cb) {
-    del(config.build, cb);
+    del(config.build).then(function () {
+        cb();
+    });
 });
 gulp.task('clean:dist', function (cb) {
-    del(config.dist, { force: true }, cb);
+    del(config.dist, { force: true }).then(function () {
+        cb();
+    });
 });
 
 
