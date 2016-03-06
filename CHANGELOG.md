@@ -19,7 +19,7 @@
 - **sass:**
   - fixed gulp watch crash on SASS compilation errors ([c654389](https://github.com/mariuszm/ng-devstack/commit/c654389))
 - **tests:**
-  - fixed coverage preprocessor to exclude `*.spec.js` files. See ([discussion](https://github.com/karma-runner/karma/pull/834)) for details ([08d02f4](https://github.com/mariuszm/ng-devstack/commit/08d02f4))
+  - fixed coverage preprocessor to exclude `*.spec.js` files. See [discussion](https://github.com/karma-runner/karma/pull/834) for details ([08d02f4](https://github.com/mariuszm/ng-devstack/commit/08d02f4))
 
 # 0.3.4 (2015-08-01)
 
