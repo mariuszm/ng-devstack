@@ -4,6 +4,8 @@ angular.module('ngDevstack.myDirectiveModule', [])
 
 .directive('myDirective', function () {
     return {
-        // directive code
+        restrict: 'E',
+        replace: true,
+        template: '<span>{{ foo }}</span>'
     };
 });

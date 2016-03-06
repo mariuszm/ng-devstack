@@ -8,12 +8,20 @@
  */
 
 ngDescribe({
-    name: 'home module',
-    modules: ['ngDevstack', 'ngDevstack.home'],
-    controllers: 'HomeCtrl',
+    name        : 'home module',
+    controllers : 'HomeCtrl',
+    modules     : [ 'ngDevstack', 'ngDevstack.home' ],
+    inject      : [ '$rootScope', '$state' ],
     tests: function (deps) {
-        it('should load', function () {
-            expect(deps.HomeCtrl).toBeTruthy();
+        it('should have a HomeCtrl controller', function () {
+            expect(deps.HomeCtrl).toBeDefined();
+        });
+
+        it('should jump to Home page when / is accessed', function () {
+            deps.$state.go('home');
+            deps.$rootScope.$apply();
+            expect(deps.$state.current.url).toBe('/');
+            expect(deps.$state.current.name).toBe('home');
         });
     }
 });

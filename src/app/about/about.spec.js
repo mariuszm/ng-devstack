@@ -8,12 +8,20 @@
  */
 
 ngDescribe({
-    name: 'about module',
-    modules: ['ngDevstack', 'ngDevstack.about'],
-    controllers: 'AboutCtrl',
+    name        : 'about module',
+    controllers : 'AboutCtrl',
+    modules     : [ 'ngDevstack', 'ngDevstack.about' ],
+    inject      : [ '$rootScope', '$state' ],
     tests: function (deps) {
-        it('should load', function () {
-            expect(deps.AboutCtrl).toBeTruthy();
+        it('should have a AboutCtrl controller', function () {
+            expect(deps.AboutCtrl).toBeDefined();
+        });
+
+        it('should jump to About page when /about is accessed', function () {
+            deps.$state.go('about');
+            deps.$rootScope.$apply();
+            expect(deps.$state.current.url).toBe('/about');
+            expect(deps.$state.current.name).toBe('about');
         });
     }
 });
