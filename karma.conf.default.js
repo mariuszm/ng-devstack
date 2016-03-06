@@ -8,15 +8,16 @@ module.exports = function (config) {
             // bower:js
             // endbower
             'node_modules/ng-describe/dist/ng-describe.js',
-            cfg.build + '/+(app|common)/**/*.module.js',
-            cfg.build + '/+(app|common)/**/*.js',
+            cfg.app + '/+(app|common)/**/*.module.js',
+            cfg.app + '/+(app|common)/**/!(*.spec).js',
+            cfg.build + '/assets/' + cfg.templateFile,
             cfg.paths.tests
         ],
         frameworks: ['jasmine'],
         plugins: ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-coverage'],
 
         preprocessors: {
-            'src/**/*.js': 'coverage'
+            'src/+(app|common)/**/!(*.spec).js': 'coverage'
         },
 
         coverageReporter: {
