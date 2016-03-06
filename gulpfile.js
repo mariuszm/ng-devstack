@@ -141,14 +141,41 @@ var fnLint = function (path, exitOnError) {
             }
             cb(null, file);
         }))
-        .pipe(gulp.dest(config.build))
         .pipe(bs.stream());
 };
 gulp.task('scripts:lint', function () {
-    return fnLint(config.paths.scripts, true);
+    if (watcher.isWatching) {
+        return fnLint(watcher.path);
+    } else {
+        return fnLint(config.paths.scripts, true);
+    }
 });
 
+var fnScripts = function () {
+    var files = [
+        config.app + '/+(app|common)/**/*.module.js',
+        config.app + '/+(app|common)/**/*.js',
+        '!' + config.paths.tests
+    ];
 
+    return gulp.src(files, { base: config.app })
+        .pipe(plugins.plumber())
+        .pipe(plugins.sourcemaps.init())
+        .pipe(plugins.concatUtil('app.js', {
+            process: function (src) {
+                return (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+            }
+        }))
+        .pipe(plugins.concatUtil.header('(function (window, document, undefined) {\n\'use strict\';\n'))
+        .pipe(plugins.concatUtil.footer('\n}) (window, document);\n'))
+        .pipe(plugins.sourcemaps.write({ sourceRoot: '/' + config.app }))
+        .pipe(plugins.size({ showFiles: true, title: '»»»' }))
+        .pipe(gulp.dest(config.build + '/assets'))
+        .pipe(bs.stream());
+};
+gulp.task('scripts', ['scripts:cacheTpls', 'scripts:lint'], function () {
+    return fnScripts();
+});
 
 
 // Prepare assets
@@ -183,12 +210,8 @@ gulp.task('assets', ['assets:img'], function () {
 
 // Inject CSS & JS to index.html source
 var fnInject = function (path) {
-    var inject = {
-        css : [config.build + '/assets/*.css'],
-        js  : [config.build + '/+(app|common)/**/*.module.js', config.build + '/+(app|common)/**/*.js']
-    };
-
-    var sources = gulp.src(inject.css.concat(inject.js), { read: false });
+    var files = [config.build + '/assets/app.css', config.build + '/assets/*.js'];
+    var sources = gulp.src(files, { read: false });
 
     return gulp.src(path)
         .pipe(plugins.inject(sources, {
@@ -198,7 +221,7 @@ var fnInject = function (path) {
         .pipe(gulp.dest(config.build))
         .pipe(bs.stream());
 };
-gulp.task('html:inject', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'wiredep'], function () {
+gulp.task('html:inject', ['styles:sass', 'scripts', 'wiredep'], function () {
     return fnInject(config.build + '/index.html');
 });
 
@@ -274,7 +297,7 @@ if (args.nocoverage) {
     cfg.reporters.splice(cfg.reporters.indexOf('coverage'), 1);
 }
 
-gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html:inject'] , function (done) {
+gulp.task('test:run', ['scripts', 'styles:sass', 'html:inject'] , function (done) {
     cfg.singleRun = true;
     var server = new Server(cfg, done);
     server.start();
@@ -285,11 +308,15 @@ gulp.task('test:run', ['scripts:lint', 'scripts:cacheTpls', 'styles:sass', 'html
 
 // Set up Watch
 // ============
+var watcher = {
+    isWatching : false,
+    path       : null
+};
 
 gulp.task('watch', function () {
     var runSequence = require('run-sequence');
 
-    runSequence('clean:build', ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'assets:img', 'html:inject'], function () {
+    runSequence('clean:build', ['styles:sass', 'scripts', 'assets:img', 'html:inject'], function () {
         bs.init({
             logPrefix: 'Browsersync',
             open: !args.nobrowser,
@@ -309,19 +336,18 @@ gulp.task('watch', function () {
             server.start();
         });
 
+        watcher.isWatching = true;
+
         // watch for JS changes
         gulp.watch(config.paths.scripts, function (event) {
-            switch (event.type) {
-                case 'deleted':
-                    del(event.path.replace(config.app, config.build));
-                    return fnInject(config.build + '/index.html');
-                case 'added':
-                    runSequence('scripts:lint', function () {
-                        return fnInject(config.build + '/index.html');
-                    });
-                    break;
-                default:
-                    return fnLint(event.path);
+            watcher.path = event.path;
+            if (event.type === 'deleted') {
+                del(event.path.replace(config.app, config.build));
+                return fnScripts();
+            } else {
+                runSequence('scripts:lint', function () {
+                    return fnScripts();
+                });
             }
         });
 
@@ -333,6 +359,7 @@ gulp.task('watch', function () {
 
         // watch for assets changes
         gulp.watch(config.paths.assets, function (event) {
+            watcher.path = event.path;
             if (event.type === 'deleted') {
                 del(event.path.replace(config.app, config.build));
             } else {
@@ -341,7 +368,8 @@ gulp.task('watch', function () {
         });
 
         // watch for index.html changes
-        gulp.watch(config.paths.html, function () {
+        gulp.watch(config.paths.html, function (event) {
+            watcher.path = event.path;
             runSequence('wiredep', function () {
                 return fnInject(config.build + '/index.html');
             });
@@ -369,7 +397,7 @@ gulp.task('clean:dist', function (cb) {
 // ===============
 
 gulp.task('build', ['clean:build'], function () {
-    var buildTasks = ['styles:sass', 'scripts:lint', 'scripts:cacheTpls', 'test:run', 'assets:img', 'html:inject'];
+    var buildTasks = ['styles:sass', 'scripts', 'assets:img', 'html:inject', 'test:run'];
     if (args.notest) {
         buildTasks.splice(buildTasks.indexOf('test:run'), 1);
     }
