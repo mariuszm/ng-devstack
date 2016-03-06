@@ -4,9 +4,9 @@ angular.module('ngDevstack.about')
 
 .config(function ($stateProvider) {
     $stateProvider.state('about', {
-        url: '/about/',
+        url: '/about',
         views: {
-            "main": {
+            'main': {
                 controller: 'AboutCtrl',
                 templateUrl: 'about/about.tpl.html'
             }

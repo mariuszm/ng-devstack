@@ -7,7 +7,7 @@ angular.module('ngDevstack')
     // handling UI Bootstrap Collapse plugin
     $scope.isCollapsed = true;
 
-    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    $rootScope.$on('$stateChangeSuccess', function (event, toState) {
         if (angular.isDefined(toState.data.pageTitle)) {
             $scope.pageTitle = toState.data.pageTitle + ' | ng-devstack';
         }

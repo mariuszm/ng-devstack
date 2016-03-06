@@ -38,7 +38,12 @@ var processWinPath = function (file) {
 
 // Compile SASS
 gulp.task('styles:sass', function () {
-    var files = [config.app + '/+(sass|app|common)/**/*.scss', '!' + config.app + '/sass/includes/*.scss', '!' + config.app + '/+(app|common)/**/_*.scss'];
+    var files = [
+        config.app + '/+(sass|app|common)/**/*.scss',
+        '!' + config.app + '/sass/includes/*.scss',
+        '!' + config.app + '/+(app|common)/**/_*.scss'
+    ];
+
     return gulp.src(files, { read: false })
         .on('data', processWinPath)
         .pipe(plugins.plumber())
@@ -53,8 +58,8 @@ gulp.task('styles:sass', function () {
         .pipe(plugins.concat('app.scss'))
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.sass().on('error', plugins.sass.logError))
-        .pipe(plugins.sourcemaps.write())
-        .pipe(plugins.size({ showFiles: true, title: '[CSS]' }))
+        .pipe(plugins.sourcemaps.write({ sourceRoot: '/' + config.app }))
+        .pipe(plugins.size({ showFiles: true, title: '»»»' }))
         .pipe(gulp.dest(config.build + '/assets'))
         .pipe(bs.stream());
 });

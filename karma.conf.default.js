@@ -3,29 +3,24 @@
 var cfg = require('./config.json');
 
 module.exports = function (config) {
-    config.set({
-        files: [
-            // bower:js
-            // endbower
-            'node_modules/ng-describe/dist/ng-describe.js',
-            cfg.app + '/+(app|common)/**/*.module.js',
-            cfg.app + '/+(app|common)/**/!(*.spec).js',
-            cfg.build + '/assets/' + cfg.templateFile,
-            cfg.paths.tests
-        ],
-        frameworks: ['jasmine'],
-        plugins: ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-coverage'],
+    var options = {
+        frameworks: [ 'jasmine' ],
+        plugins:    [ 'karma-jasmine', 'karma-phantomjs-launcher', 'karma-coverage' ],
+        browsers:   [ 'PhantomJS' ],
+        coverageReporter: { type: 'text' },
+        preprocessors:    {}
+    };
 
-        preprocessors: {
-            'src/+(app|common)/**/!(*.spec).js': 'coverage'
-        },
+    options.preprocessors[ cfg.app + '/+(app|common)/**/!(*.spec).js' ] = 'coverage';
+    options.files = [
+        // bower:js
+        // endbower
+        'node_modules/ng-describe/dist/ng-describe.js',
+        cfg.app + '/+(app|common)/**/*.module.js',
+        cfg.app + '/+(app|common)/**/!(*.spec).js',
+        cfg.build + '/assets/' + cfg.templateFile,
+        cfg.paths.tests
+    ];
 
-        coverageReporter: {
-            type: 'text'
-        },
-
-        browsers: [
-            'PhantomJS'
-        ]
-    });
+    config.set(options);
 };
