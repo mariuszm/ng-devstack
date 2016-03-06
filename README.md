@@ -1,4 +1,4 @@
-# ng-devstack v0.3.4
+# ng-devstack v0.3.5
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -27,7 +27,7 @@ Please welcome **ng-devstack**!
 - caching AngularJS templates to avoid additional server requests,
 - pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,
 - support for SASS (including Twitter Bootstrap [official SASS port](http://getbootstrap.com/css/#sass)),
-- support for SASS source maps,
+- support for SASS and JavaScript source maps,
 - support for JSHint,
 - support for CSS [Autoprefixer](http://github.com/postcss/autoprefixer-core),
 - JS/CSS/HTML minification,
@@ -87,7 +87,7 @@ Please note that by default `watch` process incorporates Karma unit testing alon
 $ gulp watch --notest --nobrowser
 ```
 
-Also, for unit testing purposes your can disable generating code coverage by Karma by adding `--nocoverage` parameter.
+Also, for unit testing purposes you can disable generating code coverage by Karma by adding `--nocoverage` parameter.
 
 ## Additional info
 

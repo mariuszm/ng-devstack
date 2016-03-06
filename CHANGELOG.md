@@ -1,3 +1,26 @@
+# 0.3.5 (2016-03-06)
+
+## Features
+
+- **build:**
+  - added cached templates filename to config ([56df9f2](https://github.com/mariuszm/ng-devstack/commit/56df9f2))
+  - added source maps support for JavaScript ([d25b706](https://github.com/mariuszm/ng-devstack/commit/d25b706))
+  - Karma configuration file is now always being generated during gulp compilation ([da0959a](https://github.com/mariuszm/ng-devstack/commit/da0959a))
+- **tests:**
+  - added missing tests, refactoring tests ([66cecb0](https://github.com/mariuszm/ng-devstack/commit/66cecb0))
+- **misc:**
+  - updated dependencies in NPM and Bower ([f2b5e1e](https://github.com/mariuszm/ng-devstack/commit/f2b5e1e))
+  - removed redundant code, minor styling updates ([8ebc94f](https://github.com/mariuszm/ng-devstack/commit/8ebc94f))
+
+## Bug Fixes
+
+- **build:**
+  - fixed gulp configuration after latest API changes ([dabd094](https://github.com/mariuszm/ng-devstack/commit/dabd094))
+- **sass:**
+  - fixed gulp watch crash on SASS compilation errors ([c654389](https://github.com/mariuszm/ng-devstack/commit/c654389))
+- **tests:**
+  - fixed coverage preprocessor to exclude `*.spec.js` files. See ([discussion](https://github.com/karma-runner/karma/pull/834)) for details ([08d02f4](https://github.com/mariuszm/ng-devstack/commit/08d02f4))
+
 # 0.3.4 (2015-08-01)
 
 ## Features
@@ -8,7 +31,7 @@
   - added new parameter to disable generating code coverage by Karma ([6468af7](https://github.com/mariuszm/ng-devstack/commit/6468af7))
   - fixed running Karma unit testing before final optimization ([7064c59](https://github.com/mariuszm/ng-devstack/commit/7064c59))
 - **misc:**
-  - updated dependencies in NPM (package.json) ([2f40fed](https://github.com/mariuszm/ng-devstack/commit/2f40fed))
+  - updated dependencies in NPM ([2f40fed](https://github.com/mariuszm/ng-devstack/commit/2f40fed))
 
 ## Bug Fixes
 
