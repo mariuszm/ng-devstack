@@ -118,11 +118,11 @@ var fnCacheTpls = function (path) {
             quotes: true
         }))
         .pipe(plugins.angularTemplatecache({
-            module: 'templates.app',
+            module: 'app.templates',
             standalone: true
         }))
-        .pipe(plugins.concat('templates.js'))
-        .pipe(gulp.dest(config.build + '/app'))
+        .pipe(plugins.concat(config.templateFile))
+        .pipe(gulp.dest(config.build + '/assets'))
         .pipe(bs.stream());
 };
 gulp.task('scripts:cacheTpls', function () {

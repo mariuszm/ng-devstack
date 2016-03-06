@@ -19,6 +19,8 @@
         "tests"  : "src/+(app|common)/**/*.spec.js"
     },
 
+    "templateFile": "app.templates.js",
+
     "bower": {
         "json": "./bower.json",
         "directory": "./vendor/",
