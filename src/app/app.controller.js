@@ -2,14 +2,16 @@
 
 angular.module('ngDevstack')
 
-.controller('AppCtrl', function ($rootScope, $scope) {
+.controller('AppCtrl', function ($scope, $transitions) {
 
     // handling UI Bootstrap Collapse plugin
     $scope.isCollapsed = true;
 
-    $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-        if (angular.isDefined(toState.data.pageTitle)) {
-            $scope.pageTitle = toState.data.pageTitle + ' | ng-devstack';
+    $transitions.onSuccess({}, function (transition) {
+        var pageTitle = transition.$to().data.pageTitle;
+        if (pageTitle) {
+            $scope.pageTitle = pageTitle + ' | ng-devstack';
         }
     });
+
 });
