@@ -5,6 +5,7 @@ var gulp     = require('gulp'),
     del      = require('del'),
     minimist = require('minimist'),
     wiredep  = require('wiredep'),
+    fsPath   = require('path'),
     plugins  = require('gulp-load-plugins')(),
     bs       = require('browser-sync').create(),
     config   = require('./config.json'),
@@ -29,9 +30,8 @@ var args = minimist(process.argv.slice(2), knownOptions);
 
 var processWinPath = function (file) {
     // Fix for bug with paths on Windows
-    var path = require('path');
     if (process.platform === 'win32') {
-        file.path = path.relative('.', file.path);
+        file.path = fsPath.relative('.', file.path);
         file.path = file.path.replace(/\\/g, '/');
     }
 };
@@ -39,9 +39,9 @@ var processWinPath = function (file) {
 // Compile SASS
 gulp.task('styles:sass', function () {
     var files = [
-        config.app + '/+(sass|app|common)/**/*.scss',
+        config.paths.sass,
         '!' + config.app + '/sass/includes/*.scss',
-        '!' + config.app + '/+(app|common)/**/_*.scss'
+        '!' + config.app + '/app/**/_*.scss'
     ];
 
     return gulp.src(files, { read: false })
@@ -49,7 +49,7 @@ gulp.task('styles:sass', function () {
         .pipe(plugins.plumber())
         .pipe(plugins.order([
             config.app + '/sass/*.scss',
-            config.app + '/+(app|common)/*/*.scss'
+            config.app + '/app/*/*.scss'
         ], { base: '.' }))
         .pipe(plugins.intercept(function (file) {
             file.contents = new Buffer('@import \'' + file.path + '\';');
@@ -117,14 +117,13 @@ gulp.task('wiredep', function () {
 // Cache AngularJS templates
 var fnCacheTpls = function (path) {
     return gulp.src(path)
-        .pipe(plugins.minifyHtml({
-            empty: true,
-            spare: true,
-            quotes: true
-        }))
+        .pipe(plugins.htmlmin({ collapseWhitespace: true }))
         .pipe(plugins.angularTemplatecache({
-            module: 'app.templates',
-            standalone: true
+            root: 'app',
+            standalone: true,
+            transformUrl: function (url) {
+                return url.replace(fsPath.dirname(url), '.');
+            }
         }))
         .pipe(plugins.concat(config.templateFile))
         .pipe(gulp.dest(config.build + '/assets'))
@@ -158,21 +157,17 @@ gulp.task('scripts:lint', function () {
 
 var fnScripts = function () {
     var files = [
-        config.app + '/+(app|common)/**/*.module.js',
-        config.app + '/+(app|common)/**/*.js',
+        '!' + config.paths.tests,
+        config.app + '/app/**/*.module.js',
+        config.app + '/app/**/*.js',
         '!' + config.paths.tests
     ];
 
     return gulp.src(files, { base: config.app })
         .pipe(plugins.plumber())
         .pipe(plugins.sourcemaps.init())
-        .pipe(plugins.concatUtil('app.js', {
-            process: function (src) {
-                return (src.trim() + '\n').replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
-            }
-        }))
-        .pipe(plugins.concatUtil.header('(function (window, document, undefined) {\n\'use strict\';\n'))
-        .pipe(plugins.concatUtil.footer('\n}) (window, document);\n'))
+        .pipe(plugins.ngAnnotate())
+        .pipe(plugins.concat('app.js'))
         .pipe(plugins.sourcemaps.write({ sourceRoot: '/' + config.app }))
         .pipe(plugins.size({ showFiles: true, title: '»»»' }))
         .pipe(gulp.dest(config.build + '/assets'))
@@ -234,11 +229,7 @@ gulp.task('html:inject', ['styles:sass', 'scripts', 'wiredep'], function () {
 gulp.task('html', ['optimize'], function () {
     return gulp.src(config.dist + '/index.html')
         .pipe(plugins.plumber())
-        .pipe(plugins.minifyHtml({
-            empty: true,
-            spare: true,
-            quotes: true
-        }))
+        .pipe(plugins.htmlmin())
         .pipe(gulp.dest(config.dist));
 });
 
@@ -269,9 +260,8 @@ gulp.task('optimize', optimizeTasks, function () {
         .pipe(plugins.size({ showFiles: true, title: '»»»' }))
         .pipe(__filterCSS.restore)
         .pipe(__filterJS)
-        .pipe(plugins.ngAnnotate())
+        // .pipe(plugins.ngAnnotate())
         .pipe(plugins.uglify({
-            mangle: false,
             compress: {
                 drop_console: true
             }
@@ -364,7 +354,7 @@ gulp.task('watch', function () {
         });
 
         // watch AngularJS templates to cache
-        gulp.watch(config.app + '/+(app|common)/**/*.tpl.html', ['scripts:cacheTpls']);
+        gulp.watch(config.paths.templates, ['scripts:cacheTpls']);
 
         // watch for SASS changes
         gulp.watch(config.paths.sass, ['styles:sass']);
