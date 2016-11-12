@@ -1,4 +1,4 @@
-# ng-devstack v0.3.5
+# ng-devstack v0.4.0
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -17,7 +17,7 @@ Please welcome **ng-devstack**!
 
 - integration with [gulp](http://gulpjs.com/),
 - package management with [Bower](http://bower.io/),
-- feature-oriented directory structure,
+- new component architecture,
 - unit testing with [Karma](http://karma-runner.github.io/) and [ng-describe](http://github.com/kensho/ng-describe/),
 - synchronised browser testing with [Browsersync](http://www.browsersync.io/),
 - auto inject Bower dependencies to application/Karma configuration without user interaction,
@@ -31,7 +31,6 @@ Please welcome **ng-devstack**!
 - support for JSHint,
 - support for CSS [Autoprefixer](http://github.com/postcss/autoprefixer-core),
 - JS/CSS/HTML minification,
-- remove redundancies (`console.log()`, multiple occurrences of `'use strict'` statement, etc.) from compiled JS code,
 - image optimization (see [Additional Info](#additional-info) for details),
 - `html5Mode` support (see [Additional Info](#additional-info) for details),
 - integration with [UI Router](http://angular-ui.github.io/ui-router/) & [UI Bootstrap](http://angular-ui.github.io/bootstrap/).
@@ -91,7 +90,7 @@ Also, for unit testing purposes you can disable generating code coverage by Karm
 
 ## Additional info
 
-All styles (as well as scripts and templates) added to `src/app/` and `src/common/` should be included to the project automatically - with a small difference to `src/sass/` folder. Partials SASS files (such as variables, mixins, etc.) put into `src/sass/includes/` must be manually imported in `src/sass/_includes.scss` file (you may want to set custom order for loading your styles). Partials located in `src/sass/includes/` should be named with a leading underscore `_`, so the compiler knows not to generate them into a CSS file (see [SASS official site](http://sass-lang.com/guide#topic-4) for details).
+All styles (as well as scripts and templates) added to `src/app/components` and `src/app/common/` should be included to the project automatically - with a small difference to `src/sass/` folder. Partials SASS files (such as variables, mixins, etc.) put into `src/sass/includes/` must be manually imported in `src/sass/_includes.scss` file (you may want to set custom order for loading your styles). Partials located in `src/sass/includes/` should be named with a leading underscore `_`, so the compiler knows not to generate them into a CSS file (see [SASS official site](http://sass-lang.com/guide#topic-4) for details).
 
 Vendor files downloaded with Bower are automatically included into application code and Karma configuration. No longer needed to put them manually!
 
@@ -114,8 +113,66 @@ In addition, image optimization is turned off by default but in case you need it
 // .pipe(plugins.imagemin({ optimizationLevel: 7, progressive: true, interlaced: true }))
 ```
 
+Since Angular 1.5 introduced `.component()` helper method, which advocates best practices and common default behaviors, it is allowed to write in an Angular 2 style as well. To reflect component architecture practices, the project structure of application created with ng-devstack had to be upgraded. Largely inspired by Todd Motto's [Angular 1.x styleguide](https://github.com/toddmotto/angular-styleguide/tree/angular-old-es5), here's an example project structure:
+
+```
+├── app/
+|   ├── common/
+|   |   ├── nav/
+|   |   |   ├── nav.module.js
+|   |   |   ├── nav.component.js
+|   |   |   ├── nav.service.js
+|   |   |   ├── nav.spec.js
+|   |   |   ├── nav.html
+|   |   |   └── nav.scss
+|   |   ├── footer/
+|   |   |   ├── footer.module.js
+|   |   |   ├── footer.component.js
+|   |   |   ├── footer.service.js
+|   |   |   ├── footer.spec.js
+|   |   |   ├── footer.html
+|   |   |   └── footer.scss
+|   |   └── common.module.js
+│   ├── components/
+|   |   ├── home/
+|   |   |   ├── home.module.js
+|   |   |   ├── home.component.js
+|   |   |   ├── home.directive.js
+|   |   |   ├── home.service.js
+|   |   |   ├── home.spec.js
+|   |   |   ├── home.html
+|   |   |   └── home.scss
+|   |   ├── about/
+|   |   |   ├── about-contact/
+|   |   |   |   ├── about-contact.module.js
+|   |   |   |   ├── about-contact.component.js
+|   |   |   |   ├── about-contact.service.js
+|   |   |   |   ├── about-contact.spec.js
+|   |   |   |   ├── about-contact.html
+|   |   |   |   └── about-contact.scss
+|   |   |   ├── about.module.js
+|   |   |   ├── about.component.js
+|   |   |   ├── about.directive.js
+|   |   |   ├── about.service.js
+|   |   |   ├── about.spec.js
+|   |   |   ├── about.html
+|   |   |   └── about.scss
+|   |   └── components.module.js
+|   ├── root.module.js
+|   ├── root.component.js
+|   └── root.spec.js
+└── index.html
+```
+
+## Known issues
+
+There's a problem with livereloading the page when saving JS file. In order to refresh the latest changes file save has to be performed twice. This is going to be fixed as soon as possible.
+
 ## TODO
 
+- replace gulp with webpack 2.0
+- switch to ES6 / TypeScript 2.0
+- replace Bootstrap with Material Design
+- add ESlint
+- add example usage of EventEmitter
 - add authorization service
-- add support for i18n internationalization
-- improve images/SVG optimization
