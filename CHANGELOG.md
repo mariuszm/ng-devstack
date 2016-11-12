@@ -7,7 +7,7 @@
 - **tests:**
   - refactored tests to be working with Angular 1.5 component architecture ([6a7305c](https://github.com/mariuszm/ng-devstack/commit/6a7305c))
 - **misc:**
-  - updated dependencies in NPM and Bower ([f2b5e1e](https://github.com/mariuszm/ng-devstack/commit/f2b5e1e))
+  - updated dependencies in NPM and Bower ([858ef93](https://github.com/mariuszm/ng-devstack/commit/858ef93))
   - minor styling updates ([d642aa1](https://github.com/mariuszm/ng-devstack/commit/d642aa1))
 
 # 0.3.5 (2016-03-06)
