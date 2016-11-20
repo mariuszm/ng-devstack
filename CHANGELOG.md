@@ -1,3 +1,18 @@
+# 1.0.0 (2016-11-20)
+
+## Features
+
+**BREAKING CHANGES**
+
+- **build:**
+  - replaced gulp with webpack 2 ([30bccac](https://github.com/mariuszm/ng-devstack/commit/30bccac))
+  - added ESLint ([f9575f6](https://github.com/mariuszm/ng-devstack/commit/f9575f6))
+- **tests:**
+  - updated tests & Karma config to work with webpack and ES6 ([31a6f8b](https://github.com/mariuszm/ng-devstack/commit/31a6f8b))
+- **misc:**
+  - updated dependencies in `package.json` ([d183ec4](https://github.com/mariuszm/ng-devstack/commit/d183ec4))
+  - updated docs to v1.0.0 ([322a2ef](https://github.com/mariuszm/ng-devstack/commit/322a2ef))
+
 # 0.4.0 (2016-11-12)
 
 ## Features
