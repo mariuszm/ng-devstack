@@ -1,39 +1,43 @@
-/* jshint ignore: start */
+describe('Component: Home', () => {
+  let $rootScope, $state, $location, $componentController, $compile;
 
-/**
- * Tests sit right alongside the file they are testing, which is more intuitive
- * and portable than separating `src` and `test` directories. Additionally, the
- * build process will exclude all `.spec.js` files from the build
- * automatically.
- */
+  beforeEach(window.module('root', 'components', 'components.home'));
 
-ngDescribe({
-  name        : 'home module',
-  controllers : 'HomeController',
-  modules     : ['components', 'components.home'],
-  inject      : ['$rootScope', '$state', '$componentController'],
-  tests: function (deps) {
-    var controller;
-    var scope;
-    beforeEach(function () {
-      scope = deps.$rootScope.$new();
-      controller = deps.$componentController('home', { $scope: scope });
-    });
+  beforeEach(inject(($injector) => {
+    $rootScope           = $injector.get('$rootScope');
+    $componentController = $injector.get('$componentController');
+    $state               = $injector.get('$state');
+    $location            = $injector.get('$location');
+    $compile             = $injector.get('$compile');
+  }));
+
+
+  describe('Module', () => {
+    // top-level specs: i.e., routes, injection, naming
 
     it('should jump to Home page when /home is accessed', function () {
-      deps.$state.go('home');
-      deps.$rootScope.$digest();
-      expect(deps.$state.current.url).toBe('/home');
-      expect(deps.$state.current.name).toBe('home');
+      $state.go('home');
+      $rootScope.$digest();
+      expect($state.current.url).toBe('/home');
+      expect($state.current.name).toBe('home');
+    });
+  });
+
+  describe('Controller', () => {
+    // controller specs
+
+    let controller;
+
+    beforeEach(() => {
+      controller = $componentController('home', {
+        $scope: $rootScope.$new()
+      });
     });
 
     it('should use the correct controller', function () {
       expect(controller.title).toBeDefined();
       expect(controller.title).toBe('Home');
-      expect(deps.HomeController).toBeDefined();
-      expect(deps.HomeController.$$prevSibling.$ctrl).toEqual(controller);
     });
-  }
-});
+  });
 
-/* jshint ignore: end */
+});

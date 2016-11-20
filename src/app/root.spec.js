@@ -1,40 +1,50 @@
-/* jshint ignore: start */
+describe('Component: Root', () => {
+  let $rootScope, $state, $location, $componentController, $compile;
 
-/**
- * Tests sit right alongside the file they are testing, which is more intuitive
- * and portable than separating `src` and `test` directories. Additionally, the
- * build process will exclude all `.spec.js` files from the build
- * automatically.
- */
+  beforeEach(window.module('root'));
 
-ngDescribe({
-  name        : 'app main module',
-  controllers : 'RootController',
-  modules     : 'root',
-  inject      : ['$location', '$rootScope'],
-  tests: function (deps) {
-    // should pass a dummy test
+  beforeEach(inject(($injector) => {
+    $rootScope           = $injector.get('$rootScope');
+    $componentController = $injector.get('$componentController');
+    $state               = $injector.get('$state');
+    $location            = $injector.get('$location');
+    $compile             = $injector.get('$compile');
+  }));
+
+
+  describe('Module', () => {
+    // top-level specs: i.e., routes, injection, naming
+
     it('has location service', function () {
-      expect(typeof deps.$location).toEqual('object');
+      expect(typeof $location).toEqual('object');
     });
 
     it('init path is correct', function () {
-      deps.$rootScope.$emit('$locationChangeSuccess');
-      expect(deps.$location.path()).toBe('/home');
+      $rootScope.$emit('$locationChangeSuccess');
+      expect($location.path()).toBe('/home');
     });
 
     it('should redirect to /home if page does not exist', function () {
-      deps.$location.path('/nonExistentPath');
-      deps.$rootScope.$emit('$locationChangeSuccess');
-      expect(deps.$location.path()).toBe('/home');
+      $location.path('/nonExistentPath');
+      $rootScope.$emit('$locationChangeSuccess');
+      expect($location.path()).toBe('/home');
+    });
+  });
+
+  describe('Controller', () => {
+    // controller specs
+
+    let controller;
+
+    beforeEach(() => {
+      controller = $componentController('root', {
+        $scope: $rootScope.$new()
+      });
     });
 
-    // deps.RootController is the $scope object injected into RootController
-    it('is a scope for controller', function () {
-      expect(deps.RootController).toBeDefined();
-      expect(typeof deps.RootController).toEqual('object');
+    it('exists', () => {
+      expect(controller).toBeDefined();
     });
-  }
+  });
+
 });
-
-/* jshint ignore: end */

@@ -1,39 +1,43 @@
-/* jshint ignore: start */
+describe('Component: About', () => {
+  let $rootScope, $state, $location, $componentController, $compile;
 
-/**
- * Tests sit right alongside the file they are testing, which is more intuitive
- * and portable than separating `src` and `test` directories. Additionally, the
- * build process will exclude all `.spec.js` files from the build
- * automatically.
- */
+  beforeEach(window.module('root', 'components', 'components.about'));
 
-ngDescribe({
-  name        : 'about module',
-  controllers : 'AboutController',
-  modules     : ['components', 'components.about'],
-  inject      : ['$rootScope', '$state', '$componentController'],
-  tests: function (deps) {
-    var controller;
-    var scope;
-    beforeEach(function () {
-      scope = deps.$rootScope.$new();
-      controller = deps.$componentController('about', { $scope: scope });
-    });
+  beforeEach(inject(($injector) => {
+    $rootScope           = $injector.get('$rootScope');
+    $componentController = $injector.get('$componentController');
+    $state               = $injector.get('$state');
+    $location            = $injector.get('$location');
+    $compile             = $injector.get('$compile');
+  }));
+
+
+  describe('Module', () => {
+    // top-level specs: i.e., routes, injection, naming
 
     it('should jump to About page when /about is accessed', function () {
-      deps.$state.go('about');
-      deps.$rootScope.$digest();
-      expect(deps.$state.current.url).toBe('/about');
-      expect(deps.$state.current.name).toBe('about');
+      $state.go('about');
+      $rootScope.$digest();
+      expect($state.current.url).toBe('/about');
+      expect($state.current.name).toBe('about');
+    });
+  });
+
+  describe('Controller', () => {
+    // controller specs
+
+    let controller;
+
+    beforeEach(() => {
+      controller = $componentController('about', {
+        $scope: $rootScope.$new()
+      });
     });
 
     it('should use the correct controller', function () {
       expect(controller.title).toBeDefined();
       expect(controller.title).toBe('About');
-      expect(deps.AboutController).toBeDefined();
-      expect(deps.AboutController.$$prevSibling.$ctrl).toEqual(controller);
     });
-  }
-});
+  });
 
-/* jshint ignore: end */
+});
