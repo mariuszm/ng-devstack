@@ -1,9 +1,7 @@
-*.DS_Store
-.sass-cache/
-.vscode/
-npm-debug.log
-karma.conf.js
-build/
 dist/
 node_modules/
-vendor/
+.sass-cache/
+.vscode/
+*.DS_Store
+npm-debug.log
+yarn.lock

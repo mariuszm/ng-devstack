@@ -1,0 +1,16 @@
+---
+# You can use comments here
+
+bootstrapVersion: 4
+
+styleLoaders:
+  - style-loader
+  - css-loader?sourceMap
+  - postcss-loader?sourceMap
+  - sass-loader?sourceMap
+
+styles: true
+
+scripts:
+  collapse: true,
+  util: true

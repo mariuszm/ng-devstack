@@ -1,10 +1,12 @@
-(function () {
-  'use strict';
+import angular from 'angular';
+import { HomeModule } from './home/home.module';
+import { AboutModule } from './about/about.module';
 
-  angular
-    .module('components', [
-      'components.home',
-      'components.about'
-    ]);
+const ComponentsModule = angular
+  .module('components', [
+    HomeModule,
+    AboutModule
+  ])
+  .name;
 
-})();
+export { ComponentsModule };

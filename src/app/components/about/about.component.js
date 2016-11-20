@@ -1,28 +1,9 @@
-(function () {
-  'use strict';
+import { AboutController } from './about.controller';
+import templateUrl from './about.html';
 
-  var about = {
-    templateUrl: './about.html',
-    controller: 'AboutController'
-  };
+const AboutComponent = {
+  templateUrl,
+  controller: AboutController
+};
 
-  function config ($stateProvider) {
-    var about = {
-      name: 'about',
-      url: '/about',
-      component: 'about',
-      data: {
-        pageTitle: 'About'
-      }
-    };
-
-    $stateProvider.state(about);
-  }
-
-
-  angular
-    .module('components.about')
-    .component('about', about)
-    .config(config);
-
-})();
+export { AboutComponent };

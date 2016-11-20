@@ -1,28 +1,9 @@
-(function () {
-  'use strict';
+import { HomeController } from './home.controller';
+import templateUrl from './home.html';
 
-  var home = {
-    templateUrl: './home.html',
-    controller: 'HomeController'
-  };
+const HomeComponent = {
+  templateUrl,
+  controller: HomeController
+};
 
-  function config ($stateProvider) {
-    var home = {
-      name: 'home',
-      url: '/home',
-      component: 'home',
-      data: {
-        pageTitle: 'Home'
-      }
-    };
-
-    $stateProvider.state(home);
-  }
-
-
-  angular
-    .module('components.home')
-    .component('home', home)
-    .config(config);
-
-})();
+export { HomeComponent };

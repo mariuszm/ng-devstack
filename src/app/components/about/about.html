@@ -2,40 +2,35 @@
 
     <div class="row-fluid">
         <h1>Why ng-devstack?</h1>
-        <p>This project has been inspired by another great concept <a href="http://joshdmiller.github.io/ng-boilerplate/">ngBoilerplate</a>, allowing to create modern web applications in <a href="http://angularjs.org/">AngularJS</a>. It follows all the best practices introduced in ngBoilerplate such as component/feature-oriented directory structure, intelligent build system, etc. However, I decided to improve it a little bit and create my own boilerplate from scratch since I missed some basic features like:</p>
-        <ul>
-            <li>watch for any file changes and apply them to the project in real-time,</li>
-            <li>automatically add dependencies to your application without user interaction,</li>
-            <li>image optimization,</li>
-            <li>remove redundant code on compiling output HTML.</li>
-        </ul>
-        <p>Please welcome <strong>ng-devstack</strong>!</p>
+        <p>It's been a while since the first version of ng-devstack has arrived. Based on old ecosystem (including gulp, ES5, etc.) it wouldn't survive long in today's world of dynamically changing front-end technologies.<br />This is the time to introduce <strong>major upgrade</strong>, which incorporates most recent techniques and best practices.<br />Hopefully, it will make the switch to Angular 2 less painfull.</p>
+        <p>Anyone searching for old version of ng-devstack, it is <a href="https://github.com/mariuszm/ng-devstack/tree/0.4.0">here</a>.</p>
     </div>
 
     <div class="row-fluid">
         <h1>Features</h1>
         <ul>
-            <li>integration with <a href="http://gulpjs.com/">gulp</a>,</li>
-            <li>package management with <a href="http://bower.io/">Bower</a>,</li>
-            <li>feature-oriented directory structure,</li>
+            <li>new Angular 1.5 component architecture,</li>
+            <li>support for ES6 with <a href="https://babeljs.io/">Babel 6</a>,</li>
+            <li>integration with <a href="https://webpack.github.io/">webpack 2</a>, allowing to use its' best features:
+                <ul>
+                    <li>local webserver with live reload,</li>
+                    <li>Hot Module Reloading, tries to reload just the component that's changed, instead of the entire page),</li>
+                    <li>support for styles/scripts source maps,</li>
+                    <li>JS/CSS/HTML minification,</li>
+                </ul>
+            </li>
             <li>unit testing with <a href="http://karma-runner.github.io/">Karma</a>,</li>
-            <li>synchronised browser testing with <a href="http://www.browsersync.io/">Browsersync</a>,</li>
-            <li>auto inject Bower dependencies to application/Karma configuration without user interaction,</li>
-            <li>watch for file changes (scripts, styles, templates, assets) and apply them to the project on the fly,</li>
-            <li>customize development process with build parameters,</li>
-            <li>each AngularJS module separated into separate file (much more suited for bigger applications),</li>
-            <li>caching AngularJS templates to avoid additional server requests,</li>
-            <li>pre-minifying AngularJS files to fix AngularJS' dependency injection upon minification,</li>
-            <li>support for SASS (including Twitter Bootstrap <a href="http://getbootstrap.com/css/#sass">official SASS port</a>),</li>
-            <li>support for SASS and JavaScript source maps,</li>
-            <li>support for JSHint,</li>
-            <li>support for CSS Autoprefixer,</li>
+            <li>support for SASS (including <a href="https://v4-alpha.getbootstrap.com/">Twitter Bootstrap 4</a>),</li>
+            <li>support for CSS <a href="https://github.com/postcss/autoprefixer">Autoprefixer</a>,</li>
+            <li>support for <a href="http://eslint.org/">ESLint</a>,</li>
             <li>JS/CSS/HTML minification,</li>
-            <li>remove redundancies (<code>console.log()</code>, multiple occurrences of <code>'use strict'</code> statement, etc.) from compiled JS code,</li>
-            <li>image optimization (see <a href="https://github.com/mariuszm/ng-devstack#additional-info">Additional Info</a> for details),</li>
-            <li>`html5Mode` support (see <a href="https://github.com/mariuszm/ng-devstack#additional-info">Additional Info</a> for details),</li>
-            <li>integration with <a href="http://angular-ui.github.io/ui-router/">UI Router</a> &amp; <a href="http://angular-ui.github.io/bootstrap/">UI Bootstrap</a>.</li>
+            <li><code>html5Mode</code> support (see <a href="https://github.com/mariuszm/ng-devstack#additional-info">Additional Info</a> for details),</li>
+            <li>integration with <a href="https://ui-router.github.io/ng1/">UI Router 1.0</a> &amp; <a href="http://angular-ui.github.io/bootstrap/">UI Bootstrap</a>.</li>
         </ul>
+    </div>
+
+    <div class="row-fluid mt-3">
+        <p>For more information please visit project's <a href="https://github.com/mariuszm/ng-devstack">GitHub</a>.</p>
     </div>
 
 </section>

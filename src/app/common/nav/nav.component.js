@@ -1,13 +1,9 @@
-(function () {
-  'use strict';
+import { AppNavController } from './nav.controller';
+import templateUrl from './nav.html';
 
-  var appNav = {
-    templateUrl: './nav.html',
-    controller: 'AppNavController'
-  };
+const AppNavComponent = {
+  templateUrl,
+  controller: AppNavController
+};
 
-  angular
-    .module('common')
-    .component('appNav', appNav);
-
-})();
+export { AppNavComponent };

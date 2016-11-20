@@ -1,51 +1,34 @@
-(function () {
-  'use strict';
-
-  angular
-    .module('root')
-    .controller('RootController', RootController);
-
-
-  function RootController ($transitions) {
-    var vm = {
-      $onInit    : $onInit,
-      $postLink  : $postLink,
-      $onDestroy : $onDestroy
-    };
-
-    angular.extend(this, vm);
-
+class RootController {
+  constructor ($transitions) {
+    'ngInject';
+    this.$transitions = $transitions;
 
     console.time('App init');
-
-    var transitionStart;
-    var transitionEnd;
-
-    function $onInit () {
-      var stateValid = {
-        from: function (state) {
-          return !!(state.name);
-        }
-      };
-
-      transitionStart = $transitions.onStart(stateValid, function ($transition$) {
-        console.time('[$transition] ' + $transition$.$from().name + '->' + $transition$.$to().name);
-      });
-
-      transitionEnd = $transitions.onSuccess(stateValid, function ($transition$) {
-        console.timeEnd('[$transition] ' + $transition$.$from().name + '->' + $transition$.$to().name);
-      });
-    }
-
-    function $postLink () {
-      console.timeEnd('App init');
-    }
-
-    function $onDestroy () {
-      transitionStart();
-      transitionEnd();
-    }
-
   }
 
-})();
+  $onInit () {
+    let stateValid = {
+      from: (state) => !!(state.name)
+    };
+
+    this.transitionStart = this.$transitions.onStart(stateValid, ($transition$) => {
+      console.time(`[$transition] ${$transition$.$from().name} -> ${$transition$.$to().name}`);
+    });
+
+    this.transitionEnd = this.$transitions.onSuccess(stateValid, ($transition$) => {
+      console.timeEnd(`[$transition] ${$transition$.$from().name} -> ${$transition$.$to().name}`);
+    });
+  }
+
+  $postLink () {
+    console.timeEnd('App init');
+  }
+
+  $onDestroy () {
+    this.transitionStart();
+    this.transitionEnd();
+  }
+
+}
+
+export { RootController };
