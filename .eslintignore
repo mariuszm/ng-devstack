@@ -1,0 +1,5 @@
+node_modules/
+src/**/*.spec.js
+karma.conf.js
+spec.bundle.js
+webpack.*

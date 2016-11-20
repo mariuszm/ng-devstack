@@ -40,7 +40,7 @@ module.exports = {
 
       {
         test: /\.js$/,
-        loaders: ['ng-annotate-loader', 'babel-loader'],
+        loaders: ['ng-annotate-loader', 'babel-loader', 'eslint-loader'],
         exclude: /node_modules/
       },
 
