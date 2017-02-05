@@ -6,8 +6,8 @@ import { ComponentsModule } from './components/components.module';
 import { CommonModule } from './common/common.module';
 import '../sass/main.scss';
 
+/* @ngInject */
 const config = ($compileProvider, $stateProvider, $urlRouterProvider) => {
-  'ngInject';
   $urlRouterProvider.otherwise('/home');
 
   // https://medium.com/swlh/improving-angular-performance-with-1-line-of-code-a1fb814a6476
@@ -23,8 +23,8 @@ const config = ($compileProvider, $stateProvider, $urlRouterProvider) => {
   // });
 };
 
+/* @ngInject */
 const run = ($rootScope, $state, $stateParams) => {
-  'ngInject';
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
 };

@@ -2,8 +2,8 @@ import angular from 'angular';
 import { AboutComponent } from './about.component';
 import './about.scss';
 
+/* @ngInject */
 const config = ($stateProvider) => {
-  'ngInject';
   let about = {
     name: 'about',
     url: '/about',

@@ -1,6 +1,6 @@
 class HomeController {
+  /* @ngInject */
   constructor () {
-    'ngInject';
     this.title = 'Home';
   }
 

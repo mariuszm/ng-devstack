@@ -2,8 +2,8 @@ import angular from 'angular';
 import { HomeComponent } from './home.component';
 import './home.scss';
 
+/* @ngInject */
 const config = ($stateProvider) => {
-  'ngInject';
   let home = {
     name: 'home',
     url: '/home',
