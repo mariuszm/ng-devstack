@@ -1,4 +1,4 @@
-# ng-devstack v1.0.0
+# ng-devstack v1.0.1
 
 #### Everything a front-end developer needs to simplify building AngularJS applications.
 
@@ -17,14 +17,13 @@ Anyone searching for old version of ng-devstack, it is [here](https://github.com
 - integration with [webpack 2](https://webpack.github.io/), allowing to use its' best features:
   - local webserver with live reload,
   - Hot Module Reloading, tries to reload just the component that's changed, instead of the entire page),
+  - tree-shaking, excluding unused bundles from exports with webpack 2 and Babel 6
   - support for styles/scripts source maps,
   - JS/CSS/HTML minification,
-- unit testing with [Karma](http://karma-runner.github.io/),
-- support for SASS (including [Twitter Bootstrap 4](https://v4-alpha.getbootstrap.com/)),
-- support for CSS [Autoprefixer](https://github.com/postcss/autoprefixer),
+- support for SASS (processed with [Autoprefixer](https://github.com/postcss/autoprefixer)),
 - support for [ESLint](http://eslint.org/),
-- `html5Mode` support (see [Additional Info](#additional-info) for details),
-- integration with [UI Router 1.0](https://ui-router.github.io/ng1/) & [UI Bootstrap](http://angular-ui.github.io/bootstrap/).
+- unit testing with [Karma](http://karma-runner.github.io/),
+- integration with [UI Router 1.0](https://ui-router.github.io/ng1/) & [Angular Material](https://material.angularjs.org/).
 
 ## Requirements
 
@@ -36,7 +35,7 @@ Anyone searching for old version of ng-devstack, it is [here](https://github.com
 Install project dependencies with other required plugins:
 
 ```sh
-$ yarn install
+$ yarn
 ```
 
 ## Usage
@@ -138,9 +137,6 @@ Since Angular 1.5 introduced `.component()` helper method, which advocates best 
 
 - add TypeScript 2.0,
 - add Redux,
-- fix webpack 2 tree-shaking,
-- fix ESLint detection of missing `'ngInject'` statements,
-- replace Bootstrap with Material Design,
 - add example usage of EventEmitter,
 - add authorization service,
 - add image optimization.
