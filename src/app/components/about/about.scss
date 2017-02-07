@@ -1,3 +1,11 @@
 .about {
   line-height: 1.6;
+
+  &-header {
+    margin-bottom: 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 }

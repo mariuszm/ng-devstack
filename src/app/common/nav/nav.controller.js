@@ -1,14 +1,20 @@
 class AppNavController {
   /* @ngInject */
-  constructor (conf) {
-    this.conf = conf;
-
-    console.time('App init');
+  constructor ($transitions) {
+    this.$transitions = $transitions;
   }
 
-  $onInit () {}
+  $onInit () {
+    this.transitionEnd = this.$transitions.onSuccess(null, ($transition$) => {
+      this.currentNavItem = $transition$.$to().name;
+    });
+  }
+
   $postLink () {}
-  $onDestroy () {}
+
+  $onDestroy () {
+    this.transitionEnd();
+  }
 }
 
 export { AppNavController };

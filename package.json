@@ -23,7 +23,6 @@
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-__coverage__": "^11.0.0",
-    "bootstrap-loader": "2.0.0-beta.15",
     "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.26.0",
     "eslint": "^3.10.2",
@@ -60,9 +59,9 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-mocks": "^1.5.8",
-    "angular-ui-bootstrap": "^2.2.0",
     "angular-ui-router": "^1.0.0-beta.3",
-    "bootstrap": "^4.0.0-alpha.5",
-    "jquery": "^3.1.1"
+    "angular-animate": "^1.6.1",
+    "angular-aria": "^1.6.1",
+    "angular-material": "^1.1.3"
   }
 }

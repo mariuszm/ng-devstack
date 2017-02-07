@@ -1,6 +1,7 @@
 class RootController {
   /* @ngInject */
-  constructor ($transitions) {
+  constructor (conf, $transitions) {
+    this.conf = conf;
     this.$transitions = $transitions;
 
     console.time('App init');

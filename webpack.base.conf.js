@@ -15,7 +15,7 @@ const isExternal = (module) => {
 module.exports = {
 
   entry: {
-    app: ['bootstrap-loader?extractStyles', './index.js']
+    app: './index.js'
   },
 
   output: {
@@ -47,12 +47,7 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|svg)$/,
         loaders: ['url-loader?limit=8192&name=[path][name].[ext]?[hash]']
-      },
-
-      // Bootstrap 4
-      { test: /\.(woff2?)$/,  loaders: ['url-loader?limit=8192'] },
-      { test: /\.(ttf|eot)$/, loaders: ['file-loader&name=[path][name].[ext]?[hash]'] },
-      { test: /bootstrap\/dist\/js\/umd\//, loaders: ['imports-loader?jQuery=jquery'] },
+      }
     ]
   },
 
@@ -64,15 +59,6 @@ module.exports = {
       }
     }),
 
-    // Bootstrap 4
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Tether: 'tether',
-      'window.Tether': 'tether',
-      Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse',
-      Util: 'exports-loader?Util!bootstrap/js/dist/util'
     }),
 
     new (webpack.optimize.OccurenceOrderPlugin || webpack.optimize.OccurrenceOrderPlugin)()

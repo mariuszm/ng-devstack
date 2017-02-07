@@ -1,8 +1,14 @@
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 offset-md-1">
-			<app-nav></app-nav>
-  		<div ui-view></div>
-		</div>
-	</div>
+<div layout="column" layout-align="center center">
+
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 flex ng-bind="::($ctrl.conf.appName + ' ' + $ctrl.conf.appVersion)"></h2>
+    </div>
+  </md-toolbar>
+
+  <div class="layout md-whiteframe-z1" layout-md="column">
+      <app-nav></app-nav>
+      <div ui-view class="md-padding layout-content"></div>
+  </div>
+
 </div>

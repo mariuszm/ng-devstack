@@ -1,10 +1,10 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
-import uiBootstrap from 'angular-ui-bootstrap';
+import ngMaterial from 'angular-material';
+import '../sass/main.scss';
 import { RootComponent } from './root.component';
 import { ComponentsModule } from './components/components.module';
 import { CommonModule } from './common/common.module';
-import '../sass/main.scss';
 
 /* @ngInject */
 const config = ($compileProvider, $stateProvider, $urlRouterProvider) => {
@@ -32,7 +32,7 @@ const run = ($rootScope, $state, $stateParams) => {
 const RootModule = angular
   .module('root', [
     uiRouter,
-    uiBootstrap,
+    ngMaterial,
     ComponentsModule,
     CommonModule
   ])

@@ -1,5 +1,10 @@
 @import 'includes';
 
-body {
-  padding-top: 20px;
+.layout {
+  margin-top: 20px;
+  width: $layout-width;
+
+  &-content {
+    background-color: #f6f6f6;
+  }
 }
