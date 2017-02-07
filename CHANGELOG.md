@@ -1,3 +1,20 @@
+# 1.0.1 (2017-02-07)
+
+## Features
+
+- **build:**
+  - replaced UI Bootstrap with Angular Material ([b70474c](https://github.com/mariuszm/ng-devstack/commit/b70474c))
+- **misc:**
+  - updated dependencies in `package.json` ([865ef75](https://github.com/mariuszm/ng-devstack/commit/865ef75))
+  - updated docs to v1.0.1 ([022860e](https://github.com/mariuszm/ng-devstack/commit/022860e))
+
+## Bug Fixes
+
+- **build:**
+  - tree-shaking is now working with latest release of webpack 2 ([c5350fd](https://github.com/mariuszm/ng-devstack/commit/c5350fd))
+  - fixed ng-annotate to work with tree-shaking enabled ([fe465a3](https://github.com/mariuszm/ng-devstack/commit/fe465a3))
+  - API updates & bundle processing optimizations ([7ac805e](https://github.com/mariuszm/ng-devstack/commit/7ac805e))
+
 # 1.0.0 (2016-11-20)
 
 ## Features
