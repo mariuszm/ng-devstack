@@ -1,14 +1,14 @@
-const webpack            = require('webpack');
 const baseConfig         = require('./webpack.base.conf');
+const path               = require('path');
+const webpack            = require('webpack');
 const merge              = require('webpack-merge');
-const validate           = require('webpack-validator');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin  = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
 
-module.exports = validate(merge(baseConfig, {
+module.exports = merge(baseConfig, {
 
-  devtool: '#eval',
+  devtool: '#source-map',
 
   output: {
     filename: 'js/[name].[hash].js',
@@ -16,16 +16,28 @@ module.exports = validate(merge(baseConfig, {
   },
 
   module: {
-    loaders: [
-      { test: /\.css$/,         loader: ExtractTextPlugin.extract(['css-loader', 'postcss-loader']) },
-      { test: /\.(sass|scss)$/, loader: ExtractTextPlugin.extract(['css-loader', 'postcss-loader', 'sass-loader']) }
+    rules: [
+      { test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader']
+        })
+      },
+      { test: /\.(sass|scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader']
+        })
+      }
     ]
   },
 
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new ExtractTextPlugin('styles/[name].[hash].css'),
-    new (webpack.optimize.OccurenceOrderPlugin || webpack.optimize.OccurrenceOrderPlugin)(),
+    new ExtractTextPlugin({
+      filename: 'styles/[name].[hash].css',
+      allChunks: true
+    }),
 
     new HtmlWebpackPlugin({
       template: './index.html',
@@ -40,4 +52,4 @@ module.exports = validate(merge(baseConfig, {
     })
   ]
 
-}));
+});

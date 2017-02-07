@@ -1,6 +1,7 @@
 const path              = require('path');
 const webpack           = require('webpack');
 const ROOT_PATH         = path.resolve(__dirname, './');
+
 const isExternal = (module) => {
   let userRequest = module.userRequest;
 
@@ -31,22 +32,22 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.html$/,
-        loaders: [`ngtemplate-loader?relativeTo=${ROOT_PATH}/src`, 'html-loader'],
+        use: [`ngtemplate-loader?relativeTo=${ROOT_PATH}/src`, 'html-loader'],
         exclude: `${ROOT_PATH}/src/index.html`
       },
 
       {
         test: /\.js$/,
-        loaders: ['babel-loader', 'eslint-loader'],
+        use: ['babel-loader', 'eslint-loader'],
         exclude: /node_modules/
       },
 
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loaders: ['url-loader?limit=8192&name=[path][name].[ext]?[hash]']
+        use: ['url-loader?limit=8192&name=[path][name].[ext]?[hash]']
       }
     ]
   },
@@ -54,13 +55,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function (module) {
-        return isExternal(module);
-      }
-    }),
-
-    }),
-
-    new (webpack.optimize.OccurenceOrderPlugin || webpack.optimize.OccurrenceOrderPlugin)()
+      minChunks: (module) => isExternal(module)
+    })
   ]
 };
