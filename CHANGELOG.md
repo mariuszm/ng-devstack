@@ -1,4 +1,23 @@
+# 1.0.2 (2017-02-08)
+
+## Bug Fixes
+
+- **build:**
+  - fixed adding `@import` into components’ SASS stylesheets ([5ed7039](https://github.com/mariuszm/ng-devstack/commit/5ed7039))
+
+## Features
+
+- **misc:**
+  - removed redundant code, minor styling updates ([9b268b8](https://github.com/mariuszm/ng-devstack/commit/9b268b8))
+
 # 1.0.1 (2017-02-07)
+
+## Bug Fixes
+
+- **build:**
+  - tree-shaking is now working with latest release of webpack 2 ([c5350fd](https://github.com/mariuszm/ng-devstack/commit/c5350fd))
+  - fixed ng-annotate to work with tree-shaking enabled ([fe465a3](https://github.com/mariuszm/ng-devstack/commit/fe465a3))
+  - API updates & bundle processing optimizations ([7ac805e](https://github.com/mariuszm/ng-devstack/commit/7ac805e))
 
 ## Features
 
@@ -7,13 +26,6 @@
 - **misc:**
   - updated dependencies in `package.json` ([865ef75](https://github.com/mariuszm/ng-devstack/commit/865ef75))
   - updated docs to v1.0.1 ([022860e](https://github.com/mariuszm/ng-devstack/commit/022860e))
-
-## Bug Fixes
-
-- **build:**
-  - tree-shaking is now working with latest release of webpack 2 ([c5350fd](https://github.com/mariuszm/ng-devstack/commit/c5350fd))
-  - fixed ng-annotate to work with tree-shaking enabled ([fe465a3](https://github.com/mariuszm/ng-devstack/commit/fe465a3))
-  - API updates & bundle processing optimizations ([7ac805e](https://github.com/mariuszm/ng-devstack/commit/7ac805e))
 
 # 1.0.0 (2016-11-20)
 
@@ -44,6 +56,15 @@
 
 # 0.3.5 (2016-03-06)
 
+## Bug Fixes
+
+- **build:**
+  - fixed gulp configuration after latest API changes ([dabd094](https://github.com/mariuszm/ng-devstack/commit/dabd094))
+- **sass:**
+  - fixed gulp watch crash on SASS compilation errors ([c654389](https://github.com/mariuszm/ng-devstack/commit/c654389))
+- **tests:**
+  - fixed coverage preprocessor to exclude `*.spec.js` files. See [discussion](https://github.com/karma-runner/karma/pull/834) for details ([08d02f4](https://github.com/mariuszm/ng-devstack/commit/08d02f4))
+
 ## Features
 
 - **build:**
@@ -56,16 +77,14 @@
   - updated dependencies in NPM and Bower ([f2b5e1e](https://github.com/mariuszm/ng-devstack/commit/f2b5e1e))
   - removed redundant code, minor styling updates ([8ebc94f](https://github.com/mariuszm/ng-devstack/commit/8ebc94f))
 
+# 0.3.4 (2015-08-01)
+
 ## Bug Fixes
 
 - **build:**
-  - fixed gulp configuration after latest API changes ([dabd094](https://github.com/mariuszm/ng-devstack/commit/dabd094))
-- **sass:**
-  - fixed gulp watch crash on SASS compilation errors ([c654389](https://github.com/mariuszm/ng-devstack/commit/c654389))
-- **tests:**
-  - fixed coverage preprocessor to exclude `*.spec.js` files. See [discussion](https://github.com/karma-runner/karma/pull/834) for details ([08d02f4](https://github.com/mariuszm/ng-devstack/commit/08d02f4))
-
-# 0.3.4 (2015-08-01)
+  - fixed order of imported SASS files ([4f3f92a](https://github.com/mariuszm/ng-devstack/commit/4f3f92a))
+  - fixed parsing CSS with Autoprefixer ([9b95f00](https://github.com/mariuszm/ng-devstack/commit/9b95f00))
+  - fixed filtering files during optimization process ([31f868d](https://github.com/mariuszm/ng-devstack/commit/31f868d))
 
 ## Features
 
@@ -77,14 +96,17 @@
 - **misc:**
   - updated dependencies in NPM ([2f40fed](https://github.com/mariuszm/ng-devstack/commit/2f40fed))
 
+# 0.3.3 (2015-07-25)
+
 ## Bug Fixes
 
+- **tests:**
+  - fixed Karma configuration after latest API changes (v0.13.0) ([2219f56](https://github.com/mariuszm/ng-devstack/commit/2219f56))
+  - removed redundant tasks & updated input files ([fcd881c](https://github.com/mariuszm/ng-devstack/commit/fcd881c))
 - **build:**
-  - fixed order of imported SASS files ([4f3f92a](https://github.com/mariuszm/ng-devstack/commit/4f3f92a))
-  - fixed parsing CSS with Autoprefixer ([9b95f00](https://github.com/mariuszm/ng-devstack/commit/9b95f00))
-  - fixed filtering files during optimization process ([31f868d](https://github.com/mariuszm/ng-devstack/commit/31f868d))
-
-# 0.3.3 (2015-07-25)
+  - updated optimization process ([20e5dbe](https://github.com/mariuszm/ng-devstack/commit/20e5dbe))
+- **watch:**
+  - clean `build/` folder before running `watch` task ([0445918](https://github.com/mariuszm/ng-devstack/commit/0445918))
 
 ## Features
 
@@ -98,16 +120,6 @@
 - **misc:**
   - updated dependencies in NPM and Bower ([1b6827f](https://github.com/mariuszm/ng-devstack/commit/1b6827f))
 
-## Bug Fixes
-
-- **tests:**
-  - fixed Karma configuration after latest API changes (v0.13.0) ([2219f56](https://github.com/mariuszm/ng-devstack/commit/2219f56))
-  - removed redundant tasks & updated input files ([fcd881c](https://github.com/mariuszm/ng-devstack/commit/fcd881c))
-- **build:**
-  - updated optimization process ([20e5dbe](https://github.com/mariuszm/ng-devstack/commit/20e5dbe))
-- **watch:**
-  - clean `build/` folder before running `watch` task ([0445918](https://github.com/mariuszm/ng-devstack/commit/0445918))
-
 # 0.3.2 (2014-10-12)
 
 ## Bug Fixes
@@ -118,6 +130,16 @@
   - forced deleting redundant JS files ([fd4dc66](https://github.com/mariuszm/ng-devstack/commit/fd4dc66))
 
 # 0.3.1 (2014-10-09)
+
+## Bug Fixes
+
+- **build:**
+  - fixed copying unnecessary CSS files to `dist/` ([0bd8f4a](https://github.com/mariuszm/ng-devstack/commit/0bd8f4a))
+  - added helper function to fix problem with Windows paths in SASS task ([e42bbed](https://github.com/mariuszm/ng-devstack/commit/e42bbed))
+- **update:**
+  - updated server config after migrating to Express 4 ([616f046](https://github.com/mariuszm/ng-devstack/commit/616f046))
+  - fixed compiling SASS with source maps after updating node-sass and Autoprefixer to latest version ([31a299b](https://github.com/mariuszm/ng-devstack/commit/31a299b))
+  - fixed CSS & JS injection to HTML according to latest API changes ([6aab772](https://github.com/mariuszm/ng-devstack/commit/6aab772))
 
 ## Features
 
@@ -130,22 +152,7 @@
   - JavaScript files moved to the bottom of the page ([cde391b](https://github.com/mariuszm/ng-devstack/commit/cde391b))
   - updated dependencies in NPM and Bower ([8eff9ff](https://github.com/mariuszm/ng-devstack/commit/8eff9ff))
 
-## Bug Fixes
-
-- **build:**
-  - fixed copying unnecessary CSS files to `dist/` ([0bd8f4a](https://github.com/mariuszm/ng-devstack/commit/0bd8f4a))
-  - added helper function to fix problem with Windows paths in SASS task ([e42bbed](https://github.com/mariuszm/ng-devstack/commit/e42bbed))
-- **update:**
-  - updated server config after migrating to Express 4 ([616f046](https://github.com/mariuszm/ng-devstack/commit/616f046))
-  - fixed compiling SASS with source maps after updating node-sass and Autoprefixer to latest version ([31a299b](https://github.com/mariuszm/ng-devstack/commit/31a299b))
-  - fixed CSS & JS injection to HTML according to latest API changes ([6aab772](https://github.com/mariuszm/ng-devstack/commit/6aab772))
-
 # 0.3.0 (2014-07-01)
-
-## Features
-
-- **misc:**
-  - updated dependencies in NPM and Bower ([757e018](https://github.com/mariuszm/ng-devstack/commit/757e018))
 
 ## Bug Fixes
 
@@ -154,12 +161,12 @@
 - **watch:**
   - fixed rebuilding CSS on SASS change ([c094769](https://github.com/mariuszm/ng-devstack/commit/c094769))
 
-# 0.2.9 (2014-07-01)
-
 ## Features
 
-- **build:**
-  - added forced clean of compiled version ([ba3382e](https://github.com/mariuszm/ng-devstack/commit/ba3382e))
+- **misc:**
+  - updated dependencies in NPM and Bower ([757e018](https://github.com/mariuszm/ng-devstack/commit/757e018))
+
+# 0.2.9 (2014-07-01)
 
 ## Bug Fixes
 
@@ -168,15 +175,12 @@
   - fixed removing temporary SASS file ([6d4ed45](https://github.com/mariuszm/ng-devstack/commit/6d4ed45))
   - fixed AngularJS modules minification (removed saving temporary file to disk) ([0ab24d3](https://github.com/mariuszm/ng-devstack/commit/0ab24d3))
 
-# 0.2.8 (2014-06-25)
-
 ## Features
 
 - **build:**
-  - running tests after the build process is finished ([3ddcbc7](https://github.com/mariuszm/ng-devstack/commit/3ddcbc7))
-- **misc:**
-  - fixed formatting ([0f505e6](https://github.com/mariuszm/ng-devstack/commit/0f505e6))
-  - updated dependencies in NPM and Bower ([8b6c087](https://github.com/mariuszm/ng-devstack/commit/8b6c087))
+  - added forced clean of compiled version ([ba3382e](https://github.com/mariuszm/ng-devstack/commit/ba3382e))
+
+# 0.2.8 (2014-06-25)
 
 ## Bug Fixes
 
@@ -187,14 +191,15 @@
 - **watch:**
   - fixed rebuilding CSS on SASS change ([0ede1af](https://github.com/mariuszm/ng-devstack/commit/0ede1af))
 
-# 0.2.7 (2014-06-09)
-
 ## Features
 
 - **build:**
-  - added example SASS file for variables ([9f9dc49](https://github.com/mariuszm/ng-devstack/commit/9f9dc49))
+  - running tests after the build process is finished ([3ddcbc7](https://github.com/mariuszm/ng-devstack/commit/3ddcbc7))
 - **misc:**
-  - updated dependencies in Bower ([331f3c7](https://github.com/mariuszm/ng-devstack/commit/331f3c7))
+  - fixed formatting ([0f505e6](https://github.com/mariuszm/ng-devstack/commit/0f505e6))
+  - updated dependencies in NPM and Bower ([8b6c087](https://github.com/mariuszm/ng-devstack/commit/8b6c087))
+
+# 0.2.7 (2014-06-09)
 
 ## Bug Fixes
 
@@ -202,6 +207,13 @@
   - fixed HTML minification ([dbeafef](https://github.com/mariuszm/ng-devstack/commit/dbeafef))
   - fixed compiling JavaScript files ([41811df](https://github.com/mariuszm/ng-devstack/commit/41811df))
   - fixed including vendor files in application ([f618f5b](https://github.com/mariuszm/ng-devstack/commit/f618f5b))
+
+## Features
+
+- **build:**
+  - added example SASS file for variables ([9f9dc49](https://github.com/mariuszm/ng-devstack/commit/9f9dc49))
+- **misc:**
+  - updated dependencies in Bower ([331f3c7](https://github.com/mariuszm/ng-devstack/commit/331f3c7))
 
 # 0.2.6 (2014-06-08)
 
@@ -214,6 +226,15 @@
   - updated docs to v0.2.6 ([363bd9d](https://github.com/mariuszm/ng-devstack/commit/363bd9d))
 
 # 0.2.5 (2014-06-06)
+
+## Bug Fixes
+
+- **build:**
+  - fixed adding vendor CSS files to project ([882c685](https://github.com/mariuszm/ng-devstack/commit/882c685))
+- **sass:**
+  - fixed compiling SASS to CSS with source maps ([f57221f](https://github.com/mariuszm/ng-devstack/commit/f57221f))
+- **watch:**
+  - fixed watching for SASS changes ([9ee7b82](https://github.com/mariuszm/ng-devstack/commit/9ee7b82))
 
 ## Features
 
@@ -228,16 +249,12 @@
   - updated dependencies in NPM (`package.json`) ([dfa11d5](https://github.com/mariuszm/ng-devstack/commit/dfa11d5))
   - updated docs to v0.2.5 ([ff65504](https://github.com/mariuszm/ng-devstack/commit/ff65504))
 
+# 0.2.4 (2014-05-30)
+
 ## Bug Fixes
 
 - **build:**
-  - fixed adding vendor CSS files to project ([882c685](https://github.com/mariuszm/ng-devstack/commit/882c685))
-- **sass:**
-  - fixed compiling SASS to CSS with source maps ([f57221f](https://github.com/mariuszm/ng-devstack/commit/f57221f))
-- **watch:**
-  - fixed watching for SASS changes ([9ee7b82](https://github.com/mariuszm/ng-devstack/commit/9ee7b82))
-
-# 0.2.4 (2014-05-30)
+  - fixed running Autoprefixer on CSS file with source maps ([d4299b4](https://github.com/mariuszm/ng-devstack/commit/d4299b4))
 
 ## Features
 
@@ -251,12 +268,12 @@
   - updated libraries ([c900208](https://github.com/mariuszm/ng-devstack/commit/c900208))
   - updated docs to v0.2.4 ([53fdd40](https://github.com/mariuszm/ng-devstack/commit/53fdd40))
 
+# 0.2.3 (2014-04-09)
+
 ## Bug Fixes
 
 - **build:**
-  - fixed running Autoprefixer on CSS file with source maps ([d4299b4](https://github.com/mariuszm/ng-devstack/commit/d4299b4))
-
-# 0.2.3 (2014-04-09)
+  - fixed running Karma after updating to latest version ([3ca9c55](https://github.com/mariuszm/ng-devstack/commit/3ca9c55))
 
 ## Features
 
@@ -271,16 +288,7 @@
   - updated libraries ([c0f56ca](https://github.com/mariuszm/ng-devstack/commit/c0f56ca))
   - updated docs to v0.2.3 ([f09ef36](https://github.com/mariuszm/ng-devstack/commit/f09ef36))
 
-## Bug Fixes
-
-- **build:**
-  - fixed running Karma after updating to latest version ([3ca9c55](https://github.com/mariuszm/ng-devstack/commit/3ca9c55))
-
 # 0.2.2 (2014-03-05)
-
-## Features
-
-- added Karma ([58edb91](https://github.com/mariuszm/ng-devstack/commit/58edb91))
 
 ## Bug Fixes
 
@@ -291,6 +299,10 @@
   - added UI Bootstrap's Collapse plugin into example app's navbar ([717575b](https://github.com/mariuszm/ng-devstack/commit/717575b))
   - updated packages as well as gulp plugins ([717575b](https://github.com/mariuszm/ng-devstack/commit/717575b))
 
+## Features
+
+- added Karma ([58edb91](https://github.com/mariuszm/ng-devstack/commit/58edb91))
+
 # 0.2.1 (2014-02-16)
 
 ## Bug Fixes
@@ -299,6 +311,13 @@
   - fixed caching AngularJS templates ([1e4c989](https://github.com/mariuszm/ng-devstack/commit/1e4c989))
 
 # 0.2.0 (2014-02-15)
+
+## Bug Fixes
+
+- **watch:**
+  - Livereload crash on adding new files/deleting when Watch task is active ([c6373e5](https://github.com/mariuszm/ng-devstack/commit/c6373e5))
+- **Bower:**
+  - broken reference to the latest version of AngularUI Router ([c6373e5](https://github.com/mariuszm/ng-devstack/commit/c6373e5))
 
 ## Features
 
@@ -309,13 +328,6 @@
   - Added comments to gulpfile ([c6373e5](https://github.com/mariuszm/ng-devstack/commit/c6373e5))
   - Removed unused plugins from `package.json` ([c6373e5](https://github.com/mariuszm/ng-devstack/commit/c6373e5))
   - Updated `README.md` ([c6373e5](https://github.com/mariuszm/ng-devstack/commit/c6373e5))
-
-## Bug Fixes
-
-- **watch:**
-  - Livereload crash on adding new files/deleting when Watch task is active ([c6373e5](https://github.com/mariuszm/ng-devstack/commit/c6373e5))
-- **Bower:**
-  - broken reference to the latest version of AngularUI Router ([c6373e5](https://github.com/mariuszm/ng-devstack/commit/c6373e5))
 
 # 0.1.0 (2014-02-12)
 

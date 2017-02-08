@@ -3,7 +3,7 @@ import { AppNavModule } from './nav/nav.module';
 
 const conf = {
   appName: 'ngDevstack',
-  appVersion: '1.0.1'
+  appVersion: '1.0.2'
 };
 
 const CommonModule = angular
