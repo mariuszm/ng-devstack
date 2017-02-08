@@ -29,9 +29,9 @@ module.exports = {
   },
 
   output: {
-    path: `${ROOT_PATH}/dist`,
-    publicPath: '',
-    filename: 'js/[name].js'
+    path       : `${ROOT_PATH}/dist`,
+    publicPath : '',
+    filename   : 'js/[name].js'
   },
 
   context: `${ROOT_PATH}/src`,
@@ -86,8 +86,8 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks: (module) => isExternal(module)
+      name      : 'vendor',
+      minChunks : (module) => isExternal(module)
     }),
 
     new ExtractTextPlugin({

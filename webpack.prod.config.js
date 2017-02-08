@@ -1,6 +1,4 @@
 const baseConfig         = require('./webpack.base.conf');
-const path               = require('path');
-const webpack            = require('webpack');
 const merge              = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin  = require('html-webpack-plugin');
@@ -10,22 +8,22 @@ module.exports = merge(baseConfig, {
   devtool: '#source-map',
 
   output: {
-    filename: 'js/[name].[hash].js',
-    chunkFilename: 'js/[name].[hash].js'
+    filename      : 'js/[name].[hash].js',
+    chunkFilename : 'js/[name].[hash].js'
   },
 
   plugins: [
     new CleanWebpackPlugin(['dist']),
 
     new HtmlWebpackPlugin({
-      template: './index.html',
-      cache: true,
+      template : './index.html',
+      cache    : true,
       minify: {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true
+        collapseWhitespace            : true,
+        removeComments                : true,
+        removeRedundantAttributes     : true,
+        removeScriptTypeAttributes    : true,
+        removeStyleLinkTypeAttributes : true
       }
     })
   ]

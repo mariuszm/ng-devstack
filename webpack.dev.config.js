@@ -1,7 +1,6 @@
 const baseConfig        = require('./webpack.base.conf');
-const path              = require('path');
-const webpack           = require('webpack');
 const merge             = require('webpack-merge');
+const webpack           = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(baseConfig, {
@@ -19,9 +18,10 @@ module.exports = merge(baseConfig, {
 
   plugins: [
     new webpack.NamedModulesPlugin(),
+
     new HtmlWebpackPlugin({
-      template: './index.html',
-      cache: true
+      template : './index.html',
+      cache    : true
     })
   ]
 
