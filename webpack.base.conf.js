@@ -1,6 +1,15 @@
 const path              = require('path');
 const webpack           = require('webpack');
+const NODE_ENV          = process.argv.indexOf('-p') !== -1 ? 'production' : 'development';
 const ROOT_PATH         = path.resolve(__dirname, './');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const sassImports = [
+  path.resolve(__dirname, './src/sass/includes/_includes.scss'),
+  path.resolve(__dirname, './src/sass/includes/variables.scss')
+];
+
+const isProduction = () => NODE_ENV === 'production';
 
 const isExternal = (module) => {
   let userRequest = module.userRequest;
@@ -48,6 +57,29 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|svg)$/,
         use: ['url-loader?limit=8192&name=[path][name].[ext]?[hash]']
+      },
+
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader',     options: { sourceMap: !isProduction() } },
+            { loader: 'postcss-loader', options: { sourceMap: !isProduction() } }
+          ]
+        })
+      },
+      {
+        test: /\.(sass|scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            { loader: 'css-loader',            options: { sourceMap: !isProduction() } },
+            { loader: 'postcss-loader',        options: { sourceMap: !isProduction() } },
+            { loader: 'sass-loader',           options: { sourceMap: !isProduction() } },
+            { loader: 'sass-resources-loader', options: { resources: sassImports } }
+          ]
+        })
       }
     ]
   },
@@ -56,6 +88,12 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: (module) => isExternal(module)
-    })
+    }),
+
+    new ExtractTextPlugin({
+      filename  : 'styles/[name].[hash].css',
+      allChunks : true,
+      disable   : !isProduction()
+    }),
   ]
 };

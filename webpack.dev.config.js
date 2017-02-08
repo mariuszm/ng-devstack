@@ -3,7 +3,6 @@ const path              = require('path');
 const webpack           = require('webpack');
 const merge             = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = merge(baseConfig, {
 
@@ -16,13 +15,6 @@ module.exports = merge(baseConfig, {
 
   output: {
     chunkFilename: 'js/[name].js'
-  },
-
-  module: {
-    rules: [
-      { test: /\.css$/,         use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?sourceMap'] },
-      { test: /\.(sass|scss)$/, use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?sourceMap', 'sass-loader?sourceMap'] }
-    ]
   },
 
   plugins: [
