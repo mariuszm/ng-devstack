@@ -8,7 +8,8 @@
   "env": {
     "test": {
       "plugins": [
-        ["__coverage__", { "ignore": "*.spec.js" }]
+        ["import-noop", { "extensions": ["scss", "css", "html"] }],
+        ["transform-es2015-modules-commonjs", { "ignore": "*.spec.js" }]
       ]
     }
   }
