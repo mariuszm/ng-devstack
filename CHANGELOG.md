@@ -1,3 +1,12 @@
+# 1.0.3 (2017-04-01)
+
+## Features
+
+- **build**: minor code & plugins optimizations ([3df0fe2](https://github.com/mariuszm/ng-devstack/commit/3df0fe2))
+- **tests**: replaced Karma launcher with Jest ([7f90421](https://github.com/mariuszm/ng-devstack/commit/7f90421))
+- **misc**: updated dependencies in Yarn ([be217b2](https://github.com/mariuszm/ng-devstack/commit/be217b2))
+- **misc**: updated docs to v1.0.3 ([9c29105](https://github.com/mariuszm/ng-devstack/commit/9c29105))
+
 # 1.0.2 (2017-02-08)
 
 ## Bug Fixes
