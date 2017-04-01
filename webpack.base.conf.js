@@ -5,8 +5,8 @@ const ROOT_PATH         = path.resolve(__dirname, './');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const sassImports = [
-  path.resolve(__dirname, './src/sass/includes/_includes.scss'),
-  path.resolve(__dirname, './src/sass/includes/variables.scss')
+  `${ROOT_PATH}/src/sass/includes/_includes.scss`,
+  `${ROOT_PATH}/src/sass/includes/variables.scss`
 ];
 
 const isProduction = () => NODE_ENV === 'production';

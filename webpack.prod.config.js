@@ -1,7 +1,8 @@
-const baseConfig         = require('./webpack.base.conf');
-const merge              = require('webpack-merge');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin  = require('html-webpack-plugin');
+const baseConfig           = require('./webpack.base.conf');
+const merge                = require('webpack-merge');
+const CleanWebpackPlugin   = require('clean-webpack-plugin');
+const HtmlWebpackPlugin    = require('html-webpack-plugin');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
 module.exports = merge(baseConfig, {
 
@@ -25,6 +26,12 @@ module.exports = merge(baseConfig, {
         removeScriptTypeAttributes    : true,
         removeStyleLinkTypeAttributes : true
       }
+    }),
+
+    new PreloadWebpackPlugin({
+      rel: 'preload',
+      as: 'script',
+      include: 'all'
     })
   ]
 

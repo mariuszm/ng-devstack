@@ -7,10 +7,14 @@ module.exports = merge(baseConfig, {
 
   devtool: '#cheap-module-source-map',
 
-  // devServer: {
+  devServer: {
   //   historyApiFallback: true,
   //   noInfo: true
-  // },
+    overlay: {
+      warnings: true,
+      errors: true
+    }
+  },
 
   output: {
     chunkFilename: 'js/[name].js'
