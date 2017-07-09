@@ -14,16 +14,17 @@ Anyone searching for old version of ng-devstack, it is [here](https://github.com
 
 - new Angular 1.5 component architecture,
 - support for ES6 with [Babel 6](https://babeljs.io/),
-- integration with [webpack 2](https://webpack.github.io/), allowing to use its' best features:
+- integration with [webpack 3](https://webpack.github.io/), allowing to use its' best features:
   - local webserver with live reload,
   - Hot Module Reloading, tries to reload just the component that's changed, instead of the entire page),
-  - tree-shaking, excluding unused bundles from exports with webpack 2 and Babel 6
+  - Scope Hoisting, removing function wrappers around modules to improve total script evaluation time as well as to achieve smaller bundle sizes,
   - support for styles/scripts source maps,
   - JS/CSS/HTML minification,
 - support for SASS (processed with [Autoprefixer](https://github.com/postcss/autoprefixer)),
 - support for [ESLint](http://eslint.org/),
 - unit testing with [Jest](https://facebook.github.io/jest/),
-- integration with [UI Router 1.0](https://ui-router.github.io/ng1/) & [Angular Material](https://material.angularjs.org/).
+- integration with [UI Router 1.0](https://ui-router.github.io/ng1/) & [Angular Material](https://material.angularjs.org/)
+- debugging with Visual Code Studio's [Debugger for Chrome](https://github.com/Microsoft/vscode-chrome-debug).
 
 ## Requirements
 
@@ -73,6 +74,16 @@ ESLint is loaded by default when webpack is processing files, but it can be run 
 ```sh
 $ yarn lint
 ```
+
+## Debugging in Chrome
+
+For Visual Code Studio users there is a configuration file `launch.json` provided to allow in-editor debugging (with support for source maps). You can launch a new Google Chrome window or attach to existing one. For the second option, browser window shall be launched with remote debugging enabled:
+
+```sh
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=remote-profile
+```
+
+Of course Google Chrome path may differ depending on your system environment - please make sure to run the browser from proper path with these two parameters included. Pathname for `sourceMapPathOverrides` can be different for different OS, visit [Debugger for Chrome](https://github.com/Microsoft/vscode-chrome-debug) for more information.
 
 ## Additional info
 
