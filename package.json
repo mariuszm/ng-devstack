@@ -22,10 +22,8 @@
   "jest": {
     "coveragePathIgnorePatterns": [
       "./node_modules",
-      "./jest.config.js",
       "./src/index.js"
-    ],
-    "setupTestFrameworkScriptFile": "./jest.config.js"
+    ]
   },
   "devDependencies": {
     "autoprefixer": "6.7.7",

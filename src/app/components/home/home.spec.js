@@ -1,3 +1,7 @@
+import 'angular';
+import 'angular-mocks';
+import '../../root.module';
+
 describe('Component: Home', () => {
   let $rootScope, $state, $location, $componentController, $compile;
 
