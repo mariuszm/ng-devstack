@@ -1,8 +1,9 @@
-const path              = require('path');
-const webpack           = require('webpack');
-const NODE_ENV          = process.argv.indexOf('-p') !== -1 ? 'production' : 'development';
-const ROOT_PATH         = path.resolve(__dirname, './');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path                 = require('path');
+const webpack              = require('webpack');
+const NODE_ENV             = process.argv.indexOf('-p') !== -1 ? 'production' : 'development';
+const ROOT_PATH            = path.resolve(__dirname, './');
+const ExtractTextPlugin    = require('extract-text-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 const sassImports = [
   `${ROOT_PATH}/src/sass/includes/_includes.scss`,
@@ -21,6 +22,7 @@ const isExternal = (module) => {
   return userRequest.indexOf('node_modules') >= 0;
 };
 
+process.traceDeprecation = true;
 
 module.exports = {
 
@@ -93,9 +95,10 @@ module.exports = {
     }),
 
     new ExtractTextPlugin({
-      filename  : 'styles/[name].[hash].css',
-      allChunks : true,
-      disable   : !isProduction()
+      filename  : isProduction() ? 'styles/[name].[hash].css' : 'styles/[name].css',
+      allChunks : true
     }),
+
+    new FriendlyErrorsPlugin()
   ]
 };

@@ -31,10 +31,10 @@
     "jasmine": true,
     "node": true
   },
-  "ecmaFeatures": {
-    "modules": true
-  },
   "parserOptions": {
+    "ecmaFeatures": {
+      "modules": true
+    },
     "sourceType": "module"
   },
   "globals" : {
