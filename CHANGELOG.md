@@ -1,3 +1,17 @@
+# 1.0.4 (2017-07-09)
+
+## Features
+
+- **build**: added support for Visual Code Studio's Debugger for Chrome ([be80ba2](https://github.com/mariuszm/ng-devstack/commit/be80ba2))
+- **build**: added webpack 3's Scope Hoisting ([230b248](https://github.com/mariuszm/ng-devstack/commit/230b248))
+- **build**: minor code & plugins optimizations ([1df3978](https://github.com/mariuszm/ng-devstack/commit/1df3978))
+- **misc**: updated dependencies in Yarn & NPM (package.json) ([1b22cab](https://github.com/mariuszm/ng-devstack/commit/1b22cab))
+- **misc**: updated docs to v1.0.4 ([146399f](https://github.com/mariuszm/ng-devstack/commit/146399f), [b72e946](https://github.com/mariuszm/ng-devstack/commit/b72e946))
+
+## Bug Fixes
+
+- **tests**: fixed unit tests after updating Jest to latest version ([b168fa4](https://github.com/mariuszm/ng-devstack/commit/b168fa4))
+
 # 1.0.3 (2017-04-01)
 
 ## Features
