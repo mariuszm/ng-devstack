@@ -1,3 +1,1 @@
-import RootModule from './app/root.module';
-
-export default RootModule;
+System.import(/* webpackChunkName: "app" */ './app/root.module');
